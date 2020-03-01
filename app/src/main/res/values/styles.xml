@@ -1,0 +1,76 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/warna1</item>
+        <item name="colorPrimaryDark">@color/warna2</item>
+        <item name="colorAccent">@color/warna3</item>
+    </style>
+
+    <style name="subheader_small">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/montlight</item>
+        <item name="android:textColor">@color/warna1</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="judul_layout">
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">@font/montbold</item>
+        <item name="android:textColor">@color/warna3</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="teksbody1">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/montregular</item>
+        <item name="android:textColor">@color/warna3</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="btn_primary_gold">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/bg_btn_primary_gold</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/montregular</item>
+    </style>
+    <style name="btn_primary_maroon">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/bg_btn_primary_maroon</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/montregular</item>
+    </style>
+
+    <style name="inputtext">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/bg_edt_input_edit</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:inputType">text</item>
+        <item name="android:textColor">@color/warna4</item>
+    </style>
+
+    <style name="inputpin">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/bg_edt_input_edit</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginLeft">2dp</item>
+        <item name="android:layout_marginRight">2dp</item>
+        <item name="android:textColor">@color/warna4</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:inputType">numberPassword</item>
+    </style>
+
+
+
+</resources>

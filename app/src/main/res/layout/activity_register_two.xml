@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_colour"
+    tools:context=".RegisterTwoAct">
+
+
+    <ImageView
+        android:id="@+id/logo_koperasi"
+        android:layout_width="56dp"
+        android:layout_height="54dp"
+        android:src="@drawable/img_logo_koperasi"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="27dp"
+        />
+    <LinearLayout
+        android:id="@+id/judul_koperasi2"
+        app:layout_constraintStart_toEndOf="@id/logo_koperasi"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="19dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        >
+        <TextView
+            android:id="@+id/judul_koperasi"
+            android:text="@string/title_judul_koperasi"
+            style="@style/subheader_small"
+            />
+
+        <TextView
+            android:id="@+id/nama_koperasi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_nama_koperasi"
+            android:textSize="20sp"
+            android:fontFamily="@font/montmedium"
+            android:textColor="@color/warna1"
+            />
+
+        <TextView
+            android:id="@+id/alamat_koperasi"
+            android:text="@string/title_alamat_koperasi"
+            style="@style/subheader_small"
+            />
+    </LinearLayout>
+
+
+
+    <TextView
+        android:id="@+id/judul_layout"
+        android:text="@string/register1_registrasi"
+        style="@style/judul_layout"
+        app:layout_constraintTop_toBottomOf="@+id/judul_koperasi2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        />
+    <ImageView
+        android:id="@+id/background_masjid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_masjid"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="-20dp"
+        android:alpha="0.5"/>
+
+    <ImageView
+        android:id="@+id/muslimhandshake"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/img_muamalah"
+        app:layout_constraintTop_toTopOf="@id/background_masjid"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="170dp"
+        android:alpha="0.6"/>
+
+    <LinearLayout
+        android:background="@drawable/bg_layout"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginStart="34dp"
+        android:layout_marginEnd="34dp"
+        app:layout_constraintTop_toBottomOf="@id/judul_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        android:padding="24dp"
+        android:orientation="vertical">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <View
+                android:id="@+id/frame_photo"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/bg_view_circle_picture"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+            <com.github.florent37.shapeofview.shapes.CircleView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:layout_constraintTop_toTopOf="@id/frame_photo"
+                app:layout_constraintBottom_toBottomOf="@id/frame_photo"
+                app:layout_constraintStart_toStartOf="@id/frame_photo"
+                app:layout_constraintEnd_toEndOf="@id/frame_photo">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/icon_nopic"
+                    />
+            </com.github.florent37.shapeofview.shapes.CircleView>
+            <Button
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/bg_btn_plus_cream"
+                app:layout_constraintTop_toTopOf="@id/frame_photo"
+                app:layout_constraintStart_toStartOf="@id/frame_photo"
+                android:layout_marginTop="70dp"
+                android:layout_marginStart="70dp"
+                android:text="+"
+                android:textAlignment="center"
+                android:textColor="@color/warna2"
+                android:textSize="21sp"/>
+            
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:text="@string/register2_email"
+            style="@style/teksbody1"
+            android:layout_marginTop="20dp"/>
+        <EditText
+            style="@style/inputtext"
+            android:inputType="textEmailAddress"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:text="@string/register2_alamat"
+            style="@style/teksbody1"
+            android:layout_marginTop="20dp"/>
+        <EditText
+            style="@style/inputtext"
+            android:inputType="text"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:text="@string/register1_tanggal_lahir"
+            style="@style/teksbody1"
+            android:layout_marginTop="20dp"/>
+        <EditText
+            style="@style/inputtext"
+            android:inputType="date"
+            android:layout_marginTop="4dp"/>
+
+        <Button
+            android:id="@+id/btn_register2_lanjut"
+            android:layout_marginTop="18sp"
+            style="@style/btn_primary_gold"
+            android:text="@string/action_lanjut"
+            />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

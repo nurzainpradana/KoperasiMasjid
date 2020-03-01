@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_colour"
+    tools:context=".SplashScreenAct">
+
+    <ImageView
+        android:id="@+id/logo_koperasi"
+        android:layout_width="136dp"
+        android:layout_height="143dp"
+        android:src="@drawable/img_logo_koperasi"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="64dp"
+        />
+
+    <TextView
+        android:id="@+id/judul_koperasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_judul_koperasi"
+        android:textSize="20sp"
+        android:fontFamily="@font/montregular"
+        android:textColor="@color/warna1"
+        app:layout_constraintTop_toBottomOf="@id/logo_koperasi"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:id="@+id/nama_koperasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_nama_koperasi"
+        android:textSize="20sp"
+        android:fontFamily="@font/montbold"
+        android:textColor="@color/warna1"
+        app:layout_constraintTop_toBottomOf="@id/judul_koperasi"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="5dp"
+        />
+
+    <TextView
+        android:id="@+id/alamat_koperasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_alamat_koperasi"
+        android:textSize="20sp"
+        android:fontFamily="@font/montmedium"
+        android:textColor="@color/warna1"
+        app:layout_constraintTop_toBottomOf="@id/nama_koperasi"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="5dp"
+        />
+
+    <ImageView
+        android:id="@+id/background_masjid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_masjid"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="100dp"
+        android:alpha="0.5"
+        />
+    <ImageView
+        android:id="@+id/muslimhandshake"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/img_muamalah"
+        app:layout_constraintTop_toTopOf="@id/background_masjid"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="150dp"
+        android:alpha="0.6"/>
+
+
+
+        
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

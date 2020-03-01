@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">KoperasiMasjid</string>
+    <string name="title_nama_koperasi">AT- TAQWA</string>
+    <string name="title_judul_koperasi">Koperasi Masjid</string>
+    <string name="title_alamat_koperasi">Alamanda Regensi</string>
+    <string name="signin_login">LOGIN</string>
+    <string name="signin_username">Username</string>
+    <string name="signin_password">Password</string>
+    <string name="action_sign_in">SIGN IN</string>
+    <string name="signin_belum_punya_akun">Belum Punya Akun ?</string>
+    <string name="action_daftar_sekarang">Daftar Sekarang</string>
+    <string name="register1_registrasi">DAFTAR AKUN</string>
+    <string name="register1_nama_lengkap">Nama Lengkap</string>
+    <string name="register1_nomor_hp">Nomor HP</string>
+    <string name="action_lanjut">LANJUT</string>
+    <string name="register1_username">Username</string>
+    <string name="register1_password">Password</string>
+    <string name="verifikasi_masukan_kode">Masukan Kode Verifikasi</string>
+    <string name="verifikasi_belum_mendapat_SMS">Belum Mendapatkan SMS ?</string>
+    <string name="action_kirim_ulang">Kirim Ulang SMS</string>
+    <string name="title_verifikasi">VERIFIKASI</string>
+    <string name="register2_email">Email</string>
+    <string name="register2_alamat">Alamat</string>
+    <string name="register1_tanggal_lahir">Tanggal Lahir</string>
+    <string name="msg_sukses_register">Selamat,  Akun anda sudah terdaftar</string>
+    <string name="action_explore">PERGI KE BERANDA</string>
+    <string name="beranda">Beranda</string>
+    <string name="transaksi">Transaksi</string>
+    <string name="keranjang">Keranjang</string>
+    <string name="favorite">Favorite</string>
+    <string name="profil">Profil</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nama_koperasi">KOPERASI MASJID AT-TAQWA</string>
+</resources>
