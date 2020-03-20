@@ -33,4 +33,15 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nama_koperasi">KOPERASI MASJID AT-TAQWA</string>
+    <string name="update_password">UBAH PASSWORD</string>
+    <string name="edit_profile">EDIT PROFILE</string>
+    <string name="old_password">Password Lama</string>
+    <string name="hint_password">********</string>
+    <string name="new_password">Password Baru</string>
+    <string name="password_confirmation">Konfirmasi Password</string>
+    <string name="btn_save">SIMPAN</string>
+    <string name="product_name">Nama Produk</string>
+    <string name="add_to_chart">TAMBAH KE KERANJANG</string>
+    <string name="search_hint">Cari ...</string>
+    <string name="camera_access_required">Camera access is required to display the camera preview.</string>
 </resources>

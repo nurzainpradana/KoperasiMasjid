@@ -102,6 +102,7 @@
             android:text="@string/register1_nama_lengkap"
             style="@style/teksbody1"/>
         <EditText
+            android:id="@+id/edt_name"
             style="@style/inputtext"
             android:layout_marginTop="4dp"/>
 
@@ -110,6 +111,7 @@
             style="@style/teksbody1"
             android:layout_marginTop="20dp"/>
         <EditText
+            android:id="@+id/edt_no_phone"
             style="@style/inputtext"
             android:inputType="number"
             android:layout_marginTop="4dp"/>
@@ -119,6 +121,7 @@
             style="@style/teksbody1"
             android:layout_marginTop="20dp"/>
         <EditText
+            android:id="@+id/edt_username"
             style="@style/inputtext"
             android:layout_marginTop="4dp"/>
         <TextView
@@ -126,6 +129,7 @@
             style="@style/teksbody1"
             android:layout_marginTop="20dp"/>
         <EditText
+            android:id="@+id/edt_password"
             style="@style/inputtext"
             android:inputType="textPassword"
             android:layout_marginTop="4dp"/>

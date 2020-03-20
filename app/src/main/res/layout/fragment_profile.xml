@@ -3,13 +3,174 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/layout_profile"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/profil"
-        android:gravity="center"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:paddingBottom="10dp">
+
+            <com.github.florent37.shapeofview.shapes.CircleView
+                android:id="@+id/profile_frame_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shape_circle_borderColor="@color/warna2"
+                app:shape_circle_borderWidth="2dp">
+
+                <ImageView
+                    android:id="@+id/profile_my_photo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/icon_nopic" />
+
+            </com.github.florent37.shapeofview.shapes.CircleView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/bg_btn_primary_maroon"
+                app:layout_constraintTop_toBottomOf="@id/profile_frame_photo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="10dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nomor HP "
+            style="@style/teksbody1"
+            android:textStyle="bold"
+            android:textColor="@color/warna1"
+            android:layout_marginLeft="24dp"
+            android:layout_marginBottom="10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0821**********"
+            style="@style/teksbody1"
+            android:textColor="@color/warna1"
+            android:layout_marginLeft="24dp"
+            android:layout_marginBottom="10dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_btn_primary_maroon"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            style="@style/teksbody1"
+            android:textStyle="bold"
+            android:textColor="@color/warna1"
+            android:layout_marginLeft="24dp"
+            android:layout_marginBottom="10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="user@gmail.com"
+            style="@style/teksbody1"
+            android:textColor="@color/warna1"
+            android:layout_marginLeft="24dp"
+            android:layout_marginBottom="10dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_btn_primary_maroon"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Alamat"
+            style="@style/teksbody1"
+            android:textStyle="bold"
+            android:textColor="@color/warna1"
+            android:layout_marginLeft="24dp"
+            android:layout_marginBottom="10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kp. Selang Cau Kel. Wanasari Kec. Cibitung Kab. Bekasi"
+            style="@style/teksbody1"
+            android:textColor="@color/warna1"
+            android:layout_marginLeft="24dp"
+            android:layout_marginBottom="10dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_btn_primary_maroon"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tanggal lahir"
+            style="@style/teksbody1"
+            android:textStyle="bold"
+            android:textColor="@color/warna1"
+            android:layout_marginLeft="24dp"
+            android:layout_marginBottom="10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="09/10/1998"
+            style="@style/teksbody1"
+            android:textColor="@color/warna1"
+            android:layout_marginLeft="24dp"
+            android:layout_marginBottom="10dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_btn_primary_maroon"/>
+
+        <Button
+            android:id="@+id/btn_update_password"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginRight="65dp"
+            android:layout_marginLeft="65dp"
+            android:layout_marginBottom="10dp"
+            style="@style/btn_primary_cream"
+            android:text="@string/update_password"
+            android:textColor="@color/warna2"/>
+
+        <Button
+            android:id="@+id/btn_edit_profile"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginRight="65dp"
+            android:layout_marginLeft="65dp"
+            android:layout_marginBottom="10dp"
+            style="@style/btn_primary_maroon"
+            android:text="@string/edit_profile"
+            android:textColor="@color/warna5"/>
+    </LinearLayout>
 
 </FrameLayout>
