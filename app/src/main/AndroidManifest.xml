@@ -16,12 +16,12 @@
         <activity android:name=".activity.DetailProductAct"/>
         <activity android:name=".activity.UpdatePasswordAct" />
 
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".view.main.MainActivity">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".activity.SuccessRegisterAct" />
+        <activity android:name=".view.sucessregister.SuccessRegisterAct" />
 
         <activity android:name=".view.registertwo.RegisterTwoAct" />
 

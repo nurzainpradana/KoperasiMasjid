@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nurzainpradana.koperasimasjid.R;
-import com.nurzainpradana.koperasimasjid.activity.MainActivity;
+import com.nurzainpradana.koperasimasjid.view.main.MainActivity;
 import com.nurzainpradana.koperasimasjid.view.registerone.RegisterOneAct;
 import com.nurzainpradana.koperasimasjid.viewmodel.MemberViewModel;
 

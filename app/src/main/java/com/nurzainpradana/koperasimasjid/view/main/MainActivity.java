@@ -1,4 +1,4 @@
-package com.nurzainpradana.koperasimasjid.activity;
+package com.nurzainpradana.koperasimasjid.view.main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             bottomNavigationView.setSelectedItemId(R.id.navigation_home);
         }
     }
+
     public boolean onCreateOptionMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu, menu);

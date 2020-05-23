@@ -33,7 +33,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.nurzainpradana.koperasimasjid.R;
-import com.nurzainpradana.koperasimasjid.activity.SuccessRegisterAct;
+import com.nurzainpradana.koperasimasjid.view.sucessregister.SuccessRegisterAct;
 import com.nurzainpradana.koperasimasjid.api.Api;
 import com.nurzainpradana.koperasimasjid.api.ApiInterface;
 import com.nurzainpradana.koperasimasjid.model.Member;
