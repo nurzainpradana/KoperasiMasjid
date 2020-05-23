@@ -1,14 +1,17 @@
-package com.nurzainpradana.koperasimasjid;
+package com.nurzainpradana.koperasimasjid.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.media.Image;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.nurzainpradana.koperasimasjid.R;
 
 public class SuccessRegisterAct extends AppCompatActivity {
     Animation btt, ttb, app_splash;
@@ -35,6 +38,14 @@ public class SuccessRegisterAct extends AppCompatActivity {
         text_success_register.startAnimation(ttb);
         image_success_register.startAnimation(app_splash);
         btn_explore.startAnimation(btt);
+
+        btn_explore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gotoberanda = new Intent(SuccessRegisterAct.this, MainActivity.class);
+                startActivity(gotoberanda);
+            }
+        });
 
 
 

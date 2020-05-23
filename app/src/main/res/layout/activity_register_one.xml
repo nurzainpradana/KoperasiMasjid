@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_colour"
-    tools:context=".RegisterOneAct">
+    tools:context=".activity.RegisterOneAct">
 
 
     <ImageView
         android:id="@+id/logo_koperasi"
         android:layout_width="56dp"
         android:layout_height="54dp"
-        android:src="@drawable/img_logo_koperasi"
+        android:src="@drawable/img_cooperative_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="18dp"
@@ -31,24 +31,24 @@
         >
         <TextView
             android:id="@+id/judul_koperasi"
-            android:text="@string/title_judul_koperasi"
-            style="@style/subheader_small"
+            android:text="@string/title_cooperative"
+            style="@style/subheader"
             />
 
         <TextView
             android:id="@+id/nama_koperasi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_nama_koperasi"
+            android:text="@string/title_cooperative_name"
             android:textSize="20sp"
             android:fontFamily="@font/montmedium"
-            android:textColor="@color/warna1"
+            android:textColor="@color/color_one"
             />
 
         <TextView
             android:id="@+id/alamat_koperasi"
-            android:text="@string/title_alamat_koperasi"
-            style="@style/subheader_small"
+            android:text="@string/title_cooperative_address"
+            style="@style/subheader"
             />
     </LinearLayout>
 
@@ -56,8 +56,8 @@
 
     <TextView
         android:id="@+id/judul_layout"
-        android:text="@string/register1_registrasi"
-        style="@style/judul_layout"
+        android:text="@string/register"
+        style="@style/header.color_three"
         app:layout_constraintTop_toBottomOf="@+id/judul_koperasi2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +67,7 @@
         android:id="@+id/background_masjid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/img_masjid"
+        android:src="@drawable/img_mosque"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -99,46 +99,46 @@
         android:orientation="vertical">
 
         <TextView
-            android:text="@string/register1_nama_lengkap"
-            style="@style/teksbody1"/>
+            android:text="@string/full_name"
+            style="@style/body"/>
         <EditText
             android:id="@+id/edt_name"
-            style="@style/inputtext"
+            style="@style/input.text"
             android:layout_marginTop="4dp"/>
 
         <TextView
-            android:text="@string/register1_nomor_hp"
-            style="@style/teksbody1"
+            android:text="@string/no_phone"
+            style="@style/body"
             android:layout_marginTop="20dp"/>
         <EditText
             android:id="@+id/edt_no_phone"
-            style="@style/inputtext"
+            style="@style/input.text"
             android:inputType="number"
             android:layout_marginTop="4dp"/>
 
         <TextView
-            android:text="@string/register1_username"
-            style="@style/teksbody1"
+            android:text="@string/username"
+            style="@style/body"
             android:layout_marginTop="20dp"/>
         <EditText
             android:id="@+id/edt_username"
-            style="@style/inputtext"
+            style="@style/input.text"
             android:layout_marginTop="4dp"/>
         <TextView
-            android:text="@string/register1_password"
-            style="@style/teksbody1"
+            android:text="@string/password"
+            style="@style/body"
             android:layout_marginTop="20dp"/>
         <EditText
             android:id="@+id/edt_password"
-            style="@style/inputtext"
+            style="@style/input.text"
             android:inputType="textPassword"
             android:layout_marginTop="4dp"/>
 
         <Button
             android:id="@+id/btn_register1_lanjut"
             android:layout_marginTop="18sp"
-            style="@style/btn_primary_gold"
-            android:text="@string/action_lanjut"
+            style="@style/btn_primary.gold"
+            android:text="@string/next"
             />
     </LinearLayout>
 

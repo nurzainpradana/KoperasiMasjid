@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SuccessRegisterAct">
+    tools:context=".activity.SuccessRegisterAct">
 
     <ImageView
         android:id="@+id/background_masjid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/img_masjid"
+        android:src="@drawable/img_mosque"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,8 +20,8 @@
         android:id="@+id/text_sukses_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/msg_sukses_register"
-        style="@style/judul_layout"
+        android:text="@string/success_register"
+        style="@style/header.color_three"
         android:textAlignment="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,8 +41,8 @@
     <Button
         android:id="@+id/btn_explore"
         android:layout_marginTop="18sp"
-        style="@style/btn_primary_maroon"
-        android:text="@string/action_explore"
+        style="@style/btn_primary.maroon"
+        android:text="@string/go_to_home"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

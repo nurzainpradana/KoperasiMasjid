@@ -1,6 +1,5 @@
-package com.nurzainpradana.koperasimasjid;
+package com.nurzainpradana.koperasimasjid.activity;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,10 +10,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.api.Api;
 import com.nurzainpradana.koperasimasjid.api.ApiInterface;
 import com.nurzainpradana.koperasimasjid.model.Member;
-import com.nurzainpradana.koperasimasjid.model.Result;
+import com.nurzainpradana.koperasimasjid.model.ResultMember;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -35,14 +35,13 @@ public class RegisterOneAct extends AppCompatActivity {
 
     List<Member> List = new ArrayList<>();
     ApiInterface Service;
-    Call<Result> Call;
-    AlertDialog.Builder alertDialogBuilder;
+    Call<ResultMember> Call;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_one);
-        getMember();
+        getAllMember();
 
         btn_register1_lanjut = findViewById(R.id.btn_register1_lanjut);
         edtName = findViewById(R.id.edt_name);
@@ -61,29 +60,34 @@ public class RegisterOneAct extends AppCompatActivity {
                 member.setmUsername(edtUsername.getText().toString());
                 member.setmPassword(md5Java(edtPassword.getText().toString()));
 
-                for (int i = 0; i < List.toArray().length; i++) {
-                    Boolean checkUsername = (edtUsername.getText().toString()).equals(List.get(i).getmUsername());
-                    Boolean checkNoPhone = (edtNoPhone.getText().toString()).equals(List.get(i).getmNoPhone());
-                    if (checkUsername) {
-                        Toast.makeText(RegisterOneAct.this, "Username Sudah terdaftar", Toast.LENGTH_SHORT).show();
-                        edtUsername.setError("Username Sudah Terdaftar");
-                        edtUsername.requestFocus();
-                    } else {
-                        Intent gotoregistertwo = new Intent(RegisterOneAct.this, RegisterTwoAct.class);
-                        gotoregistertwo.putExtra(RegisterTwoAct.EXTRA_MEMBER, member);
-                        startActivity(gotoregistertwo);
-                    }
+                if (List.toArray().length > 0){
+                    for (int i = 0; i < List.toArray().length; i++) {
+                        Boolean checkUsername = (edtUsername.getText().toString()).equals(List.get(i).getmUsername());
+                        if (checkUsername) {
+                            Toast.makeText(RegisterOneAct.this, "Username Sudah terdaftar", Toast.LENGTH_SHORT).show();
+                            edtUsername.setError("Username Sudah Terdaftar");
+                            edtUsername.requestFocus();
+                        } else {
+                            Intent gotoregistertwo = new Intent(RegisterOneAct.this, RegisterTwoAct.class);
+                            gotoregistertwo.putExtra(RegisterTwoAct.EXTRA_MEMBER, member);
+                            startActivity(gotoregistertwo);
+                        }
+                     }
+                } else {
+                    Intent gotoregistertwo = new Intent(RegisterOneAct.this, RegisterTwoAct.class);
+                    gotoregistertwo.putExtra(RegisterTwoAct.EXTRA_MEMBER, member);
+                    startActivity(gotoregistertwo);
                 }
             }
         });
     }
 
-    private void getMember() {
+    private void getAllMember() {
         Service = Api.getApi().create(ApiInterface.class);
-        Call = Service.getMember();
-        Call.enqueue(new Callback<Result>() {
+        Call = Service.getAllMember();
+        Call.enqueue(new Callback<ResultMember>() {
             @Override
-            public void onResponse(retrofit2.Call<Result> call, Response<Result> response) {
+            public void onResponse(retrofit2.Call<ResultMember> call, Response<ResultMember> response) {
                 List.clear();
                 if (response.body() != null) {
                     List = response.body().getmResultMember();
@@ -92,7 +96,7 @@ public class RegisterOneAct extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(retrofit2.Call<Result> call, Throwable t) {
+            public void onFailure(retrofit2.Call<ResultMember> call, Throwable t) {
                 Log.e("Error Bosque", t.toString());
             }
         });

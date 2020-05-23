@@ -1,4 +1,4 @@
-package com.nurzainpradana.koperasimasjid;
+package com.nurzainpradana.koperasimasjid.fragment;
 
 import android.os.Bundle;
 
@@ -10,13 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class KeranjangFragment extends Fragment {
-    public KeranjangFragment() {
+import com.nurzainpradana.koperasimasjid.R;
+
+public class CartFragment extends Fragment {
+    public CartFragment() {
         // Required empty public constructor
     }
 
-    static Fragment newInstance(){
-        return new KeranjangFragment();
+    public static Fragment newInstance(){
+        return new CartFragment();
     }
 
     @Nullable

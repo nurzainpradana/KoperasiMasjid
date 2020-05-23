@@ -1,4 +1,4 @@
-package com.nurzainpradana.koperasimasjid;
+package com.nurzainpradana.koperasimasjid.fragment;
 
 import android.os.Bundle;
 
@@ -10,18 +10,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ProfileFragment extends Fragment {
-    public ProfileFragment() {
+import com.nurzainpradana.koperasimasjid.R;
+
+public class HomeFragment extends Fragment {
+
+    public HomeFragment() {
         // Required empty public constructor
     }
 
-    static Fragment newInstance(){
-        return new ProfileFragment();
+    public static Fragment newInstance(){
+        return new HomeFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return inflater.inflate(R.layout.fragment_beranda, container, false);
     }
 }

@@ -6,24 +6,13 @@
     android:layout_height="match_parent"
     android:id="@+id/container"
     android:background="@color/background_colour"
-    tools:context=".MainActivity">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/textView"
-        android:textAlignment="center"
-        app:layout_constraintTop_toTopOf="@id/container"
-        android:layout_marginTop="?attr/actionBarSize"/>
-
+    tools:context=".activity.MainActivity">
 
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation_view"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -32,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        android:background="@color/warna5"
+        android:background="@color/color_five"
         android:elevation="3dp"
         app:menu="@menu/bottom_nav_menu"
         app:layout_constraintBottom_toBottomOf="parent"

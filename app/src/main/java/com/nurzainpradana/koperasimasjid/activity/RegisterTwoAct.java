@@ -1,8 +1,9 @@
-package com.nurzainpradana.koperasimasjid;
+package com.nurzainpradana.koperasimasjid.activity;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -31,10 +32,11 @@ import com.google.android.material.snackbar.Snackbar;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.api.Api;
 import com.nurzainpradana.koperasimasjid.api.ApiInterface;
 import com.nurzainpradana.koperasimasjid.model.Member;
-import com.nurzainpradana.koperasimasjid.model.Result;
+import com.nurzainpradana.koperasimasjid.model.ResultMember;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
@@ -47,10 +49,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.nurzainpradana.koperasimasjid.BuildConfig.BASE_URL;
+
 public class RegisterTwoAct extends AppCompatActivity {
     public static final String EXTRA_MEMBER = "extra_member";
     private static final int PERMISSION_REQUEST_CAMERA = 0;
     private static int RESULT_LOAD_IMAGE = 1;
+
+    String USERNAME_KEY = "usernamekey";
+    String username_key = "";
 
     Button btn_register2_lanjut, btnAddPhoto;
     EditText edtEmail, edtAddress, edtDateOfBirth;
@@ -70,7 +77,7 @@ public class RegisterTwoAct extends AppCompatActivity {
     Calendar myCalendar;
     ApiInterface Service;
     RequestParams params = new RequestParams();
-    Call<Result> Call;
+    Call<ResultMember> Call;
     ProgressBar progressDialog;
     java.util.Date dateSaved;
 
@@ -143,6 +150,11 @@ public class RegisterTwoAct extends AppCompatActivity {
                     address = edtAddress.getText().toString();
                     dateOfBirth = edtDateOfBirth.getText().toString();
                     saveMember();
+                    SharedPreferences sf = getSharedPreferences(USERNAME_KEY, MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sf.edit();
+                    editor.putString(username_key, username);
+                    editor.apply();
+
                     Intent gotoSuccessRegister = new Intent(RegisterTwoAct.this, SuccessRegisterAct.class);
                     startActivity(gotoSuccessRegister);
 
@@ -157,9 +169,10 @@ public class RegisterTwoAct extends AppCompatActivity {
         Service = Api.getApi().create(ApiInterface.class);
         uploadImage();
         Call = Service.insertMember(name, noPhone, username, password, email, address, dateOfBirth, "/koperasimasjid/img/" + fileName);
-        Call.enqueue(new Callback<Result>() {
+        Call.enqueue(new Callback<ResultMember>() {
             @Override
-            public void onResponse(retrofit2.Call<Result> call, Response<Result> response) {
+            public void onResponse(retrofit2.Call<ResultMember> call, Response<ResultMember> response) {
+
                 String value = response.body().getValue();
                 String message = response.body().getMessage();
                 if (value.equals("1")) {
@@ -172,7 +185,7 @@ public class RegisterTwoAct extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(retrofit2.Call<Result> call, Throwable t) {
+            public void onFailure(retrofit2.Call<ResultMember> call, Throwable t) {
                 t.printStackTrace();
                 Log.e("error", String.valueOf(t));
                 progressDialog.setVisibility(View.GONE);
@@ -284,7 +297,6 @@ public class RegisterTwoAct extends AppCompatActivity {
     //AsyncTask - To conver Image to String
     public void encodeImagetoString() {
         new AsyncTask<Void, Void, String>() {
-            @Override
             protected void onPreExecute() {
             }
 
@@ -322,7 +334,7 @@ public class RegisterTwoAct extends AppCompatActivity {
     public void makeHTTPCall() {
         AsyncHttpClient client = new AsyncHttpClient();
         // don't forget to change ip address
-        client.post("http://192.168.43.53/koperasimasjid/uploadPhotoProfile.php", params, new AsyncHttpResponseHandler() {
+        client.post("http://192.168.42.117/koperasimasjid/uploadPhotoProfile.php", params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 progressDialog.setVisibility(View.GONE);

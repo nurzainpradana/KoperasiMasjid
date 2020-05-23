@@ -1,4 +1,4 @@
-package com.nurzainpradana.koperasimasjid;
+package com.nurzainpradana.koperasimasjid.fragment;
 
 import android.os.Bundle;
 
@@ -10,13 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class TransaksiFragment extends Fragment {
-    public TransaksiFragment() {
+import com.nurzainpradana.koperasimasjid.R;
+
+public class TransactionFragment extends Fragment {
+    public TransactionFragment() {
         // Required empty public constructor
     }
 
-    static Fragment newInstance(){
-        return new TransaksiFragment();
+    public static Fragment newInstance(){
+        return new TransactionFragment();
     }
 
     @Nullable

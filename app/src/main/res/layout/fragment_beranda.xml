@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BerandaFragment">
+    tools:context=".fragment.HomeFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/beranda"
+        android:text="@string/home"
         android:gravity="center"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSembako"

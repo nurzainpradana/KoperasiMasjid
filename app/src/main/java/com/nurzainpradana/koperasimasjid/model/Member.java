@@ -78,18 +78,6 @@ public class Member implements Parcelable {
         this.mPhotoProfile = in.readString();
     }
 
-    public Member(int mIdMember, String mName, String mNoPhone, String mUsername, String mPassword, String mEmail, String mAddress, Date mDateOfBirth, String mPhotoProfile) {
-        this.mIdMember = mIdMember;
-        this.mName = mName;
-        this.mNoPhone = mNoPhone;
-        this.mUsername = mUsername;
-        this.mPassword = mPassword;
-        this.mEmail = mEmail;
-        this.mAddress = mAddress;
-        this.mDateOfBirth = mDateOfBirth;
-        this.mPhotoProfile = mPhotoProfile;
-    }
-
     public int getmIdMember() {
         return mIdMember;
     }

@@ -7,29 +7,29 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Result implements Parcelable {
+public class ResultMember implements Parcelable {
 
     String value;
     String message;
     @SerializedName("result")
     private List<Member> mResultMember;
 
-    protected Result(Parcel in) {
+    protected ResultMember(Parcel in) {
         this.mResultMember = in.createTypedArrayList(Member.CREATOR);
     }
 
-    public Result() {
+    public ResultMember() {
     }
 
-    public static final Creator<Result> CREATOR = new Creator<Result>() {
+    public static final Creator<ResultMember> CREATOR = new Creator<ResultMember>() {
         @Override
-        public Result createFromParcel(Parcel in) {
-            return new Result(in);
+        public ResultMember createFromParcel(Parcel in) {
+            return new ResultMember(in);
         }
 
         @Override
-        public Result[] newArray(int size) {
-            return new Result[size];
+        public ResultMember[] newArray(int size) {
+            return new ResultMember[size];
         }
     };
 
@@ -37,8 +37,8 @@ public class Result implements Parcelable {
         return mResultMember;
     }
 
-    public void setmResultMember (List<Member> mResultMember1) {
-        this.mResultMember = mResultMember1;
+    public void setmResultMember (List<Member> mResultMember) {
+        this.mResultMember = mResultMember;
     }
 
     @Override

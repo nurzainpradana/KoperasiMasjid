@@ -12,33 +12,42 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DetailProductAct"></activity>
-        <activity android:name=".UpdatePasswordAct" />
-        <activity android:name=".MainActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.SEARCH"/>
-            <category android:name="android.intent.category.DEFAULT"/>
-        </intent-filter>
-        <meta-data
-            android:name="android.app.searchable"
-            android:resource="@xml/searchable" />
+
+        <activity android:name=".activity.DetailProductAct"/>
+        <activity android:name=".activity.UpdatePasswordAct" />
+
+        <activity android:name=".activity.MainActivity">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".SuccessRegisterAct" />
-        <activity android:name=".RegisterTwoAct" />
-        <activity android:name=".VerificationAct" />
-        <activity android:name=".RegisterOneAct" />
-        <activity android:name=".SignInAct" />
-        <activity android:name=".BerandaFragment"/>
-        <activity android:name=".TransaksiFragment" />
-        <activity android:name=".KeranjangFragment" />
-        <activity android:name=".FavoriteFragment" />
-        <activity android:name=".ProfileFragment" />
-        <activity android:name=".SplashScreenAct">
+        <activity android:name=".activity.SuccessRegisterAct" />
+
+        <activity android:name=".activity.RegisterTwoAct" />
+
+        <activity android:name=".activity.VerificationAct" />
+
+        <activity android:name=".activity.RegisterOneAct" />
+
+        <activity android:name=".activity.SignInAct" />
+
+        <activity android:name=".fragment.HomeFragment"/>
+
+        <activity android:name=".fragment.TransactionFragment" />
+
+        <activity android:name=".fragment.CartFragment" />
+
+        <activity android:name=".fragment.FavoriteFragment" />
+
+        <activity android:name=".fragment.ProfileFragment" />
+
+        <activity android:name=".activity.SplashScreenAct">
             <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+                <category android:name="android.intent.category.DEFAULT"/>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

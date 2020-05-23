@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_colour"
-    tools:context=".RegisterTwoAct">
+    tools:context=".activity.RegisterTwoAct">
 
 
     <ImageView
         android:id="@+id/logo_koperasi"
         android:layout_width="56dp"
         android:layout_height="54dp"
-        android:src="@drawable/img_logo_koperasi"
+        android:src="@drawable/img_cooperative_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="18dp"
@@ -31,24 +31,24 @@
         >
         <TextView
             android:id="@+id/judul_koperasi"
-            android:text="@string/title_judul_koperasi"
-            style="@style/subheader_small"
+            android:text="@string/title_cooperative"
+            style="@style/subheader"
             />
 
         <TextView
             android:id="@+id/nama_koperasi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_nama_koperasi"
+            android:text="@string/title_cooperative_name"
             android:textSize="20sp"
             android:fontFamily="@font/montmedium"
-            android:textColor="@color/warna1"
+            android:textColor="@color/color_one"
             />
 
         <TextView
             android:id="@+id/alamat_koperasi"
-            android:text="@string/title_alamat_koperasi"
-            style="@style/subheader_small"
+            android:text="@string/title_cooperative_address"
+            style="@style/subheader"
             />
     </LinearLayout>
 
@@ -56,8 +56,8 @@
 
     <TextView
         android:id="@+id/judul_layout"
-        android:text="@string/register1_registrasi"
-        style="@style/judul_layout"
+        android:text="@string/register"
+        style="@style/header.color_three"
         app:layout_constraintTop_toBottomOf="@+id/judul_koperasi2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +67,7 @@
         android:id="@+id/background_masjid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/img_masjid"
+        android:src="@drawable/img_mosque"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -125,46 +125,46 @@
                 app:layout_constraintEnd_toEndOf="@id/frame_photo"
                 android:text="+"
                 android:textAlignment="center"
-                android:textColor="@color/warna2"
+                android:textColor="@color/color_two"
                 android:textSize="21sp"/>
             
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:text="@string/register2_email"
-            style="@style/teksbody1"
+            android:text="@string/email"
+            style="@style/body"
             android:layout_marginTop="20dp"/>
         <EditText
             android:id="@+id/edt_email"
-            style="@style/inputtext"
+            style="@style/input.text"
             android:inputType="textEmailAddress"
             android:layout_marginTop="4dp"/>
 
         <TextView
-            android:text="@string/register2_alamat"
-            style="@style/teksbody1"
+            android:text="@string/address"
+            style="@style/body"
             android:layout_marginTop="20dp"/>
         <EditText
             android:id="@+id/edt_address"
-            style="@style/inputtext"
+            style="@style/input.text"
             android:inputType="text"
             android:layout_marginTop="4dp"/>
 
         <TextView
-            android:text="@string/register1_tanggal_lahir"
-            style="@style/teksbody1"
+            android:text="@string/birth_date"
+            style="@style/body"
             android:layout_marginTop="20dp"/>
         <EditText
             android:id="@+id/edt_dateofbirth"
-            style="@style/inputtext"
+            style="@style/input.text"
             android:inputType="date"
             android:layout_marginTop="4dp"/>
 
         <Button
             android:id="@+id/btn_register2_lanjut"
             android:layout_marginTop="18sp"
-            style="@style/btn_primary_gold"
-            android:text="@string/action_lanjut"
+            style="@style/btn_primary.gold"
+            android:text="@string/next"
             />
     </LinearLayout>
     <ProgressBar

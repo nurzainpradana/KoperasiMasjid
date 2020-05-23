@@ -1,4 +1,4 @@
-package com.nurzainpradana.koperasimasjid;
+package com.nurzainpradana.koperasimasjid.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,14 +6,21 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.nurzainpradana.koperasimasjid.R;
+import com.nurzainpradana.koperasimasjid.fragment.HomeFragment;
+import com.nurzainpradana.koperasimasjid.fragment.FavoriteFragment;
+import com.nurzainpradana.koperasimasjid.fragment.CartFragment;
+import com.nurzainpradana.koperasimasjid.fragment.ProfileFragment;
+import com.nurzainpradana.koperasimasjid.fragment.TransactionFragment;
 
 public class MainActivity extends AppCompatActivity {
     private TextView textView;
@@ -22,21 +29,33 @@ public class MainActivity extends AppCompatActivity {
     private final String SELECTED_MENU = "selected_menu";
     BottomNavigationView bottomNavigationView;
 
+    String USERNAME_KEY = "usernamekey";
+    String username_key = "";
+    String username = "";
+
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment fragment = null;
+            Bundle mBundle = new Bundle();
+            mBundle.putString(USERNAME_KEY, username);
 
-            if(item.getItemId() == R.id.navigation_beranda){
-                fragment = BerandaFragment.newInstance();
-            } else if(item.getItemId() == R.id.navigation_transaksi){
-                fragment = TransaksiFragment.newInstance();
+            if(item.getItemId() == R.id.navigation_home){
+                fragment = HomeFragment.newInstance();
+                fragment.setArguments(mBundle);
+            } else if(item.getItemId() == R.id.navigation_transaction){
+                fragment = TransactionFragment.newInstance();
+                fragment.setArguments(mBundle);
             } else if(item.getItemId() == R.id.navigation_keranjang){
-                fragment = KeranjangFragment.newInstance();
+                fragment = CartFragment.newInstance();
+                fragment.setArguments(mBundle);
             } else if(item.getItemId() == R.id.navigation_favorite){
                 fragment = FavoriteFragment.newInstance();
-            } else if(item.getItemId() == R.id.navigation_profil){
+                fragment.setArguments(mBundle);
+            } else if(item.getItemId() == R.id.navigation_profile){
                 fragment = ProfileFragment.newInstance();
+                fragment.setArguments(mBundle);
             }
 
             if(fragment != null){
@@ -54,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getUsernameLocal();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -61,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         if(savedInstanceState != null){
             savedInstanceState.getInt(SELECTED_MENU);
         } else {
-            bottomNavigationView.setSelectedItemId(R.id.navigation_beranda);
+            bottomNavigationView.setSelectedItemId(R.id.navigation_home);
         }
     }
     public boolean onCreateOptionMenu(Menu menu) {
@@ -92,5 +112,9 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt(SELECTED_MENU, bottomNavigationView.getSelectedItemId());
     }
 
+    private void getUsernameLocal(){
+        SharedPreferences sf = getSharedPreferences(USERNAME_KEY, Context.MODE_PRIVATE);
+        username = sf.getString(username_key, "");
+    }
 
 }
