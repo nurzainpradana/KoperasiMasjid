@@ -12,7 +12,7 @@
 
     <style name="subheader">
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">@font/montlight</item>
+        <item name="android:fontFamily">@font/mont_light</item>
         <item name="android:textColor">@color/color_one</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -22,7 +22,7 @@
 
     <style name="header">
         <item name="android:textSize">22sp</item>
-        <item name="android:fontFamily">@font/montbold</item>
+        <item name="android:fontFamily">@font/mont_bold</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
@@ -39,7 +39,7 @@
 
     <style name="body">
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">@font/montregular</item>
+        <item name="android:fontFamily">@font/mont_regular</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
@@ -62,7 +62,7 @@
         <item name="android:layout_height">40dp</item>
         <item name="android:textColor">#fff</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:fontFamily">@font/montregular</item>
+        <item name="android:fontFamily">@font/mont_regular</item>
     </style>
 
     <style name="btn_primary.gold">

@@ -10,7 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.nurzainpradana.koperasimasjid.R;
-import com.nurzainpradana.koperasimasjid.activity.RegisterTwoAct;
+import com.nurzainpradana.koperasimasjid.view.registertwo.RegisterTwoAct;
 import com.nurzainpradana.koperasimasjid.api.Api;
 import com.nurzainpradana.koperasimasjid.api.ApiInterface;
 import com.nurzainpradana.koperasimasjid.model.Member;
@@ -29,8 +29,11 @@ import retrofit2.Response;
 
 public class RegisterOneAct extends AppCompatActivity {
 
-    Button btn_register1_lanjut;
-    EditText edtName, edtNoPhone, edtUsername, edtPassword;
+    Button btnRegisterOneNext;
+    EditText edtName;
+    EditText edtNoPhone;
+    EditText edtUsername;
+    EditText edtPassword;
 
     List<Member> List = new ArrayList<>();
     ApiInterface Service;
@@ -42,28 +45,31 @@ public class RegisterOneAct extends AppCompatActivity {
         setContentView(R.layout.activity_register_one);
         getAllMember();
 
-        btn_register1_lanjut = findViewById(R.id.btn_register1_lanjut);
+        btnRegisterOneNext = findViewById(R.id.btn_register_one_next);
         edtName = findViewById(R.id.edt_name);
         edtNoPhone = findViewById(R.id.edt_no_phone);
         edtUsername = findViewById(R.id.edt_username);
         edtPassword = findViewById(R.id.edt_password);
 
-        btn_register1_lanjut.setOnClickListener(v -> {
+        btnRegisterOneNext.setOnClickListener(v -> {
             String username = edtUsername.getText().toString();
+            String name = edtName.getText().toString();
+            String noPhone = edtNoPhone.getText().toString();
+            String password = edtPassword.getText().toString();
 
             Member member = new Member();
-            member.setmName(edtName.getText().toString());
-            member.setmNoPhone(edtNoPhone.getText().toString());
+            member.setmName(name);
+            member.setmNoPhone(noPhone);
             member.setmUsername(username);
-            member.setmPassword(md5Java(edtPassword.getText().toString()));
+            member.setmPassword(md5Java(password));
 
             if (!checkUsername(username)) {
-                Intent gotoregistertwo = new Intent(RegisterOneAct.this, RegisterTwoAct.class);
-                gotoregistertwo.putExtra(RegisterTwoAct.EXTRA_MEMBER, member);
-                RegisterOneAct.this.startActivity(gotoregistertwo);
+                Intent goToRegisterTwo = new Intent(RegisterOneAct.this, RegisterTwoAct.class);
+                goToRegisterTwo.putExtra(RegisterTwoAct.EXTRA_MEMBER, member);
+                RegisterOneAct.this.startActivity(goToRegisterTwo);
             } else {
-                Toast.makeText(RegisterOneAct.this, "Username Sudah terdaftar", Toast.LENGTH_SHORT).show();
-                edtUsername.setError("Username Sudah Terdaftar");
+                Toast.makeText(RegisterOneAct.this, getString(R.string.username_already_registered), Toast.LENGTH_SHORT).show();
+                edtUsername.setError(getString(R.string.username_already_registered));
                 edtUsername.requestFocus();
             }
         });

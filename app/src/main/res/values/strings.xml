@@ -1,8 +1,6 @@
 <resources>
-    <string name="app_name">KoperasiMasjid</string>
-    <string name="title_cooperative_name">AT- TAQWA</string>
-    <string name="title_cooperative">Koperasi Masjid</string>
-    <string name="title_cooperative_address">Alamanda Regensi</string>
+    <string name="app_name">Aplikasi Koperasi Masjid</string>
+    <string name="title_cooperative_name">Koperasi Masjid \n AT- TAQWA \n Alamanda Regensi</string>
     <string name="login">LOGIN</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -39,4 +37,13 @@
     <string name="add_to_chart">TAMBAH KE KERANJANG</string>
     <string name="search_hint">Cari ...</string>
     <string name="camera_access_required">Camera access is required to display the camera preview.</string>
+    <string name="organization_logo">Organization Logo</string>
+    <string name="background_mosque">Background Mosque</string>
+    <string name="muslim_handshake">Muslim Handshake</string>
+    <string name="register_photo">Register Photo</string>
+    <string name="add">+</string>
+    <string name="not_null">Tidak Boleh Kosong</string>
+    <string name="wrong_password">password salah</string>
+    <string name="username_not_found">Username tidak ditemukan</string>
+    <string name="username_already_registered">Username Sudah terdaftar</string>
 </resources>

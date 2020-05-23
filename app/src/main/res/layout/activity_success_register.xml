@@ -7,7 +7,7 @@
     tools:context=".activity.SuccessRegisterAct">
 
     <ImageView
-        android:id="@+id/background_masjid"
+        android:id="@+id/background_mosque"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/img_mosque"

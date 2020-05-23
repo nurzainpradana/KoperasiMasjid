@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,7 +10,7 @@
 
 
     <ImageView
-        android:id="@+id/logo_koperasi"
+        android:id="@+id/organization_logo"
         android:layout_width="56dp"
         android:layout_height="54dp"
         android:src="@drawable/img_cooperative_logo"
@@ -17,72 +18,55 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="18dp"
         android:layout_marginStart="27dp"
-        />
-    <LinearLayout
-        android:id="@+id/judul_koperasi2"
-        app:layout_constraintStart_toEndOf="@id/logo_koperasi"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="19dp"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        >
-        <TextView
-            android:id="@+id/judul_koperasi"
-            android:text="@string/title_cooperative"
-            style="@style/subheader"
-            />
+        android:contentDescription="@string/organization_logo" />
 
         <TextView
-            android:id="@+id/nama_koperasi"
+            android:id="@+id/organization_name"
+            android:fontFamily="@font/mont_medium"
+            android:orientation="vertical"
+            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="15dp"
             android:text="@string/title_cooperative_name"
-            android:textSize="20sp"
-            android:fontFamily="@font/montmedium"
+            android:textSize="16sp"
             android:textColor="@color/color_one"
-            />
-
-        <TextView
-            android:id="@+id/alamat_koperasi"
-            android:text="@string/title_cooperative_address"
-            style="@style/subheader"/>
-    </LinearLayout>
-
-
+            app:layout_constraintStart_toEndOf="@id/organization_logo"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/judul_layout"
+        android:id="@+id/layout_title"
         android:text="@string/verification"
         style="@style/header.color_three"
-        app:layout_constraintTop_toBottomOf="@+id/judul_koperasi2"
+        app:layout_constraintTop_toBottomOf="@+id/organization_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="70dp"/>
 
     <ImageView
-        android:id="@+id/background_masjid"
+        android:id="@+id/background_mosque"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="-20dp"
+        android:alpha="0.5"
+        android:contentDescription="@string/background_mosque"
         android:src="@drawable/img_mosque"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="-20dp"
-        android:alpha="0.5"/>
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ImageView
-        android:id="@+id/muslimhandshake"
+        android:id="@+id/background_muslim_handshake"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/img_muamalah"
-        app:layout_constraintTop_toTopOf="@id/background_masjid"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="170dp"
-        android:alpha="0.6"/>
+        android:src="@drawable/img_muamalah"
+        android:alpha="0.6"
+        android:contentDescription="@string/muslim_handshake"
+        app:layout_constraintTop_toTopOf="@id/background_mosque"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <LinearLayout
         android:background="@drawable/bg_layout"
@@ -90,12 +74,12 @@
         android:layout_width="match_parent"
         android:layout_marginStart="34dp"
         android:layout_marginEnd="34dp"
-        app:layout_constraintTop_toBottomOf="@id/judul_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="20dp"
         android:padding="24dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/layout_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:text="@string/enter_verification_code"
@@ -107,30 +91,51 @@
             android:orientation="horizontal"
             android:weightSum="6"
             android:layout_marginTop="4dp">
-            <EditText style="@style/input.pin"/>
-            <EditText style="@style/input.pin"/>
-            <EditText style="@style/input.pin"/>
-            <EditText style="@style/input.pin"/>
-            <EditText style="@style/input.pin"/>
-            <EditText style="@style/input.pin"/>
+
+            <EditText
+                android:id="@+id/pin_one"
+                style="@style/input.pin"
+                tools:ignore="Autofill,LabelFor" />
+            <EditText
+                android:id="@+id/pin_two"
+                style="@style/input.pin"
+                tools:ignore="Autofill,LabelFor" />
+            <EditText
+                android:id="@+id/pin_three"
+                style="@style/input.pin"
+                tools:ignore="Autofill,LabelFor" />
+            <EditText
+                android:id="@+id/pin_four"
+                style="@style/input.pin"
+                tools:ignore="Autofill,LabelFor" />
+            <EditText
+                android:id="@+id/pin_five"
+                style="@style/input.pin"
+                tools:ignore="Autofill,LabelFor" />
+            <EditText
+                android:id="@+id/pin_six"
+                style="@style/input.pin"
+                tools:ignore="Autofill,LabelFor" />
         </LinearLayout>
+
         <Button
-            android:id="@+id/btn_verifikasi_lanjut"
+            android:id="@+id/btn_verification_next"
             android:layout_marginTop="18sp"
             style="@style/btn_primary.gold"
             android:text="@string/next"/>
+
         <TextView
             android:layout_marginTop="10dp"
             android:text="@string/dont_recieve_sms"
             style="@style/body"
             android:layout_width="match_parent"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_marginTop="4dp"
             android:text="@string/resend"
             style="@style/body"
-            android:fontFamily="@font/montbold"/>
-
+            android:fontFamily="@font/mont_bold"/>
 
     </LinearLayout>
 

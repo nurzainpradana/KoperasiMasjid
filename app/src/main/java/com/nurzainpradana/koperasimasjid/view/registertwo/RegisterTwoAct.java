@@ -1,4 +1,4 @@
-package com.nurzainpradana.koperasimasjid.activity;
+package com.nurzainpradana.koperasimasjid.view.registertwo;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
@@ -33,6 +33,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.nurzainpradana.koperasimasjid.R;
+import com.nurzainpradana.koperasimasjid.activity.SuccessRegisterAct;
 import com.nurzainpradana.koperasimasjid.api.Api;
 import com.nurzainpradana.koperasimasjid.api.ApiInterface;
 import com.nurzainpradana.koperasimasjid.model.Member;
@@ -41,7 +42,6 @@ import com.nurzainpradana.koperasimasjid.model.ResultMember;
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
@@ -49,39 +49,42 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.nurzainpradana.koperasimasjid.BuildConfig.BASE_URL;
-
 public class RegisterTwoAct extends AppCompatActivity {
     public static final String EXTRA_MEMBER = "extra_member";
     private static final int PERMISSION_REQUEST_CAMERA = 0;
     private static int RESULT_LOAD_IMAGE = 1;
 
+    Button btnRegisterTwoNext;
+    Button btnAddPhoto;
+    EditText edtEmail;
+    EditText edtAddress;
+    EditText edtDateOfBirth;
+    ImageView ivRegisterPhoto;
+    ProgressBar progressBar;
+
     String USERNAME_KEY = "usernamekey";
     String username_key = "";
 
-    Button btn_register2_lanjut, btnAddPhoto;
-    EditText edtEmail, edtAddress, edtDateOfBirth;
-    String email, address, name, username, password, noPhone;
+    String email;
+    String address;
+    String name;
+    String username;
+    String password;
+    String noPhone;
     String dateOfBirth;
     String encodedString;
     String imgPath;
     String fileName;
+    Integer mYear;
+    Integer mMonth;
+    Integer mDay;
+
     SimpleDateFormat sdf;
-    ImageView ivRegisterPhoto;
-    Date date;
-
-    Integer mYear, mMonth, mDay;
-
     Bitmap bitmap;
-
     Calendar myCalendar;
     ApiInterface Service;
     RequestParams params = new RequestParams();
     Call<ResultMember> Call;
-    ProgressBar progressDialog;
-    java.util.Date dateSaved;
-
-
     RelativeLayout mLayout;
 
     @Override
@@ -91,81 +94,67 @@ public class RegisterTwoAct extends AppCompatActivity {
 
         edtEmail = findViewById(R.id.edt_email);
         edtAddress = findViewById(R.id.edt_address);
-        edtDateOfBirth = findViewById(R.id.edt_dateofbirth);
+        edtDateOfBirth = findViewById(R.id.edt_date_of_birth);
         ivRegisterPhoto = findViewById(R.id.iv_register_photo);
         btnAddPhoto = findViewById(R.id.btn_add_photo);
-        progressDialog = findViewById(R.id.loading);
+        progressBar = findViewById(R.id.loading);
 
 
         Member member = getIntent().getParcelableExtra(EXTRA_MEMBER);
-
-        name = member.getmName();
-        username = member.getmUsername();
-        password = member.getmPassword();
-        noPhone = member.getmNoPhone();
-
+        if (member != null) {
+            name = member.getmName();
+            username = member.getmUsername();
+            password = member.getmPassword();
+            noPhone = member.getmNoPhone();
+        }
         myCalendar = Calendar.getInstance();
         mYear = myCalendar.get(Calendar.YEAR);
         mMonth = myCalendar.get(Calendar.MONTH);
         mDay = myCalendar.get(Calendar.DAY_OF_WEEK);
 
-        edtDateOfBirth.setOnClickListener(new View.OnClickListener() {
+        edtDateOfBirth.setOnClickListener(v -> new DatePickerDialog(RegisterTwoAct.this, new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onClick(View v) {
-                new DatePickerDialog(RegisterTwoAct.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        myCalendar.set(Calendar.YEAR, year);
-                        myCalendar.set(Calendar.MONTH, month);
-                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, month);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                        String formatTanggal = "yyyy-MM-dd";
-                        sdf = new SimpleDateFormat(formatTanggal, Locale.getDefault());
-                        edtDateOfBirth.setText(sdf.format(myCalendar.getTime()));
-                    }
-                },
-                        mYear, mMonth, mDay).show();
+                String formatTanggal = "dd/MM/yyyy";
+                sdf = new SimpleDateFormat(formatTanggal, Locale.getDefault());
+                edtDateOfBirth.setText(sdf.format(myCalendar.getTime()));
+            }
+        }, mYear, mMonth, mDay).show());
+
+        btnAddPhoto.setOnClickListener(v -> showCameraPreview());
+
+        btnRegisterTwoNext = findViewById(R.id.btn_register_two_next);
+        btnRegisterTwoNext.setOnClickListener(v -> {
+            if(edtEmail.getText().toString().isEmpty()) {
+                edtEmail.setError(getString(R.string.not_null));
+            } else if (edtAddress.getText().toString().isEmpty()) {
+                edtAddress.setError(getString(R.string.not_null));
+            } else if (edtDateOfBirth.getText().toString().isEmpty()) {
+                edtDateOfBirth.setError(getString(R.string.not_null));
+            } else {
+                email = edtEmail.getText().toString();
+                address = edtAddress.getText().toString();
+                dateOfBirth = edtDateOfBirth.getText().toString();
+                saveMember();
+
+                SharedPreferences sf = getSharedPreferences(USERNAME_KEY, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sf.edit();
+                editor.putString(username_key, username);
+                editor.apply();
+
+                Intent gotoSuccessRegister = new Intent(RegisterTwoAct.this, SuccessRegisterAct.class);
+                startActivity(gotoSuccessRegister);
+
             }
         });
-
-        btnAddPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCameraPreview();
-            }
-        });
-
-        btn_register2_lanjut = findViewById(R.id.btn_register2_lanjut);
-        btn_register2_lanjut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(edtEmail.getText().toString().isEmpty()) {
-                    edtEmail.setError("Tidak Boleh Kosong");
-                } else if (edtAddress.getText().toString().isEmpty()) {
-                    edtAddress.setError("Tidak Boleh Kosong");
-                } else if (edtDateOfBirth.getText().toString().isEmpty()) {
-                    edtDateOfBirth.setError("Tidak Boleh Kosong");
-                } else {
-                    email = edtEmail.getText().toString();
-                    address = edtAddress.getText().toString();
-                    dateOfBirth = edtDateOfBirth.getText().toString();
-                    saveMember();
-                    SharedPreferences sf = getSharedPreferences(USERNAME_KEY, MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sf.edit();
-                    editor.putString(username_key, username);
-                    editor.apply();
-
-                    Intent gotoSuccessRegister = new Intent(RegisterTwoAct.this, SuccessRegisterAct.class);
-                    startActivity(gotoSuccessRegister);
-
-                }
-            }
-        });
-
     }
 
     public void saveMember() {
-        progressDialog.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
         Service = Api.getApi().create(ApiInterface.class);
         uploadImage();
         Call = Service.insertMember(name, noPhone, username, password, email, address, dateOfBirth, "/koperasimasjid/img/" + fileName);
@@ -181,16 +170,16 @@ public class RegisterTwoAct extends AppCompatActivity {
                 } else {
                     Toast.makeText(RegisterTwoAct.this, message, Toast.LENGTH_SHORT).show();
                 }
-                progressDialog.setVisibility(View.GONE);
+                progressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onFailure(retrofit2.Call<ResultMember> call, Throwable t) {
                 t.printStackTrace();
                 Log.e("error", String.valueOf(t));
-                progressDialog.setVisibility(View.GONE);
+                progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(RegisterTwoAct.this, "Jaringan Error !", Toast.LENGTH_SHORT).show();
-                progressDialog.setVisibility(View.GONE);
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -285,7 +274,7 @@ public class RegisterTwoAct extends AppCompatActivity {
     public void uploadImage() {
         //when image is selected from gallery
         if (imgPath != null && !imgPath.isEmpty()) {
-            progressDialog.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
             //convert image to string using base64
             encodeImagetoString();
             //when image is not selected from gallery
@@ -337,13 +326,13 @@ public class RegisterTwoAct extends AppCompatActivity {
         client.post("http://192.168.42.117/koperasimasjid/uploadPhotoProfile.php", params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                progressDialog.setVisibility(View.GONE);
+                progressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 //hide progress dialog
-                progressDialog.setVisibility(View.GONE);
+                progressBar.setVisibility(View.INVISIBLE);
                 //when http response code is '404'
                 if (statusCode == 404) {
                     Toast.makeText(getApplicationContext(), "Request resource not found", Toast.LENGTH_LONG).show();
@@ -366,8 +355,8 @@ public class RegisterTwoAct extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         //dissmiss the progress bar when appliaction is closed
-        if (progressDialog != null) {
-            progressDialog.setVisibility(View.GONE);
+        if (progressBar != null) {
+            progressBar.setVisibility(View.INVISIBLE);
         }
     }
 

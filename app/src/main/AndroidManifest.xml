@@ -23,7 +23,7 @@
         </activity>
         <activity android:name=".activity.SuccessRegisterAct" />
 
-        <activity android:name=".activity.RegisterTwoAct" />
+        <activity android:name=".view.registertwo.RegisterTwoAct" />
 
         <activity android:name=".activity.VerificationAct" />
 

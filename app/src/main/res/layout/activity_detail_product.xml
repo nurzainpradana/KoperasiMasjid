@@ -48,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:fontFamily="@font/montmedium"
+                    android:fontFamily="@font/mont_medium"
                     android:text="@string/product_name"
                     android:textColor="@color/color_one"
                     android:textSize="20sp" />
@@ -56,7 +56,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montregular"
+                    android:fontFamily="@font/mont_regular"
                     android:text="Rp. 100.000"
                     android:textColor="@color/color_one" />
             </LinearLayout>
@@ -111,7 +111,7 @@
                 style="@style/subheader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/montmedium"
+                android:fontFamily="@font/mont_medium"
                 android:text="Deskripsi" />
 
             <TextView

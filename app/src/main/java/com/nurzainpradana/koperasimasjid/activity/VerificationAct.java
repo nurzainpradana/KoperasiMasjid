@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.nurzainpradana.koperasimasjid.R;
+import com.nurzainpradana.koperasimasjid.view.registertwo.RegisterTwoAct;
 
 public class VerificationAct extends AppCompatActivity {
 
@@ -18,7 +19,7 @@ public class VerificationAct extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verification);
 
-        btn_verifikasi_lanjut = findViewById(R.id.btn_verifikasi_lanjut);
+        btn_verifikasi_lanjut = findViewById(R.id.btn_verification_next);
 
         btn_verifikasi_lanjut.setOnClickListener(new View.OnClickListener() {
             @Override
