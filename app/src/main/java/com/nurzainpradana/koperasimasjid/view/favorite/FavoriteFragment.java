@@ -1,4 +1,4 @@
-package com.nurzainpradana.koperasimasjid.fragment;
+package com.nurzainpradana.koperasimasjid.view.favorite;
 
 import android.os.Bundle;
 
@@ -12,18 +12,18 @@ import android.view.ViewGroup;
 
 import com.nurzainpradana.koperasimasjid.R;
 
-public class TransactionFragment extends Fragment {
-    public TransactionFragment() {
+public class FavoriteFragment extends Fragment {
+    public FavoriteFragment() {
         // Required empty public constructor
     }
 
     public static Fragment newInstance(){
-        return new TransactionFragment();
+        return new FavoriteFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_transaksi, container, false);
+        return inflater.inflate(R.layout.fragment_favorite, container, false);
     }
 }

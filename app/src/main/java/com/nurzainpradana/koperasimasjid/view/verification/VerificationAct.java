@@ -1,4 +1,4 @@
-package com.nurzainpradana.koperasimasjid.activity;
+package com.nurzainpradana.koperasimasjid.view.verification;
 
 import androidx.appcompat.app.AppCompatActivity;
 

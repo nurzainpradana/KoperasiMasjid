@@ -13,8 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activity.DetailProductAct"/>
-        <activity android:name=".activity.UpdatePasswordAct" />
+        <activity android:name=".view.detailproduct.DetailProductAct"/>
+        <activity android:name=".view.updatepassword.UpdatePasswordAct" />
 
         <activity android:name=".view.main.MainActivity">
             <meta-data
@@ -25,21 +25,21 @@
 
         <activity android:name=".view.registertwo.RegisterTwoAct" />
 
-        <activity android:name=".activity.VerificationAct" />
+        <activity android:name=".view.verification.VerificationAct" />
 
         <activity android:name=".view.registerone.RegisterOneAct" />
 
         <activity android:name=".view.signin.SignInAct" />
 
-        <activity android:name=".fragment.HomeFragment"/>
+        <activity android:name=".view.home.HomeFragment"/>
 
-        <activity android:name=".fragment.TransactionFragment" />
+        <activity android:name=".view.transaction.TransactionFragment" />
 
-        <activity android:name=".fragment.CartFragment" />
+        <activity android:name=".view.cart.CartFragment" />
 
-        <activity android:name=".fragment.FavoriteFragment" />
+        <activity android:name=".view.favorite.FavoriteFragment" />
 
-        <activity android:name=".fragment.ProfileFragment" />
+        <activity android:name=".view.profile.ProfileFragment" />
 
         <activity android:name=".view.splashscreen.SplashScreenAct">
             <intent-filter>

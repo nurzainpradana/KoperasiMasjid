@@ -1,4 +1,4 @@
-package com.nurzainpradana.koperasimasjid.activity;
+package com.nurzainpradana.koperasimasjid.view.updatepassword;
 
 import androidx.appcompat.app.AppCompatActivity;
 

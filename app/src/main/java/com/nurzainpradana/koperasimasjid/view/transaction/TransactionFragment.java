@@ -1,4 +1,4 @@
-package com.nurzainpradana.koperasimasjid.fragment;
+package com.nurzainpradana.koperasimasjid.view.transaction;
 
 import android.os.Bundle;
 
@@ -12,18 +12,18 @@ import android.view.ViewGroup;
 
 import com.nurzainpradana.koperasimasjid.R;
 
-public class CartFragment extends Fragment {
-    public CartFragment() {
+public class TransactionFragment extends Fragment {
+    public TransactionFragment() {
         // Required empty public constructor
     }
 
     public static Fragment newInstance(){
-        return new CartFragment();
+        return new TransactionFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_keranjang, container, false);
+        return inflater.inflate(R.layout.fragment_transaction, container, false);
     }
 }

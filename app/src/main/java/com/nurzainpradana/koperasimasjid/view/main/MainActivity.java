@@ -16,11 +16,11 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nurzainpradana.koperasimasjid.R;
-import com.nurzainpradana.koperasimasjid.fragment.HomeFragment;
-import com.nurzainpradana.koperasimasjid.fragment.FavoriteFragment;
-import com.nurzainpradana.koperasimasjid.fragment.CartFragment;
-import com.nurzainpradana.koperasimasjid.fragment.ProfileFragment;
-import com.nurzainpradana.koperasimasjid.fragment.TransactionFragment;
+import com.nurzainpradana.koperasimasjid.view.home.HomeFragment;
+import com.nurzainpradana.koperasimasjid.view.favorite.FavoriteFragment;
+import com.nurzainpradana.koperasimasjid.view.cart.CartFragment;
+import com.nurzainpradana.koperasimasjid.view.profile.ProfileFragment;
+import com.nurzainpradana.koperasimasjid.view.transaction.TransactionFragment;
 
 public class MainActivity extends AppCompatActivity {
     private TextView textView;
