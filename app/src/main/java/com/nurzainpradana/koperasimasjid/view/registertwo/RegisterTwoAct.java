@@ -1,6 +1,7 @@
 package com.nurzainpradana.koperasimasjid.view.registertwo;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,7 +17,6 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -112,17 +112,14 @@ public class RegisterTwoAct extends AppCompatActivity {
         mMonth = myCalendar.get(Calendar.MONTH);
         mDay = myCalendar.get(Calendar.DAY_OF_WEEK);
 
-        edtDateOfBirth.setOnClickListener(v -> new DatePickerDialog(RegisterTwoAct.this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, month);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        edtDateOfBirth.setOnClickListener(v -> new DatePickerDialog(RegisterTwoAct.this, (view, year, month, dayOfMonth) -> {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, month);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                String formatTanggal = "dd/MM/yyyy";
-                sdf = new SimpleDateFormat(formatTanggal, Locale.getDefault());
-                edtDateOfBirth.setText(sdf.format(myCalendar.getTime()));
-            }
+            String formatTanggal = "dd/MM/yyyy";
+            sdf = new SimpleDateFormat(formatTanggal, Locale.getDefault());
+            edtDateOfBirth.setText(sdf.format(myCalendar.getTime()));
         }, mYear, mMonth, mDay).show());
 
         btnAddPhoto.setOnClickListener(v -> showCameraPreview());
@@ -161,16 +158,17 @@ public class RegisterTwoAct extends AppCompatActivity {
         Call.enqueue(new Callback<ResultMember>() {
             @Override
             public void onResponse(retrofit2.Call<ResultMember> call, Response<ResultMember> response) {
-
-                String value = response.body().getValue();
-                String message = response.body().getMessage();
-                if (value.equals("1")) {
-                    Toast.makeText(RegisterTwoAct.this, message, Toast.LENGTH_SHORT).show();
-                    finish();
-                } else {
-                    Toast.makeText(RegisterTwoAct.this, message, Toast.LENGTH_SHORT).show();
+                if (response.body() != null) {
+                    String value = response.body().getValue();
+                    String message = response.body().getMessage();
+                    if (value.equals("1")) {
+                        Toast.makeText(RegisterTwoAct.this, message, Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        Toast.makeText(RegisterTwoAct.this, message, Toast.LENGTH_SHORT).show();
+                    }
+                    progressBar.setVisibility(View.INVISIBLE);
                 }
-                progressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -213,12 +211,9 @@ public class RegisterTwoAct extends AppCompatActivity {
     private void requestCameraPermission() {
         //Permission has not been granted and must be request
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            Snackbar.make(mLayout, R.string.camera_access_required, Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //request permission
-                    ActivityCompat.requestPermissions(RegisterTwoAct.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CAMERA);
-                }
+            Snackbar.make(mLayout, R.string.camera_access_required, Snackbar.LENGTH_INDEFINITE).setAction("OK", v -> {
+                //request permission
+                ActivityCompat.requestPermissions(RegisterTwoAct.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CAMERA);
             }).show();
         } else {
             // Request the permission. The result will be received in onRequestPermissionResult().
@@ -245,13 +240,15 @@ public class RegisterTwoAct extends AppCompatActivity {
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
                 //Get the cursor
-                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                //Move to first
-                cursor.moveToFirst();
-
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                imgPath = cursor.getString(columnIndex);
-                cursor.close();
+                if (selectedImage != null) {
+                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    if (cursor != null) {
+                        cursor.moveToFirst();
+                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                        imgPath = cursor.getString(columnIndex);
+                        cursor.close();
+                    }
+                }
 
                 //set image in imageView
                 ivRegisterPhoto.setImageBitmap(BitmapFactory.decodeFile(imgPath));
@@ -284,6 +281,7 @@ public class RegisterTwoAct extends AppCompatActivity {
     }
 
     //AsyncTask - To conver Image to String
+    @SuppressLint("StaticFieldLeak")
     public void encodeImagetoString() {
         new AsyncTask<Void, Void, String>() {
             protected void onPreExecute() {
@@ -291,7 +289,7 @@ public class RegisterTwoAct extends AppCompatActivity {
 
             @Override
             protected String doInBackground(Void... params) {
-                BitmapFactory.Options options = null;
+                BitmapFactory.Options options;
                 options = new BitmapFactory.Options();
                 options.inSampleSize = 3;
                 bitmap = BitmapFactory.decodeFile(imgPath, options);
@@ -359,6 +357,4 @@ public class RegisterTwoAct extends AppCompatActivity {
             progressBar.setVisibility(View.INVISIBLE);
         }
     }
-
-
 }

@@ -1,5 +1,6 @@
 package com.nurzainpradana.koperasimasjid.view.profile;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,37 +64,38 @@ public class ProfileFragment extends Fragment {
         tvProfilUsername = view.findViewById(R.id.tv_profile_username);
         ivProfilePicture = view.findViewById(R.id.iv_profile_frame_photo);
 
-        String username = getArguments().getString(USERNAME_KEY);
-
-        Toast.makeText(getContext(), username, Toast.LENGTH_SHORT).show();
-        memberViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(MemberViewModel.class);
-        memberViewModel.setMember(username, getContext());
+        if (getArguments() != null){
+            String username = getArguments().getString(USERNAME_KEY);
+            Toast.makeText(getContext(), username, Toast.LENGTH_SHORT).show();
+            memberViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(MemberViewModel.class);
+            memberViewModel.setMember(username, getContext());
+        }
 
         memberViewModel.getMember().observe(this, new Observer<List<Member>>() {
             @Override
             public void onChanged(List<Member> members) {
-                tvProfileName.setText(members.get(0).getmName().toUpperCase());
-                tvProfileAddress.setText(members.get(0).getmAddress());
-                SimpleDateFormat ft = new SimpleDateFormat("yyyy.MM.dd");
-                tvProfileBirthdate.setText(ft.format(members.get(0).getmDateOfBirth()));
-                tvProfileEmail.setText(members.get(0).getmEmail());
-                tvProfileNoPhone.setText(members.get(0).getmNoPhone());
-                tvProfilUsername.setText(members.get(0).getmUsername());
-
-                String urlPhoto = BASE_URL + members.get(0).getmPhotoProfile();
-                Toast.makeText(getContext(), urlPhoto, Toast.LENGTH_SHORT).show();
-
-                //Glide.with(getContext())
-                //        .load(urlPhoto)
-//                        .apply(new RequestOptions().override(150,150))
-//                        .into(ivProfilePicture);
-                Picasso.get()
-                        .load(urlPhoto)
-                        .placeholder(R.mipmap.ic_launcher)
-                        .error(R.mipmap.ic_launcher)
-                        .into(ivProfilePicture);
+                setView(members);
             }
         });
+    }
+
+    private void setView(List<Member> members) {
+        tvProfileName.setText(members.get(0).getmName().toUpperCase());
+        tvProfileAddress.setText(members.get(0).getmAddress());
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat ft = new SimpleDateFormat("yyyy.MM.dd");
+        tvProfileBirthdate.setText(ft.format(members.get(0).getmDateOfBirth()));
+        tvProfileEmail.setText(members.get(0).getmEmail());
+        tvProfileNoPhone.setText(members.get(0).getmNoPhone());
+        tvProfilUsername.setText(members.get(0).getmUsername());
+
+        String urlPhoto = BASE_URL + members.get(0).getmPhotoProfile();
+        Toast.makeText(getContext(), urlPhoto, Toast.LENGTH_SHORT).show();
+
+        Picasso.get()
+                .load(urlPhoto)
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
+                .into(ivProfilePicture);
     }
 
 
