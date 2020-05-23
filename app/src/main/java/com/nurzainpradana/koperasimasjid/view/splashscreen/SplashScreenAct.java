@@ -1,4 +1,4 @@
-package com.nurzainpradana.koperasimasjid.activity;
+package com.nurzainpradana.koperasimasjid.view.splashscreen;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nurzainpradana.koperasimasjid.R;
+import com.nurzainpradana.koperasimasjid.view.signin.SignInAct;
 
 public class SplashScreenAct extends AppCompatActivity {
     Animation app_splash, btt;

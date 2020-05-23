@@ -27,9 +27,9 @@
 
         <activity android:name=".activity.VerificationAct" />
 
-        <activity android:name=".activity.RegisterOneAct" />
+        <activity android:name=".view.registerone.RegisterOneAct" />
 
-        <activity android:name=".activity.SignInAct" />
+        <activity android:name=".view.signin.SignInAct" />
 
         <activity android:name=".fragment.HomeFragment"/>
 
@@ -41,7 +41,7 @@
 
         <activity android:name=".fragment.ProfileFragment" />
 
-        <activity android:name=".activity.SplashScreenAct">
+        <activity android:name=".view.splashscreen.SplashScreenAct">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
                 <category android:name="android.intent.category.DEFAULT"/>

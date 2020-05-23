@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.nurzainpradana.koperasimasjid"
         minSdkVersion 21
@@ -38,12 +38,12 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    //Dependencies untuk Picasso dan ShapeOfView
+    //Picasso dan ShapeOfView
     implementation 'com.github.florent37:shapeofview:1.4.4'
     implementation 'com.squareup.picasso:picasso:2.71828'
 
-    //Dependencies untuk BottomNavigationBar
-    implementation "com.google.android.material:material:1.2.0-alpha05"
+    //BottomNavigationBar
+    implementation "com.google.android.material:material:1.2.0-alpha06"
 
     //simple search view
     //implementation 'com.github.Ferfalk:SimpleSearchView:0.1.5'
@@ -51,12 +51,12 @@ dependencies {
     implementation 'com.github.fevziomurtekin:SearchView:0.1.1'
 
     //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.8.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
     implementation 'com.google.code.gson:gson:2.8.5'
 
     //butterknife
-    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
 
     //gson
@@ -66,9 +66,10 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     //glide
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
     implementation 'com.loopj.android:android-async-http:1.4.9'
 
+    //Circle Image View
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 }

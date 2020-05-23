@@ -1,4 +1,4 @@
-package com.nurzainpradana.koperasimasjid.activity;
+package com.nurzainpradana.koperasimasjid.view.signin;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -13,22 +13,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.nurzainpradana.koperasimasjid.BuildConfig;
 import com.nurzainpradana.koperasimasjid.R;
+import com.nurzainpradana.koperasimasjid.activity.MainActivity;
+import com.nurzainpradana.koperasimasjid.view.registerone.RegisterOneAct;
 import com.nurzainpradana.koperasimasjid.model.Member;
-import com.nurzainpradana.koperasimasjid.model.ResultMember;
 import com.nurzainpradana.koperasimasjid.viewmodel.ListMemberViewModel;
 import com.nurzainpradana.koperasimasjid.viewmodel.MemberViewModel;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_colour"
-    tools:context=".activity.SplashScreenAct">
+    tools:context=".view.splashscreen.SplashScreenAct">
 
     <ImageView
         android:id="@+id/logo_koperasi"

@@ -1,9 +1,8 @@
-package com.nurzainpradana.koperasimasjid.activity;
+package com.nurzainpradana.koperasimasjid.view.registerone;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -11,12 +10,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.nurzainpradana.koperasimasjid.R;
+import com.nurzainpradana.koperasimasjid.activity.RegisterTwoAct;
 import com.nurzainpradana.koperasimasjid.api.Api;
 import com.nurzainpradana.koperasimasjid.api.ApiInterface;
 import com.nurzainpradana.koperasimasjid.model.Member;
 import com.nurzainpradana.koperasimasjid.model.ResultMember;
-
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -49,37 +48,38 @@ public class RegisterOneAct extends AppCompatActivity {
         edtUsername = findViewById(R.id.edt_username);
         edtPassword = findViewById(R.id.edt_password);
 
+        btn_register1_lanjut.setOnClickListener(v -> {
+            String username = edtUsername.getText().toString();
 
+            Member member = new Member();
+            member.setmName(edtName.getText().toString());
+            member.setmNoPhone(edtNoPhone.getText().toString());
+            member.setmUsername(username);
+            member.setmPassword(md5Java(edtPassword.getText().toString()));
 
-        btn_register1_lanjut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Member member = new Member();
-                member.setmName(edtName.getText().toString());
-                member.setmNoPhone(edtNoPhone.getText().toString());
-                member.setmUsername(edtUsername.getText().toString());
-                member.setmPassword(md5Java(edtPassword.getText().toString()));
-
-                if (List.toArray().length > 0){
-                    for (int i = 0; i < List.toArray().length; i++) {
-                        Boolean checkUsername = (edtUsername.getText().toString()).equals(List.get(i).getmUsername());
-                        if (checkUsername) {
-                            Toast.makeText(RegisterOneAct.this, "Username Sudah terdaftar", Toast.LENGTH_SHORT).show();
-                            edtUsername.setError("Username Sudah Terdaftar");
-                            edtUsername.requestFocus();
-                        } else {
-                            Intent gotoregistertwo = new Intent(RegisterOneAct.this, RegisterTwoAct.class);
-                            gotoregistertwo.putExtra(RegisterTwoAct.EXTRA_MEMBER, member);
-                            startActivity(gotoregistertwo);
-                        }
-                     }
-                } else {
-                    Intent gotoregistertwo = new Intent(RegisterOneAct.this, RegisterTwoAct.class);
-                    gotoregistertwo.putExtra(RegisterTwoAct.EXTRA_MEMBER, member);
-                    startActivity(gotoregistertwo);
-                }
+            if (!checkUsername(username)) {
+                Intent gotoregistertwo = new Intent(RegisterOneAct.this, RegisterTwoAct.class);
+                gotoregistertwo.putExtra(RegisterTwoAct.EXTRA_MEMBER, member);
+                RegisterOneAct.this.startActivity(gotoregistertwo);
+            } else {
+                Toast.makeText(RegisterOneAct.this, "Username Sudah terdaftar", Toast.LENGTH_SHORT).show();
+                edtUsername.setError("Username Sudah Terdaftar");
+                edtUsername.requestFocus();
             }
         });
+    }
+
+    private boolean checkUsername(String username) {
+        boolean isAlready = false;
+        if (List.toArray().length > 0){
+            for (int i = 0; i < List.toArray().length; i++) {
+                boolean checkUsername = (username.equals(List.get(i).getmUsername()));
+                //Jika username sudah terdaftar
+                if (checkUsername)
+                    isAlready = true;
+            }
+        }
+        return isAlready;
     }
 
     private void getAllMember() {
@@ -89,10 +89,8 @@ public class RegisterOneAct extends AppCompatActivity {
             @Override
             public void onResponse(retrofit2.Call<ResultMember> call, Response<ResultMember> response) {
                 List.clear();
-                if (response.body() != null) {
+                if (response.body() != null)
                     List = response.body().getmResultMember();
-                }
-
             }
 
             @Override
@@ -102,12 +100,12 @@ public class RegisterOneAct extends AppCompatActivity {
         });
     }
 
-    public static String md5Java(String message)
-    {
+    public static String md5Java(String message) {
         String digest = null;
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] hash = md.digest(message.getBytes("UTF-8"));
+            byte[] hash = md.digest(message.getBytes(StandardCharsets.UTF_8));
+
             //merubah byte array ke dalam String Hexadecimal
             StringBuilder sb = new StringBuilder(2*hash.length);
             for(byte b : hash)
@@ -115,9 +113,6 @@ public class RegisterOneAct extends AppCompatActivity {
                 sb.append(String.format("%02x", b&0xff));
             }
             digest = sb.toString();
-        } catch (UnsupportedEncodingException ex)
-        {
-            Logger.getLogger(RegisterOneAct.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSuchAlgorithmException ex)
         {
             Logger.getLogger(RegisterOneAct.class.getName()).log(Level.SEVERE, null, ex);
