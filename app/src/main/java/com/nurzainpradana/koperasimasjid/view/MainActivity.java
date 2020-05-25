@@ -4,17 +4,35 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.nurzainpradana.koperasimasjid.adapter.ProductsAdapter;
+import com.nurzainpradana.koperasimasjid.fragment.BerandaFragment;
+import com.nurzainpradana.koperasimasjid.fragment.FavoriteFragment;
+import com.nurzainpradana.koperasimasjid.fragment.KeranjangFragment;
+import com.nurzainpradana.koperasimasjid.fragment.ProfileFragment;
+import com.nurzainpradana.koperasimasjid.fragment.TransaksiFragment;
+import com.nurzainpradana.koperasimasjid.model.Product;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    //List store all product
+    List<Product> productList;
+
+    //RecyclerView
+    RecyclerView recyclerView;
+    ProductsAdapter adapter;
 
     //BottomNavBar
     private final String SELECTED_MENU = "selected_menu";
     BottomNavigationView navView;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -57,8 +75,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             navView.setSelectedItemId(R.id.navigation_beranda);
         }
+
     }
 
+    //Bottom Navigation Selected
     @Override
     protected void onSaveInstanceState(Bundle outState){
         super.onSaveInstanceState(outState);
