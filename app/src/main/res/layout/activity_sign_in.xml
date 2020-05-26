@@ -5,61 +5,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_colour"
-    tools:context=".SignInAct">
+    tools:context=".view.signin.SignInAct">
 
     <ImageView
-        android:id="@+id/logo_koperasi"
+        android:id="@+id/organization_logo"
         android:layout_width="56dp"
         android:layout_height="54dp"
-        android:src="@drawable/img_logo_koperasi"
+        android:src="@drawable/img_cooperative_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="18dp"
         android:layout_marginStart="27dp"
-        />
-    <LinearLayout
-        android:id="@+id/judul_koperasi2"
-        app:layout_constraintStart_toEndOf="@id/logo_koperasi"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="19dp"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        >
-        <TextView
-            android:id="@+id/judul_koperasi"
-            android:text="@string/title_judul_koperasi"
-            style="@style/subheader_small"
-            />
-
-        <TextView
-            android:id="@+id/nama_koperasi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title_nama_koperasi"
-            android:textSize="20sp"
-            android:fontFamily="@font/montmedium"
-            android:textColor="@color/warna1"
-            />
-
-        <TextView
-            android:id="@+id/alamat_koperasi"
-            android:text="@string/title_alamat_koperasi"
-            style="@style/subheader_small"
-            />
-    </LinearLayout>
+        android:contentDescription="@string/organization_logo" />
 
     <TextView
-        android:id="@+id/judul_layout"
-        android:text="@string/signin_login"
-        style="@style/judul_layout"
-        app:layout_constraintTop_toBottomOf="@+id/judul_koperasi2"
+            android:id="@+id/organization_name"
+            android:fontFamily="@font/mont_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_cooperative_name"
+            android:textSize="16sp"
+            android:textColor="@color/color_one"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            app:layout_constraintStart_toEndOf="@id/organization_logo"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/layout_title"
+        style="@style/header.color_three"
+        android:text="@string/login"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toBottomOf="@id/organization_name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="70dp"
-        />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <LinearLayout
         android:background="@drawable/bg_layout"
@@ -67,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_marginStart="34dp"
         android:layout_marginEnd="34dp"
-        app:layout_constraintTop_toBottomOf="@id/judul_layout"
+        app:layout_constraintTop_toBottomOf="@id/layout_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="20dp"
@@ -75,62 +55,70 @@
         android:orientation="vertical">
 
         <TextView
-            android:text="@string/signin_username"
-            style="@style/teksbody1"/>
+            android:text="@string/username"
+            style="@style/body"
+            android:labelFor="@id/edt_sign_in_username"/>
+
         <EditText
-            style="@style/inputtext"
-            android:layout_marginTop="4dp"/>
+            android:id="@+id/edt_sign_in_username"
+            style="@style/input.text"
+            android:layout_marginTop="4dp"
+            android:autofillHints=""/>
 
         <TextView
-            android:text="@string/signin_password"
-            style="@style/teksbody1"
-            android:layout_marginTop="20dp"/>
+            android:text="@string/password"
+            style="@style/body"
+            android:layout_marginTop="20dp"
+            android:labelFor="@id/edt_sign_in_password"/>
         <EditText
-            style="@style/inputtext"
+            android:id="@+id/edt_sign_in_password"
+            style="@style/input.text"
             android:inputType="textPassword"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="4dp"
+            android:autofillHints=""/>
 
         <Button
             android:id="@+id/btn_sign_in"
             android:layout_marginTop="18sp"
-            style="@style/btn_primary_gold"
-            android:text="@string/action_sign_in"
+            style="@style/btn_primary.gold"
+            android:text="@string/sign_in"
             />
 
         <TextView
-            android:layout_marginTop="10dp"
-            android:text="@string/signin_belum_punya_akun"
-            style="@style/teksbody1"
-            android:layout_width="match_parent"/>
+            style="@style/body"
+            android:text="@string/dont_have_an_account"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"/>
         <TextView
-            android:id="@+id/text_daftar_sekarang"
+            android:id="@+id/text_register_now"
+            style="@style/body"
+            android:fontFamily="@font/mont_bold"
             android:layout_width="match_parent"
             android:layout_marginTop="4dp"
-            android:text="@string/action_daftar_sekarang"
-            style="@style/teksbody1"
-            android:fontFamily="@font/montbold"/>
+            android:text="@string/register_now" />
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/background_masjid"
+        android:id="@+id/background_mosque"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/img_masjid"
+        android:src="@drawable/img_mosque"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="0dp"
         android:alpha="0.5"
-        />
+        android:contentDescription="@string/background_mosque" />
     <ImageView
-        android:id="@+id/muslimhandshake"
+        android:id="@+id/background_muslim_handshake"
+        android:alpha="0.6"
+        android:contentDescription="@string/muslim_handshake"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/img_muamalah"
-        app:layout_constraintTop_toTopOf="@id/background_masjid"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="170dp"
-        android:alpha="0.6"/>
+        android:src="@drawable/img_muamalah"
+        app:layout_constraintTop_toTopOf="@id/background_mosque"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

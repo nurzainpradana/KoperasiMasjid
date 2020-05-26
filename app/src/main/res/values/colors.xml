@@ -3,11 +3,11 @@
 
     <color name="background_colour">#FBFBFB</color>
 
-    <color name="warna1">#AE0001</color>
-    <color name="warna2">#740001</color>
-    <color name="warna3">#eeba30</color>
-    <color name="warna4">#d3a625</color>
-    <color name="warna5">#FFEAB2</color>
+    <color name="color_one">#AE0001</color>
+    <color name="color_two">#740001</color>
+    <color name="color_three">#eeba30</color>
+    <color name="color_four">#d3a625</color>
+    <color name="color_five">#FFEAB2</color>
 
 
 

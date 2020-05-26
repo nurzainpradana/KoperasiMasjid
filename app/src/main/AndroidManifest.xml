@@ -1,32 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nurzainpradana.koperasimasjid">
-
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:launchMode="singleTop"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".SuccessRegisterAct" />
-        <activity android:name=".RegisterTwoAct" />
-        <activity android:name=".VerificationAct" />
-        <activity android:name=".RegisterOneAct" />
-        <activity android:name=".SignInAct" />
-        <activity android:name=".BerandaFragment"/>
-        <activity android:name=".TransaksiFragment"/>
-        <activity android:name=".KeranjangFragment"/>
-        <activity android:name=".FavoriteFragment"/>
-        <activity android:name=".ProfileFragment"/>
-        <activity android:name=".SplashScreenAct">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
+        <activity android:name=".view.detailproduct.DetailProductAct"/>
+        <activity android:name=".view.updatepassword.UpdatePasswordAct" />
+
+        <activity android:name=".view.main.MainActivity">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+        <activity android:name=".view.sucessregister.SuccessRegisterAct" />
+
+        <activity android:name=".view.registertwo.RegisterTwoAct" />
+
+        <activity android:name=".view.verification.VerificationAct" />
+
+        <activity android:name=".view.registerone.RegisterOneAct" />
+
+        <activity android:name=".view.signin.SignInAct" />
+
+        <activity android:name=".view.home.HomeFragment"/>
+
+        <activity android:name=".view.transaction.TransactionFragment" />
+
+        <activity android:name=".view.cart.CartFragment" />
+
+        <activity android:name=".view.favorite.FavoriteFragment" />
+
+        <activity android:name=".view.profile.ProfileFragment" />
+
+        <activity android:name=".view.splashscreen.SplashScreenAct">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
