@@ -3,7 +3,7 @@ package com.nurzainpradana.koperasimasjid.api;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ApiService {
+class ApiService {
     //this is the JSON Data URL
     //make sure you are using the correct ip else it will not work
     public static final String URL = "http://192.168.43.83/koperasimasjid/";

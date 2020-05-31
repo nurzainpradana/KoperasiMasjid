@@ -32,7 +32,7 @@ public class SplashScreenAct extends AppCompatActivity {
         nama_koperasi = findViewById(R.id.nama_koperasi);
         alamat_koperasi = findViewById(R.id.alamat_koperasi);
         masjid = findViewById(R.id.background_masjid);
-        muslimhandshake = findViewById(R.id.muslimhandshake);
+        muslimhandshake = findViewById(R.id.background_muslim_handshake);
 
         //run animation
         logo_koperasi.startAnimation(app_splash);

@@ -45,7 +45,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     //BottomNavigationBar
-    implementation "com.google.android.material:material:1.2.0-alpha06"
+    implementation "com.google.android.material:material:1.2.0-beta01"
 
     //simple search view
     //implementation 'com.github.Ferfalk:SimpleSearchView:0.1.5'
@@ -78,5 +78,5 @@ dependencies {
     //Firebase
     implementation 'com.google.firebase:firebase-core:17.4.2'
     implementation 'com.google.firebase:firebase-auth:19.3.1'
-    annotationProcessor 'androidx.room:room-compiler:2.2.2'
+    annotationProcessor 'androidx.room:room-compiler:2.2.5'
 }

@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
+class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     @NonNull
     @Override

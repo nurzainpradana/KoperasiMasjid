@@ -11,14 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nurzainpradana.koperasimasjid.R;
-import com.nurzainpradana.koperasimasjid.db_local.FavoriteList;
 import com.nurzainpradana.koperasimasjid.model.Product;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder> {
 

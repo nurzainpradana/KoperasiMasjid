@@ -1,4 +1,4 @@
-package com.nurzainpradana.koperasimasjid.Model;
+package com.nurzainpradana.koperasimasjid.model;
 
 public class Product {
 }
