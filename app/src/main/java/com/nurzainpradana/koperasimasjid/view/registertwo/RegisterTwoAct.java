@@ -38,6 +38,7 @@ import com.nurzainpradana.koperasimasjid.api.Api;
 import com.nurzainpradana.koperasimasjid.api.ApiInterface;
 import com.nurzainpradana.koperasimasjid.model.Member;
 import com.nurzainpradana.koperasimasjid.model.ResultMember;
+import com.nurzainpradana.koperasimasjid.view.verification.VerificationAct;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
@@ -48,6 +49,8 @@ import cz.msebera.android.httpclient.Header;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.nurzainpradana.koperasimasjid.BuildConfig.BASE_URL;
 
 public class RegisterTwoAct extends AppCompatActivity {
     public static final String EXTRA_MEMBER = "extra_member";
@@ -145,6 +148,7 @@ public class RegisterTwoAct extends AppCompatActivity {
 
                 Intent gotoSuccessRegister = new Intent(RegisterTwoAct.this, SuccessRegisterAct.class);
                 startActivity(gotoSuccessRegister);
+
 
             }
         });
@@ -321,7 +325,7 @@ public class RegisterTwoAct extends AppCompatActivity {
     public void makeHTTPCall() {
         AsyncHttpClient client = new AsyncHttpClient();
         // don't forget to change ip address
-        client.post("http://192.168.42.117/koperasimasjid/uploadPhotoProfile.php", params, new AsyncHttpResponseHandler() {
+        client.post(BASE_URL + "/koperasimasjid/uploadPhotoProfile.php", params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 progressBar.setVisibility(View.INVISIBLE);

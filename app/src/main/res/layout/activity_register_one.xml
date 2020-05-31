@@ -96,12 +96,21 @@
             android:layout_marginTop="20dp"
             android:labelFor="@id/edt_no_phone"/>
 
-        <EditText
-            android:id="@+id/edt_no_phone"
-            style="@style/input.text"
-            android:inputType="phone"
-            android:layout_marginTop="4dp"
-            tools:ignore="Autofill" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/phone_code"
+                android:layout_marginEnd="16dp"/>
+            <EditText
+                android:id="@+id/edt_no_phone"
+                style="@style/input.text"
+                android:inputType="phone"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
 
         <TextView
             android:text="@string/username"

@@ -82,6 +82,12 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
+            android:id="@+id/tv_send_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp"/>
+
+        <TextView
             android:text="@string/enter_verification_code"
             style="@style/body"/>
 
@@ -131,8 +137,9 @@
             android:layout_width="match_parent"/>
 
         <TextView
+            android:id="@+id/tv_resend_code"
             android:layout_width="match_parent"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:text="@string/resend"
             style="@style/body"
             android:fontFamily="@font/mont_bold"/>

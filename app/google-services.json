@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "713082224595",
+    "firebase_url": "https://koperasi-masjid.firebaseio.com",
+    "project_id": "koperasi-masjid",
+    "storage_bucket": "koperasi-masjid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:713082224595:android:b59926998ce3663b71b926",
+        "android_client_info": {
+          "package_name": "com.nurzainpradana.koperasimasjid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "713082224595-13mlhod5ro9esm7plgk54so4fdhuim1n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nurzainpradana.koperasimasjid",
+            "certificate_hash": "74c9e0f65ca5ccdf04c85840bf2dcc9e8ecefbbc"
+          }
+        },
+        {
+          "client_id": "713082224595-lm2v1c4nil2l2btg4f0dr33r5pgch4pr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCD4q_EaZj7mTJc-zVWyecTZLTJnvalt-E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "713082224595-lm2v1c4nil2l2btg4f0dr33r5pgch4pr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

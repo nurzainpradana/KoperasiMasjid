@@ -1,5 +1,7 @@
 package com.nurzainpradana.koperasimasjid.api;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.nurzainpradana.koperasimasjid.BuildConfig;
 
 import retrofit2.Retrofit;

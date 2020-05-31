@@ -9,17 +9,23 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.view.registertwo.RegisterTwoAct;
 import com.nurzainpradana.koperasimasjid.api.Api;
 import com.nurzainpradana.koperasimasjid.api.ApiInterface;
 import com.nurzainpradana.koperasimasjid.model.Member;
 import com.nurzainpradana.koperasimasjid.model.ResultMember;
+import com.nurzainpradana.koperasimasjid.view.verification.VerificationAct;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,7 +60,7 @@ public class RegisterOneAct extends AppCompatActivity {
         btnRegisterOneNext.setOnClickListener(v -> {
             String username = edtUsername.getText().toString();
             String name = edtName.getText().toString();
-            String noPhone = edtNoPhone.getText().toString();
+            String noPhone = getString(R.string.phone_code) + edtNoPhone.getText().toString();
             String password = edtPassword.getText().toString();
 
             Member member = new Member();
@@ -64,9 +70,12 @@ public class RegisterOneAct extends AppCompatActivity {
             member.setmPassword(md5Java(password));
 
             if (!checkUsername(username)) {
-                Intent goToRegisterTwo = new Intent(RegisterOneAct.this, RegisterTwoAct.class);
-                goToRegisterTwo.putExtra(RegisterTwoAct.EXTRA_MEMBER, member);
-                RegisterOneAct.this.startActivity(goToRegisterTwo);
+                Intent goToVerification = new Intent(RegisterOneAct.this, VerificationAct.class);
+                goToVerification.putExtra(VerificationAct.EXTRA_MEMBER, member);
+                startActivity(goToVerification);
+                //Intent goToRegisterTwo = new Intent(RegisterOneAct.this, RegisterTwoAct.class);
+                //goToRegisterTwo.putExtra(RegisterTwoAct.EXTRA_MEMBER, member);
+                //RegisterOneAct.this.startActivity(goToRegisterTwo);
             } else {
                 Toast.makeText(RegisterOneAct.this, getString(R.string.username_already_registered), Toast.LENGTH_SHORT).show();
                 edtUsername.setError(getString(R.string.username_already_registered));

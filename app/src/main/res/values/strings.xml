@@ -46,4 +46,6 @@
     <string name="wrong_password">password salah</string>
     <string name="username_not_found">Username tidak ditemukan</string>
     <string name="username_already_registered">Username Sudah terdaftar</string>
+    <string name="code_send_to">Kode dikirim ke nomor</string>
+    <string name="phone_code">+62</string>
 </resources>
