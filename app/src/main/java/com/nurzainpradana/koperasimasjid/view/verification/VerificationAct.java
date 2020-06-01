@@ -1,8 +1,5 @@
 package com.nurzainpradana.koperasimasjid.view.verification;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,10 +9,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
@@ -82,46 +79,31 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
 
         //Menghubungkan project dengan firebase auth
         auth = FirebaseAuth.getInstance();
-        stateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                //Mendeteksi apakah ada user yang sedang login (belum logout)
-                if (user != null) {
-                    //Jika ada, User tidak perlu login lagi dan langsung menuju
-                    //Welcome ACtivity
-                    startActivity(new Intent(VerificationAct.this, RegisterTwoAct.class));
-                    finish();
-                }
+        stateListener = firebaseAuth -> {
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            //Mendeteksi apakah ada user yang sedang login (belum logout)
+            if (user != null) {
+                //Jika ada, User tidak perlu login lagi dan langsung menuju
+                //Welcome ACtivity
+                startActivity(new Intent(VerificationAct.this, RegisterTwoAct.class));
+                finish();
             }
         };
 
-
-        btn_verification_next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent goToRegisterTwo = new Intent(VerificationAct.this, RegisterTwoAct.class);
-                startActivity(goToRegisterTwo);
-            }
-        });
-
         //Menghubungkan project dengan firebase auth
         auth = FirebaseAuth.getInstance();
-        stateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                //Mendeteksi apakah ada user yang sedang login (belum logout)
-                if (user != null) {
-                    //Jika ada, User tidak perlu login lagi dan langsung menuju
-                    //Welcome ACtivity
-                    Member member = getIntent().getParcelableExtra(EXTRA_MEMBER);
-                    Intent goToRegisterTwo = new Intent(VerificationAct.this, RegisterTwoAct.class);
-                    goToRegisterTwo.putExtra(EXTRA_MEMBER, member);
-                    startActivity(goToRegisterTwo);
-                    finish();
-                    finish();
-                }
+        stateListener = firebaseAuth -> {
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            //Mendeteksi apakah ada user yang sedang login (belum logout)
+            if (user != null) {
+                //Jika ada, User tidak perlu login lagi dan langsung menuju
+                //Welcome ACtivity
+                Member member1 = getIntent().getParcelableExtra(EXTRA_MEMBER);
+                Intent goToRegisterTwo = new Intent(VerificationAct.this, RegisterTwoAct.class);
+                goToRegisterTwo.putExtra(EXTRA_MEMBER, member1);
+                startActivity(goToRegisterTwo);
+                finish();
+                finish();
             }
         };
 
@@ -174,22 +156,19 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
 
     private void signInWithPhoneAuthCredential(final PhoneAuthCredential credential) {
         auth.signInWithCredential(credential)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            //Sign in berhasil
-                            Member member = getIntent().getParcelableExtra(EXTRA_MEMBER);
-                            Intent goToRegisterTwo = new Intent(VerificationAct.this, RegisterTwoAct.class);
-                            goToRegisterTwo.putExtra(EXTRA_MEMBER, member);
-                            startActivity(goToRegisterTwo);
-                            finish();
-                        } else {
-                            //Sign gagal
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                //Kode yang dimasukkan tidak valid
-                                Toast.makeText(VerificationAct.this, "Kode yang dimasukkan tidak valid", Toast.LENGTH_SHORT).show();
-                            }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        //Sign in berhasil
+                        Member member = getIntent().getParcelableExtra(EXTRA_MEMBER);
+                        Intent goToRegisterTwo = new Intent(VerificationAct.this, RegisterTwoAct.class);
+                        goToRegisterTwo.putExtra(EXTRA_MEMBER, member);
+                        startActivity(goToRegisterTwo);
+                        finish();
+                    } else {
+                        //Sign gagal
+                        if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                            //Kode yang dimasukkan tidak valid
+                            Toast.makeText(VerificationAct.this, "Kode yang dimasukkan tidak valid", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

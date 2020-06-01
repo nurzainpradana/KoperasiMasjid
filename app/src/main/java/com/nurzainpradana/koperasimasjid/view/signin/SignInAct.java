@@ -54,7 +54,7 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
     public void onClick(View v) {
         if (v.getId() == R.id.btn_sign_in) {
             String username = edtSignInUsername.getText().toString();
-            String password = md5Java(edtSignInPassword.getText().toString());
+            String password = md5Java(md5Java(edtSignInPassword.getText().toString()));
 
             if (username.isEmpty()) {
                 edtSignInUsername.setError(getString(R.string.not_null));

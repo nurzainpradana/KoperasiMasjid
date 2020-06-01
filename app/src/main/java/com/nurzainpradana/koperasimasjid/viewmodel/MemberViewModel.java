@@ -41,7 +41,6 @@ public class MemberViewModel  extends ViewModel {
 
                 @Override
                 public void onFailure(retrofit2.Call<List<Member>> call, Throwable t) {
-                    Log.d("Error Bosq", t.getMessage());
                     Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });

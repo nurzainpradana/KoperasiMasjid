@@ -9,11 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthProvider;
 import com.nurzainpradana.koperasimasjid.R;
-import com.nurzainpradana.koperasimasjid.view.registertwo.RegisterTwoAct;
 import com.nurzainpradana.koperasimasjid.api.Api;
 import com.nurzainpradana.koperasimasjid.api.ApiInterface;
 import com.nurzainpradana.koperasimasjid.model.Member;
@@ -25,7 +21,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -67,7 +62,7 @@ public class RegisterOneAct extends AppCompatActivity {
             member.setmName(name);
             member.setmNoPhone(noPhone);
             member.setmUsername(username);
-            member.setmPassword(md5Java(password));
+            member.setmPassword(md5Java(md5Java(password)));
 
             if (!checkUsername(username)) {
                 Intent goToVerification = new Intent(RegisterOneAct.this, VerificationAct.class);

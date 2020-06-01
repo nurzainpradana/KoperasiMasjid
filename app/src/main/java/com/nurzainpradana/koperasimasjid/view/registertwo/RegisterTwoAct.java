@@ -38,7 +38,6 @@ import com.nurzainpradana.koperasimasjid.api.Api;
 import com.nurzainpradana.koperasimasjid.api.ApiInterface;
 import com.nurzainpradana.koperasimasjid.model.Member;
 import com.nurzainpradana.koperasimasjid.model.ResultMember;
-import com.nurzainpradana.koperasimasjid.view.verification.VerificationAct;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
