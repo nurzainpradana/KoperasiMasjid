@@ -2,31 +2,21 @@ package com.nurzainpradana.koperasimasjid.view.registerone;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.nurzainpradana.koperasimasjid.R;
-import com.nurzainpradana.koperasimasjid.api.Api;
-import com.nurzainpradana.koperasimasjid.api.ApiInterface;
 import com.nurzainpradana.koperasimasjid.model.Member;
-import com.nurzainpradana.koperasimasjid.model.ResultMember;
 import com.nurzainpradana.koperasimasjid.view.verification.VerificationAct;
+import com.nurzainpradana.koperasimasjid.viewmodel.ListMemberViewModel;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import static com.nurzainpradana.koperasimasjid.util.EncryptMd5Java.encryptMd5Java;
 
 public class RegisterOneAct extends AppCompatActivity {
 
@@ -36,15 +26,18 @@ public class RegisterOneAct extends AppCompatActivity {
     EditText edtUsername;
     EditText edtPassword;
 
-    List<Member> List = new ArrayList<>();
-    ApiInterface Service;
-    Call<ResultMember> Call;
+    ListMemberViewModel listMemberViewModel;
+    List<Member> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_one);
-        getAllMember();
+
+        listMemberViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ListMemberViewModel.class);
+        listMemberViewModel.setListMember();
+
+        listMemberViewModel.getListMember().observe(this, resultMember -> list = resultMember.getmResultMember());
 
         btnRegisterOneNext = findViewById(R.id.btn_register_one_next);
         edtName = findViewById(R.id.edt_name);
@@ -62,15 +55,12 @@ public class RegisterOneAct extends AppCompatActivity {
             member.setmName(name);
             member.setmNoPhone(noPhone);
             member.setmUsername(username);
-            member.setmPassword(md5Java(md5Java(password)));
+            member.setmPassword(encryptMd5Java(encryptMd5Java(password)));
 
             if (!checkUsername(username)) {
                 Intent goToVerification = new Intent(RegisterOneAct.this, VerificationAct.class);
                 goToVerification.putExtra(VerificationAct.EXTRA_MEMBER, member);
                 startActivity(goToVerification);
-                //Intent goToRegisterTwo = new Intent(RegisterOneAct.this, RegisterTwoAct.class);
-                //goToRegisterTwo.putExtra(RegisterTwoAct.EXTRA_MEMBER, member);
-                //RegisterOneAct.this.startActivity(goToRegisterTwo);
             } else {
                 Toast.makeText(RegisterOneAct.this, getString(R.string.username_already_registered), Toast.LENGTH_SHORT).show();
                 edtUsername.setError(getString(R.string.username_already_registered));
@@ -81,9 +71,9 @@ public class RegisterOneAct extends AppCompatActivity {
 
     private boolean checkUsername(String username) {
         boolean isAlready = false;
-        if (List.toArray().length > 0){
-            for (int i = 0; i < List.toArray().length; i++) {
-                boolean checkUsername = (username.equals(List.get(i).getmUsername()));
+        if (list.toArray().length > 0) {
+            for (int i = 0; i < list.toArray().length; i++) {
+                boolean checkUsername = (username.equals(list.get(i).getmUsername()));
                 //Jika username sudah terdaftar
                 if (checkUsername)
                     isAlready = true;
@@ -92,41 +82,4 @@ public class RegisterOneAct extends AppCompatActivity {
         return isAlready;
     }
 
-    private void getAllMember() {
-        Service = Api.getApi().create(ApiInterface.class);
-        Call = Service.getAllMember();
-        Call.enqueue(new Callback<ResultMember>() {
-            @Override
-            public void onResponse(retrofit2.Call<ResultMember> call, Response<ResultMember> response) {
-                List.clear();
-                if (response.body() != null)
-                    List = response.body().getmResultMember();
-            }
-
-            @Override
-            public void onFailure(retrofit2.Call<ResultMember> call, Throwable t) {
-                Log.e("Error Bosque", t.toString());
-            }
-        });
-    }
-
-    public static String md5Java(String message) {
-        String digest = null;
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] hash = md.digest(message.getBytes(StandardCharsets.UTF_8));
-
-            //merubah byte array ke dalam String Hexadecimal
-            StringBuilder sb = new StringBuilder(2*hash.length);
-            for(byte b : hash)
-            {
-                sb.append(String.format("%02x", b&0xff));
-            }
-            digest = sb.toString();
-        } catch (NoSuchAlgorithmException ex)
-        {
-            Logger.getLogger(RegisterOneAct.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return digest;
-    }
 }

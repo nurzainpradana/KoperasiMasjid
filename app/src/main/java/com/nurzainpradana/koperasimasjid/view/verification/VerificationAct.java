@@ -150,6 +150,7 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
             public void onVerificationFailed(@NonNull FirebaseException e) {
                 //Callback disini akan dipanggil saat permintaan tidak valid atau terdapat kesalahan
                 Toast.makeText(getApplicationContext(), "Verifikasi Gagal, Silahkan Coba Lagi ", Toast.LENGTH_SHORT).show();
+                tvResendCode.setEnabled(true);
             }
         };
     }

@@ -86,6 +86,7 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
 
                     Intent goToHome = new Intent(SignInAct.this, MainActivity.class);
                     startActivity(goToHome);
+                    finish();
                 } else {
                     message = getString(R.string.wrong_password);
                 }

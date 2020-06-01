@@ -18,6 +18,11 @@ public interface ApiInterface {
     @POST("/koperasimasjid/getMember.php")
     Call<List<Member>> getMember(@Field("username") String username);
 
+    @FormUrlEncoded
+    @POST("/koperasimasjid/uploadPhotoProfile.php")
+    Call<ResultMember> uploadPhoto(@Field("image") String image,
+                                   @Field("filename") String filename);
+
     @GET("/koperasimasjid/getAllMember.php")
     Call<ResultMember> getAllMember();
 

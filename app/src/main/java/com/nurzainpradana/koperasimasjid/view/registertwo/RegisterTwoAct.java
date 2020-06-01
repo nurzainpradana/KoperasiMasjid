@@ -320,34 +320,20 @@ public class RegisterTwoAct extends AppCompatActivity {
 
     //make http call to upload image to php server
     public void makeHTTPCall() {
-        AsyncHttpClient client = new AsyncHttpClient();
-        // don't forget to change ip address
-        client.post(BASE_URL + "/koperasimasjid/uploadPhotoProfile.php", params, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                progressBar.setVisibility(View.INVISIBLE);
-            }
+        Service = Api.getApi().create(ApiInterface.class);
+        uploadImage();
+        Call = Service.uploadPhoto(encodedString, fileName);
+        Call.enqueue(new Callback<ResultMember>() {
+                         @Override
+                         public void onResponse(retrofit2.Call<ResultMember> call, Response<ResultMember> response) {
+                             Toast.makeText(RegisterTwoAct.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                         }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                //hide progress dialog
-                progressBar.setVisibility(View.INVISIBLE);
-                //when http response code is '404'
-                if (statusCode == 404) {
-                    Toast.makeText(getApplicationContext(), "Request resource not found", Toast.LENGTH_LONG).show();
-                }
-
-                //when Http response code is '500
-                else if (statusCode == 500) {
-                    Toast.makeText(getApplicationContext(), "Something went wrong at server", Toast.LENGTH_LONG).show();
-                }
-
-                //when http response code other than 404, 400
-                else {
-                    Toast.makeText(getApplicationContext(), "Error Occured n Most Common Error: n1. Device not connected to Internetn2. Web App is not deployed in App servern3. App server is not runningn HTTP Status code : ", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+                         @Override
+                         public void onFailure(retrofit2.Call<ResultMember> call, Throwable t) {
+                             Toast.makeText(RegisterTwoAct.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                         }
+                     });
     }
 
     @Override

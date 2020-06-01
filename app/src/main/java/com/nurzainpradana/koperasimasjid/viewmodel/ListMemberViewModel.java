@@ -39,7 +39,6 @@ public class ListMemberViewModel extends ViewModel {
                     ResultMember listMembers;
                     listMembers = response.body();
                     listMember.postValue(listMembers);
-
                 }
 
                 @Override

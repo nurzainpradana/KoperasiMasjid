@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,7 +31,12 @@ public class ProfileFragment extends Fragment {
     private MemberViewModel memberViewModel;
     String USERNAME_KEY = "usernamekey";
 
-    private TextView tvProfileName, tvProfileAddress, tvProfileNoPhone, tvProfileEmail, tvProfileBirthdate, tvProfilUsername;
+    private TextView tvProfileName;
+    private TextView tvProfileAddress;
+    private TextView tvProfileNoPhone;
+    private TextView tvProfileEmail;
+    private TextView tvProfileBirthdate;
+    private TextView tvProfilUsername;
     private CircleImageView ivProfilePicture;
     private Button btnUpdatePassword, btnEditProfile;
 
@@ -66,7 +70,6 @@ public class ProfileFragment extends Fragment {
 
         if (getArguments() != null){
             String username = getArguments().getString(USERNAME_KEY);
-            Toast.makeText(getContext(), username, Toast.LENGTH_SHORT).show();
             memberViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(MemberViewModel.class);
             memberViewModel.setMember(username, getContext());
         }
@@ -74,7 +77,7 @@ public class ProfileFragment extends Fragment {
         memberViewModel.getMember().observe(this, new Observer<List<Member>>() {
             @Override
             public void onChanged(List<Member> members) {
-                setView(members);
+                ProfileFragment.this.setView(members);
             }
         });
     }
@@ -89,8 +92,6 @@ public class ProfileFragment extends Fragment {
         tvProfilUsername.setText(members.get(0).getmUsername());
 
         String urlPhoto = BASE_URL + members.get(0).getmPhotoProfile();
-        Toast.makeText(getContext(), urlPhoto, Toast.LENGTH_SHORT).show();
-
         Picasso.get()
                 .load(urlPhoto)
                 .placeholder(R.mipmap.ic_launcher)
