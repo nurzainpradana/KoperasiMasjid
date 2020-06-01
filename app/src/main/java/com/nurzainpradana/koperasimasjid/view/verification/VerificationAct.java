@@ -115,7 +115,11 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
                 if (user != null) {
                     //Jika ada, User tidak perlu login lagi dan langsung menuju
                     //Welcome ACtivity
-                    startActivity(new Intent(VerificationAct.this, RegisterTwoAct.class));
+                    Member member = getIntent().getParcelableExtra(EXTRA_MEMBER);
+                    Intent goToRegisterTwo = new Intent(VerificationAct.this, RegisterTwoAct.class);
+                    goToRegisterTwo.putExtra(EXTRA_MEMBER, member);
+                    startActivity(goToRegisterTwo);
+                    finish();
                     finish();
                 }
             }
@@ -175,7 +179,10 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             //Sign in berhasil
-                            startActivity(new Intent(VerificationAct.this, RegisterTwoAct.class));
+                            Member member = getIntent().getParcelableExtra(EXTRA_MEMBER);
+                            Intent goToRegisterTwo = new Intent(VerificationAct.this, RegisterTwoAct.class);
+                            goToRegisterTwo.putExtra(EXTRA_MEMBER, member);
+                            startActivity(goToRegisterTwo);
                             finish();
                         } else {
                             //Sign gagal
