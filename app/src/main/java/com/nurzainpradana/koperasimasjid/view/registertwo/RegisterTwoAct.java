@@ -1,7 +1,6 @@
 package com.nurzainpradana.koperasimasjid.view.registertwo;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,10 +9,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,27 +26,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.nurzainpradana.koperasimasjid.R;
-import com.nurzainpradana.koperasimasjid.view.sucessregister.SuccessRegisterAct;
 import com.nurzainpradana.koperasimasjid.api.Api;
 import com.nurzainpradana.koperasimasjid.api.ApiInterface;
 import com.nurzainpradana.koperasimasjid.model.Member;
 import com.nurzainpradana.koperasimasjid.model.ResultMember;
+import com.nurzainpradana.koperasimasjid.util.UploadImage;
+import com.nurzainpradana.koperasimasjid.view.sucessregister.SuccessRegisterAct;
 
-import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import cz.msebera.android.httpclient.Header;
-import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.nurzainpradana.koperasimasjid.BuildConfig.BASE_URL;
 
 public class RegisterTwoAct extends AppCompatActivity {
     public static final String EXTRA_MEMBER = "extra_member";
@@ -74,7 +65,6 @@ public class RegisterTwoAct extends AppCompatActivity {
     String password;
     String noPhone;
     String dateOfBirth;
-    String encodedString;
     String imgPath;
     String fileName;
     Integer mYear;
@@ -82,11 +72,8 @@ public class RegisterTwoAct extends AppCompatActivity {
     Integer mDay;
 
     SimpleDateFormat sdf;
-    Bitmap bitmap;
     Calendar myCalendar;
-    ApiInterface Service;
-    RequestParams params = new RequestParams();
-    Call<ResultMember> Call;
+
     RelativeLayout mLayout;
 
     @Override
@@ -153,8 +140,11 @@ public class RegisterTwoAct extends AppCompatActivity {
 
     public void saveMember() {
         progressBar.setVisibility(View.VISIBLE);
+        ApiInterface Service;
+        retrofit2.Call<ResultMember> Call;
         Service = Api.getApi().create(ApiInterface.class);
-        uploadImage();
+        UploadImage uploadImage = new UploadImage(imgPath, fileName);
+        uploadImage.uploadImage();
         Call = Service.insertMember(name, noPhone, username, password, email, address, dateOfBirth, "/koperasimasjid/img/" + fileName);
         Call.enqueue(new Callback<ResultMember>() {
             @Override
@@ -257,9 +247,6 @@ public class RegisterTwoAct extends AppCompatActivity {
                 //get the image's filename
                 String[] fileNameSegments = imgPath.split("/");
                 fileName = fileNameSegments[fileNameSegments.length - 1];
-
-                //put file name in async http post param which will used in php web app
-                params.put("filename", fileName);
             } else {
                 Toast.makeText(this, "You Haven't picked image", Toast.LENGTH_LONG).show();
             }
@@ -268,73 +255,7 @@ public class RegisterTwoAct extends AppCompatActivity {
         }
     }
 
-    //when upload button is clicked
-    public void uploadImage() {
-        //when image is selected from gallery
-        if (imgPath != null && !imgPath.isEmpty()) {
-            progressBar.setVisibility(View.VISIBLE);
-            //convert image to string using base64
-            encodeImagetoString();
-            //when image is not selected from gallery
-        } else {
-            Log.e("Error", "You must select image from gallery before you try to upload");
-        }
-    }
 
-    //AsyncTask - To conver Image to String
-    @SuppressLint("StaticFieldLeak")
-    public void encodeImagetoString() {
-        new AsyncTask<Void, Void, String>() {
-            protected void onPreExecute() {
-            }
-
-            @Override
-            protected String doInBackground(Void... params) {
-                BitmapFactory.Options options;
-                options = new BitmapFactory.Options();
-                options.inSampleSize = 3;
-                bitmap = BitmapFactory.decodeFile(imgPath, options);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                // Must compress the image to reduce image size to make upload easey
-                bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream);
-                byte[] byte_arr = stream.toByteArray();
-
-                //encode image to string
-                encodedString = Base64.encodeToString(byte_arr, 0);
-                return "";
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                //put converted image string into async http post params
-                params.put("image", encodedString);
-                //trigger image upload
-                triggerImageUpload();
-            }
-        }.execute(null, null, null);
-    }
-
-    public void triggerImageUpload(){
-        makeHTTPCall();
-    }
-
-    //make http call to upload image to php server
-    public void makeHTTPCall() {
-        Service = Api.getApi().create(ApiInterface.class);
-        uploadImage();
-        Call = Service.uploadPhoto(encodedString, fileName);
-        Call.enqueue(new Callback<ResultMember>() {
-                         @Override
-                         public void onResponse(retrofit2.Call<ResultMember> call, Response<ResultMember> response) {
-                             Toast.makeText(RegisterTwoAct.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                         }
-
-                         @Override
-                         public void onFailure(retrofit2.Call<ResultMember> call, Throwable t) {
-                             Toast.makeText(RegisterTwoAct.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                         }
-                     });
-    }
 
     @Override
     protected void onDestroy() {

@@ -98,15 +98,14 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
             if (user != null) {
                 //Jika ada, User tidak perlu login lagi dan langsung menuju
                 //Welcome ACtivity
-                Member member1 = getIntent().getParcelableExtra(EXTRA_MEMBER);
-                Intent goToRegisterTwo = new Intent(VerificationAct.this, RegisterTwoAct.class);
-                goToRegisterTwo.putExtra(EXTRA_MEMBER, member1);
-                startActivity(goToRegisterTwo);
-                finish();
-                finish();
+
+                //Member member1 = getIntent().getParcelableExtra(EXTRA_MEMBER);
+                //Intent goToRegisterTwo = new Intent(VerificationAct.this, RegisterTwoAct.class);
+                //goToRegisterTwo.putExtra(EXTRA_MEMBER, member1);
+                //startActivity(goToRegisterTwo);
+                //finish();
             }
         };
-
     }
 
     @Override
@@ -143,7 +142,6 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
                 //Callback disini akan dipanggil saat verifikasi berhasil
                 Toast.makeText(getApplicationContext(), "Verifikasi Selesai", Toast.LENGTH_SHORT).show();
                 signInWithPhoneAuthCredential(phoneAuthCredential);
-
             }
 
             @Override
@@ -209,6 +207,5 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
                 Toast.makeText(this, "Mengirim ulang kode verifikasi", Toast.LENGTH_SHORT).show();
                 break;
         }
-
     }
 }

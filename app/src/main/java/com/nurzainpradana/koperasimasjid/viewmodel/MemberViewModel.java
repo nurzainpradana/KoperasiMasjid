@@ -1,7 +1,6 @@
 package com.nurzainpradana.koperasimasjid.viewmodel;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -28,7 +27,6 @@ public class MemberViewModel  extends ViewModel {
     public void setMember(String username, Context context) {
         ApiInterface Service;
         Call<List<Member>> Call;
-
         try {
             Service = Api.getApi().create(ApiInterface.class);
             Call = Service.getMember(username);
