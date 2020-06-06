@@ -2,7 +2,9 @@ package com.nurzainpradana.koperasimasjid.view.verification;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,6 +64,7 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
         btn_verification_next = findViewById(R.id.btn_verification_next);
 
         btn_verification_next.setOnClickListener(this);
+        tvResendCode.setOnClickListener(this);
 
         Member member = getIntent().getParcelableExtra(EXTRA_MEMBER);
         if (member != null) {
@@ -93,9 +96,9 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
         //Menghubungkan project dengan firebase auth
         auth = FirebaseAuth.getInstance();
         stateListener = firebaseAuth -> {
-            FirebaseUser user = firebaseAuth.getCurrentUser();
+            //FirebaseUser user = firebaseAuth.getCurrentUser();
             //Mendeteksi apakah ada user yang sedang login (belum logout)
-            if (user != null) {
+            //if (user != null) {
                 //Jika ada, User tidak perlu login lagi dan langsung menuju
                 //Welcome ACtivity
 
@@ -104,8 +107,9 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
                 //goToRegisterTwo.putExtra(EXTRA_MEMBER, member1);
                 //startActivity(goToRegisterTwo);
                 //finish();
-            }
+            //}
         };
+        moveEditTextPin();
     }
 
     @Override
@@ -121,6 +125,89 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
         super.onStop();
         //Menghapus listener pada FirebaseAuth saat activity dihentikan
         auth.removeAuthStateListener(stateListener);
+    }
+
+    private void moveEditTextPin() {
+        edtPin1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (edtPin1.getText().toString().length() == 1) {
+                    edtPin2.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        edtPin2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (edtPin2.getText().toString().length() == 1) {
+                    edtPin3.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        edtPin3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (edtPin3.getText().toString().length() == 1) {
+                    edtPin4.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        edtPin4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (edtPin4.getText().toString().length() == 1) {
+                    edtPin5.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        edtPin5.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (edtPin5.getText().toString().length() == 1) {
+                    edtPin6.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
     private void setupVerificationCallback() {
@@ -196,15 +283,21 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.tv_resend_code:
-                setupVerificationCallback();
-                PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                        phoneNumber,
-                        60,
-                        TimeUnit.SECONDS,
-                        this,
-                        callbacks,
-                        resendingToken);
-                Toast.makeText(this, "Mengirim ulang kode verifikasi", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Mengirim Ulang Kode Verifikasi", Toast.LENGTH_SHORT).show();
+                Member member = getIntent().getParcelableExtra(EXTRA_MEMBER);
+                if (member != null) {
+                    phoneNumber = member.getmNoPhone();
+                    setupVerificationCallback();
+                    PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                            phoneNumber,
+                            60,
+                            TimeUnit.SECONDS,
+                            this,
+                            callbacks,
+                            resendingToken);
+                    Toast.makeText(this, "Mengirim ulang kode verifikasi", Toast.LENGTH_SHORT).show();
+                }
+                Toast.makeText(this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

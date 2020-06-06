@@ -36,7 +36,6 @@ public class RegisterOneAct extends AppCompatActivity {
 
         listMemberViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ListMemberViewModel.class);
         listMemberViewModel.setListMember();
-
         listMemberViewModel.getListMember().observe(this, resultMember -> list = resultMember.getmResultMember());
 
         btnRegisterOneNext = findViewById(R.id.btn_register_one_next);
@@ -61,7 +60,7 @@ public class RegisterOneAct extends AppCompatActivity {
                 Intent goToVerification = new Intent(RegisterOneAct.this, VerificationAct.class);
                 goToVerification.putExtra(VerificationAct.EXTRA_MEMBER, member);
                 startActivity(goToVerification);
-            } else {
+            } else if (checkUsername(username)){
                 Toast.makeText(RegisterOneAct.this, getString(R.string.username_already_registered), Toast.LENGTH_SHORT).show();
                 edtUsername.setError(getString(R.string.username_already_registered));
                 edtUsername.requestFocus();
@@ -71,12 +70,14 @@ public class RegisterOneAct extends AppCompatActivity {
 
     private boolean checkUsername(String username) {
         boolean isAlready = false;
-        if (list.toArray().length > 0) {
-            for (int i = 0; i < list.toArray().length; i++) {
-                boolean checkUsername = (username.equals(list.get(i).getmUsername()));
-                //Jika username sudah terdaftar
-                if (checkUsername)
-                    isAlready = true;
+        if (list != null) {
+            if (list.size() > 0) {
+                for (int i = 0; i < list.toArray().length; i++) {
+                    boolean checkUsername = (username.equals(list.get(i).getmUsername()));
+                    //Jika username sudah terdaftar
+                    if (checkUsername)
+                        isAlready = true;
+                }
             }
         }
         return isAlready;
