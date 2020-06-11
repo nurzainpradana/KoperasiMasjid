@@ -45,7 +45,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     //BottomNavigationBar
-    implementation "com.google.android.material:material:1.2.0-beta01"
+    implementation "com.google.android.material:material:1.2.0-aplha01"
 
     //simple search view
     //implementation 'com.github.Ferfalk:SimpleSearchView:0.1.5'
@@ -76,7 +76,13 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     //Firebase
-    implementation 'com.google.firebase:firebase-core:17.4.2'
+    implementation 'com.google.firebase:firebase-core:17.4.3'
     implementation 'com.google.firebase:firebase-auth:19.3.1'
     annotationProcessor 'androidx.room:room-compiler:2.2.5'
+
+    //EasyPermission
+    implementation 'pub.devrel:easypermissions:1.2.0'
+
+    //File Picker
+    implementation 'com.vincent.filepicker:MultiTypeFilePicker:1.0.7'
 }
