@@ -56,6 +56,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="body.bold.maroon">
+        <item name="android:textColor">@color/color_two</item>
+    </style>
+
     <!-- BUTTON STYLE -->
     <style name="btn_primary">
         <item name="android:layout_width">match_parent</item>
@@ -89,6 +93,19 @@
     <style name="input.text">
         <item name="android:inputType">text</item>
     </style>
+
+    <style name="input.maroon">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/bg_edt_input_edit_maroon</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textColor">@color/color_four</item>
+    </style>
+
+    <style name="input.maroon.text">
+        <item name="android:inputType">text</item>
+    </style>
+
 
     <style name="input.pin">
         <item name="android:layout_weight">1</item>

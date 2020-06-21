@@ -48,4 +48,11 @@
     <string name="username_already_registered">Username Sudah terdaftar</string>
     <string name="code_send_to">Kode dikirim ke nomor</string>
     <string name="phone_code">+62</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="choose_date">CHOOSE DATE</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="date_hint">31-12-2000</string>
+    <string name="wrong_username_password">Username / Password Salah</string>
+    <string name="verification_success">Verifikasi Berhasil</string>
 </resources>

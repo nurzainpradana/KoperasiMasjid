@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nurzainpradana.koperasimasjid.R;
+import com.nurzainpradana.koperasimasjid.model.Member;
+import com.nurzainpradana.koperasimasjid.util.MemberPreference;
 import com.nurzainpradana.koperasimasjid.view.main.MainActivity;
 import com.nurzainpradana.koperasimasjid.view.registerone.RegisterOneAct;
 import com.nurzainpradana.koperasimasjid.viewmodel.MemberViewModel;
@@ -27,12 +28,9 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
     private EditText edtSignInUsername;
     private EditText edtSignInPassword;
 
+    private String result;
+
     private MemberViewModel memberViewModel;
-
-    private String message;
-    String USERNAME_KEY = "usernamekey";
-    String username_key = "";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,28 +73,28 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
         //Cek Verifikasi Username Password
         memberViewModel.setMember(username, getApplicationContext());
         memberViewModel.getMember().observe(this, members -> {
-            if (username.equals(members.get(0).getmUsername())) {
-                if ( password.equals(members.get(0).getmPassword())){
+            if (username.equals(members.get(0).getmUsername())){
+                if (password.equals(members.get(0).getmPassword())) {
+                    MemberPreference memberPreference = new MemberPreference(this);
+                    Member mMember = new Member();
+                    mMember.setmUsername(members.get(0).getmUsername());
+                    memberPreference.setMember(mMember);
 
-                    //set sharedpreference
-                    SharedPreferences sf = getSharedPreferences(USERNAME_KEY, MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sf.edit();
-                    editor.putString(username_key, edtSignInUsername.getText().toString());
-                    editor.apply();
-
+                    Toast.makeText(this, "Verifikasi Selesai", Toast.LENGTH_SHORT).show();
+                    result = getString(R.string.verification_success);
                     Intent goToHome = new Intent(SignInAct.this, MainActivity.class);
                     startActivity(goToHome);
-                    finish();
-                } else {
-                    message = getString(R.string.wrong_password);
                 }
+                result = getString(R.string.wrong_password);
+                //Toast.makeText(this, getString(R.string.wrong_password), Toast.LENGTH_SHORT).show();
             } else {
-                message = getString(R.string.username_not_found);
-            }
-            if (message != null) {
-                Toast.makeText(SignInAct.this, message, Toast.LENGTH_SHORT).show();
+                result = getString(R.string.username_not_found);
+                //Toast.makeText(this, getString(R.string.username_not_found), Toast.LENGTH_SHORT).show();
             }
         });
+        if (result != null) {
+            Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+        }
     }
 
     //Enkripsi Password

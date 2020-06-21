@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.updateprofile.UpdateProfileFragment">
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="34dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.github.florent37.shapeofview.shapes.CircleView
+            android:id="@+id/container_photo"
+            android:layout_width="105dp"
+            android:layout_height="105dp"
+            app:shape_circle_borderWidth="2dp"
+            app:shape_circle_borderColor="@color/color_two"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_register_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/icon_nopic"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/register_photo" />
+        </com.github.florent37.shapeofview.shapes.CircleView>
+        <Button
+            android:id="@+id/btn_add_photo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_btn_plus_cream"
+            app:layout_constraintBottom_toBottomOf="@id/container_photo"
+            app:layout_constraintEnd_toEndOf="@id/container_photo"
+            android:text="@string/add"
+            android:textAlignment="center"
+            android:textColor="@color/color_two"
+            android:textSize="21sp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/full_name"
+        style="@style/body.bold.maroon"
+        android:layout_marginTop="8dp"/>
+
+    <EditText
+        android:id="@+id/edt_name"
+        style="@style/input.maroon.text"
+        tools:ignore="Autofill,LabelFor"
+        android:layout_marginTop="8dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_four"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/username"
+        style="@style/body.bold.maroon"
+        android:layout_marginTop="8dp"/>
+
+    <EditText
+        android:id="@+id/edt_username"
+        style="@style/input.maroon.text"
+        tools:ignore="Autofill,LabelFor"
+        android:layout_marginTop="8dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_four"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_phone"
+        style="@style/body.bold.maroon"
+        android:layout_marginTop="8dp"/>
+
+    <EditText
+        android:id="@+id/edt_no_phone"
+        style="@style/input.maroon.text"
+        android:layout_marginTop="8dp"
+        android:inputType="phone"
+        tools:ignore="Autofill,LabelFor" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_four"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/email"
+        style="@style/body.bold.maroon"
+        android:layout_marginTop="8dp"/>
+
+    <EditText
+        android:id="@+id/edt_email"
+        style="@style/input.maroon.text"
+        android:layout_marginTop="8dp"
+        android:inputType="textEmailAddress"
+        tools:ignore="Autofill,LabelFor" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_four"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/address"
+        style="@style/body.bold.maroon"
+        android:layout_marginTop="8dp"/>
+
+    <EditText
+        android:id="@+id/edt_address"
+        style="@style/input.maroon.text"
+        android:layout_marginTop="8dp"
+        android:inputType="text"
+        tools:ignore="Autofill,LabelFor" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_four"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/birth_date"
+        style="@style/body.bold.maroon"
+        android:layout_marginTop="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="5">
+
+            <EditText
+                android:id="@+id/edt_date_of_birth"
+                style="@style/input.maroon.text"
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:inputType="date"
+                tools:ignore="Autofill,LabelFor,NestedWeights" />
+
+            <Button
+                android:id="@+id/btn_choose_date"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_date"
+                android:textColor="@color/white"
+                style="@style/btn_primary.maroon"/>
+
+        </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_four"
+        android:layout_marginTop="8dp"/>
+
+        <Button
+            android:id="@+id/btn_update_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/update_password"
+            android:textColor="@color/color_two"
+            android:layout_marginTop="8dp"
+            style="@style/btn_primary.cream"/>
+
+        <Button
+            android:id="@+id/btn_save_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_save"
+            android:textColor="@color/white"
+            android:layout_marginTop="8dp"
+            style="@style/btn_primary.maroon"/>
+    </LinearLayout>
+</ScrollView>

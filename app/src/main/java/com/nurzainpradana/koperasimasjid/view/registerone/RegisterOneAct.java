@@ -21,6 +21,7 @@ import static com.nurzainpradana.koperasimasjid.util.EncryptMd5Java.encryptMd5Ja
 public class RegisterOneAct extends AppCompatActivity {
 
     Button btnRegisterOneNext;
+    Button btnChooseDate;
     EditText edtName;
     EditText edtNoPhone;
     EditText edtUsername;
@@ -39,6 +40,7 @@ public class RegisterOneAct extends AppCompatActivity {
         listMemberViewModel.getListMember().observe(this, resultMember -> list = resultMember.getmResultMember());
 
         btnRegisterOneNext = findViewById(R.id.btn_register_one_next);
+        btnChooseDate = findViewById(R.id.btn_choose_date);
         edtName = findViewById(R.id.edt_name);
         edtNoPhone = findViewById(R.id.edt_no_phone);
         edtUsername = findViewById(R.id.edt_username);

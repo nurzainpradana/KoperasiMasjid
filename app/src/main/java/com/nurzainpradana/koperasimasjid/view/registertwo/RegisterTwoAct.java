@@ -48,6 +48,7 @@ public class RegisterTwoAct extends AppCompatActivity {
 
     Button btnRegisterTwoNext;
     Button btnAddPhoto;
+    Button btnChooseDate;
     EditText edtEmail;
     EditText edtAddress;
     EditText edtDateOfBirth;
@@ -86,6 +87,7 @@ public class RegisterTwoAct extends AppCompatActivity {
         ivRegisterPhoto = findViewById(R.id.iv_register_photo);
         btnAddPhoto = findViewById(R.id.btn_add_photo);
         progressBar = findViewById(R.id.loading);
+        btnChooseDate = findViewById(R.id.btn_choose_date);
 
 
         Member member = getIntent().getParcelableExtra(EXTRA_MEMBER);
@@ -100,15 +102,19 @@ public class RegisterTwoAct extends AppCompatActivity {
         mMonth = myCalendar.get(Calendar.MONTH);
         mDay = myCalendar.get(Calendar.DAY_OF_WEEK);
 
-        edtDateOfBirth.setOnClickListener(v -> new DatePickerDialog(RegisterTwoAct.this, (view, year, month, dayOfMonth) -> {
-            myCalendar.set(Calendar.YEAR, year);
-            myCalendar.set(Calendar.MONTH, month);
-            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-            String formatTanggal = "dd/MM/yyyy";
-            sdf = new SimpleDateFormat(formatTanggal, Locale.getDefault());
-            edtDateOfBirth.setText(sdf.format(myCalendar.getTime()));
-        }, mYear, mMonth, mDay).show());
+        btnChooseDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(RegisterTwoAct.this, (view, year, month, dayOfMonth) -> {
+                    myCalendar.set(Calendar.YEAR, year);
+                    myCalendar.set(Calendar.MONTH, month);
+                    myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                    String formatTanggal = "dd-MM-yyyy";
+                    sdf = new SimpleDateFormat(formatTanggal, Locale.getDefault());
+                    edtDateOfBirth.setText(sdf.format(myCalendar.getTime()));
+                }, mYear, mMonth, mDay).show();
+            }
+        });
 
         btnAddPhoto.setOnClickListener(v -> showCameraPreview());
 

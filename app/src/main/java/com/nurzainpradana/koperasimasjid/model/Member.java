@@ -19,7 +19,7 @@ public class Member implements Parcelable {
     private String mNoPhone;
 
     @SerializedName("username")
-    private String mUsername;
+    public String mUsername;
 
     @SerializedName("password")
     private String mPassword;
@@ -67,15 +67,15 @@ public class Member implements Parcelable {
 
 
     public Member(Parcel in) {
-        this.mIdMember = in.readInt();
-        this.mName = in.readString();
-        this.mNoPhone = in.readString();
-        this.mUsername = in.readString();
-        this.mPassword = in.readString();
-        this.mEmail = in.readString();
-        this.mAddress = in.readString();
-        this.mDateOfBirth = (Date) in.readSerializable();
-        this.mPhotoProfile = in.readString();
+        mIdMember = in.readInt();
+        mName = in.readString();
+        mNoPhone = in.readString();
+        mUsername = in.readString();
+        mPassword = in.readString();
+        mEmail = in.readString();
+        mAddress = in.readString();
+        mDateOfBirth = (Date) in.readSerializable();
+        mPhotoProfile = in.readString();
     }
 
     public int getmIdMember() {

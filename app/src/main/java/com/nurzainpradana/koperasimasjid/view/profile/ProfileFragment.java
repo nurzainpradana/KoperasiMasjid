@@ -1,6 +1,7 @@
 package com.nurzainpradana.koperasimasjid.view.profile;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.model.Member;
+import com.nurzainpradana.koperasimasjid.util.MemberPreference;
+import com.nurzainpradana.koperasimasjid.view.updateprofile.UpdateProfileActivity;
 import com.nurzainpradana.koperasimasjid.viewmodel.MemberViewModel;
 import com.squareup.picasso.Picasso;
 
@@ -26,10 +29,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.nurzainpradana.koperasimasjid.BuildConfig.BASE_URL;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     private MemberViewModel memberViewModel;
-    String USERNAME_KEY = "usernamekey";
+    public static String USERNAME_KEY = "usernamekey";
+
+    public Member member;
+    public MemberPreference memberPreference;
 
     private TextView tvProfileName;
     private TextView tvProfileAddress;
@@ -60,6 +66,8 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        btnEditProfile = view.findViewById(R.id.btn_edit_profile);
+
         tvProfileName = view.findViewById(R.id.tv_profile_name);
         tvProfileAddress = view.findViewById(R.id.tv_profile_address);
         tvProfileEmail = view.findViewById(R.id.tv_profile_email);
@@ -68,13 +76,17 @@ public class ProfileFragment extends Fragment {
         tvProfilUsername = view.findViewById(R.id.tv_profile_username);
         ivProfilePicture = view.findViewById(R.id.iv_profile_frame_photo);
 
-        if (getArguments() != null){
-            String username = getArguments().getString(USERNAME_KEY);
-            memberViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(MemberViewModel.class);
-            memberViewModel.setMember(username, getContext());
+        if (getContext() != null) {
+            memberPreference = new MemberPreference(getContext());
+            member = memberPreference.getMember();
+            if (member != null) {
+                String username = member.getmUsername();
+                memberViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(MemberViewModel.class);
+                memberViewModel.setMember(username, getContext());
+            }
         }
 
-        memberViewModel.getMember().observe(this, new Observer<List<Member>>() {
+        memberViewModel.getMember().observe(getViewLifecycleOwner(), new Observer<List<Member>>() {
             @Override
             public void onChanged(List<Member> members) {
                 ProfileFragment.this.setView(members);
@@ -85,7 +97,7 @@ public class ProfileFragment extends Fragment {
     private void setView(List<Member> members) {
         tvProfileName.setText(members.get(0).getmName().toUpperCase());
         tvProfileAddress.setText(members.get(0).getmAddress());
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat ft = new SimpleDateFormat("yyyy.MM.dd");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat ft = new SimpleDateFormat("dd-MM-yyyy");
         tvProfileBirthdate.setText(ft.format(members.get(0).getmDateOfBirth()));
         tvProfileEmail.setText(members.get(0).getmEmail());
         tvProfileNoPhone.setText(members.get(0).getmNoPhone());
@@ -99,5 +111,18 @@ public class ProfileFragment extends Fragment {
                 .into(ivProfilePicture);
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        btnEditProfile.setOnClickListener(this);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId()==R.id.btn_edit_profile) {
+            Intent goToUpdateProfile = new Intent(getActivity(), UpdateProfileActivity.class);
+            startActivity(goToUpdateProfile);
+        }
+    }
 }

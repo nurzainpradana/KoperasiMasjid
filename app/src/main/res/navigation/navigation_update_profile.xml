@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_update_profile"
+    app:startDestination="@id/updateProfileFragment">
+
+    <fragment
+        android:id="@+id/updateProfileFragment"
+        android:name="com.nurzainpradana.koperasimasjid.view.updateprofile.UpdateProfileFragment"
+        android:label="fragment_update_profile"
+        tools:layout="@layout/fragment_update_profile" />
+</navigation>
