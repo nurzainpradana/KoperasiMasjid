@@ -1,16 +1,24 @@
 package com.nurzainpradana.koperasimasjid.view.updateprofile;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +26,11 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.model.Member;
 import com.nurzainpradana.koperasimasjid.util.Const;
@@ -32,7 +43,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
+import static android.app.Activity.RESULT_OK;
 import static com.nurzainpradana.koperasimasjid.BuildConfig.BASE_URL;
 
 public class UpdateProfileFragment extends Fragment implements View.OnClickListener{
@@ -44,9 +57,12 @@ public class UpdateProfileFragment extends Fragment implements View.OnClickListe
     private EditText edtAddress;
     private EditText edtDateOfBirth;
 
+    private TextView titleBar;
+
     private ImageView ivPhotoProfile;
 
     private Button btnChooseDate;
+    private Button btnAddPhoto;
     private Button btnUpdatePassword;
     private Button btnSaveProfile;
 
@@ -54,16 +70,20 @@ public class UpdateProfileFragment extends Fragment implements View.OnClickListe
     private MemberPreference memberPreference;
     private Member member;
 
+    RelativeLayout mLayout;
+
     private Calendar myCalendar;
     Integer mYear;
     Integer mMonth;
     Integer mDay;
     SimpleDateFormat sdf;
 
+    String imgPath;
+    String fileName;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -88,6 +108,7 @@ public class UpdateProfileFragment extends Fragment implements View.OnClickListe
         btnChooseDate = view.findViewById(R.id.btn_choose_date);
         btnUpdatePassword = view.findViewById(R.id.btn_update_password);
         btnSaveProfile = view.findViewById(R.id.btn_save_profile);
+        btnAddPhoto = view.findViewById(R.id.btn_add_photo);
     }
 
     @Override
@@ -106,6 +127,7 @@ public class UpdateProfileFragment extends Fragment implements View.OnClickListe
         });
 
         btnChooseDate.setOnClickListener(this);
+        btnAddPhoto.setOnClickListener(this);
     }
 
     public void setView(Member member) {
@@ -130,6 +152,73 @@ public class UpdateProfileFragment extends Fragment implements View.OnClickListe
         return member;
     }
 
+    private void showCameraPreview() {
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            //Permission is already availbale, start camera provide
+            loadImagefromGallery();
+        } else {
+            //Permission is missing and must be request
+            requestCameraPermission();
+        }
+    }
+
+    private void requestCameraPermission() {
+        //Permission has not been granted and must be request
+        if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            Snackbar.make(mLayout, R.string.camera_access_required, Snackbar.LENGTH_INDEFINITE).setAction("OK", v -> {
+                //request permission
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, new Const().PERMISSION_REQUEST_CAMERA);
+            }).show();
+        } else {
+            // Request the permission. The result will be received in onRequestPermissionResult().
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, new Const().PERMISSION_REQUEST_CAMERA);
+        }
+    }
+
+    public void loadImagefromGallery() {
+        //create intent to open image application like Gallery, Google Photos
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        //Start intent
+        startActivityForResult(galleryIntent,
+                new Const().RESULT_LOAD_IMAGE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        try {
+            //when image is picked
+            if (requestCode == new Const().RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+                //get image from data
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+                //Get the cursor
+                if (selectedImage != null) {
+                    Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    if (cursor != null) {
+                        cursor.moveToFirst();
+                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                        imgPath = cursor.getString(columnIndex);
+                        cursor.close();
+                    }
+                }
+
+                //set image in imageView
+                ivPhotoProfile.setImageBitmap(BitmapFactory.decodeFile(imgPath));
+
+                //get the image's filename
+                String[] fileNameSegments = imgPath.split("/");
+                fileName = fileNameSegments[fileNameSegments.length - 1];
+            } else {
+                Toast.makeText(getContext(), "You Haven't picked image", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -149,6 +238,10 @@ public class UpdateProfileFragment extends Fragment implements View.OnClickListe
                         edtDateOfBirth.setText(sdf.format(myCalendar.getTime()));
                     }
                 }, mYear, mMonth, mDay).show();
+
+            case R.id.btn_add_photo:
+                showCameraPreview();
+
         }
     }
 }

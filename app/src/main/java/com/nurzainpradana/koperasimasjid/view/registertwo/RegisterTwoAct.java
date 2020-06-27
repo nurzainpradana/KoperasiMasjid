@@ -30,6 +30,7 @@ import com.nurzainpradana.koperasimasjid.api.Api;
 import com.nurzainpradana.koperasimasjid.api.ApiInterface;
 import com.nurzainpradana.koperasimasjid.model.Member;
 import com.nurzainpradana.koperasimasjid.model.ResultMember;
+import com.nurzainpradana.koperasimasjid.util.Const;
 import com.nurzainpradana.koperasimasjid.util.UploadImage;
 import com.nurzainpradana.koperasimasjid.view.sucessregister.SuccessRegisterAct;
 
@@ -42,9 +43,7 @@ import retrofit2.Response;
 
 
 public class RegisterTwoAct extends AppCompatActivity {
-    public static final String EXTRA_MEMBER = "extra_member";
-    private static final int PERMISSION_REQUEST_CAMERA = 0;
-    private static int RESULT_LOAD_IMAGE = 1;
+
 
     Button btnRegisterTwoNext;
     Button btnAddPhoto;
@@ -90,7 +89,7 @@ public class RegisterTwoAct extends AppCompatActivity {
         btnChooseDate = findViewById(R.id.btn_choose_date);
 
 
-        Member member = getIntent().getParcelableExtra(EXTRA_MEMBER);
+        Member member = getIntent().getParcelableExtra(new Const().EXTRA_MEMBER);
         if (member != null) {
             name = member.getmName();
             username = member.getmUsername();
@@ -181,7 +180,7 @@ public class RegisterTwoAct extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         //Begin_include(onRequestPermissionResult)
-        if (requestCode == PERMISSION_REQUEST_CAMERA) {
+        if (requestCode == new Const().PERMISSION_REQUEST_CAMERA) {
             //request for camera permission
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //Permission has been granted. start camera preview action
@@ -209,11 +208,11 @@ public class RegisterTwoAct extends AppCompatActivity {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
             Snackbar.make(mLayout, R.string.camera_access_required, Snackbar.LENGTH_INDEFINITE).setAction("OK", v -> {
                 //request permission
-                ActivityCompat.requestPermissions(RegisterTwoAct.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CAMERA);
+                ActivityCompat.requestPermissions(RegisterTwoAct.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, new Const().PERMISSION_REQUEST_CAMERA);
             }).show();
         } else {
             // Request the permission. The result will be received in onRequestPermissionResult().
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CAMERA);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, new Const().PERMISSION_REQUEST_CAMERA);
         }
     }
 
@@ -221,7 +220,7 @@ public class RegisterTwoAct extends AppCompatActivity {
         //create intent to open image application like Gallery, Google Photos
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         //Start intent
-        startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+        startActivityForResult(galleryIntent, new Const().RESULT_LOAD_IMAGE);
     }
 
     //when image is selected from gallery
@@ -230,7 +229,7 @@ public class RegisterTwoAct extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         try {
             //when image is picked
-            if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            if (requestCode == new Const().RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             //get image from data
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};

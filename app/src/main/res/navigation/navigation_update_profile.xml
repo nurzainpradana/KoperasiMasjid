@@ -10,4 +10,6 @@
         android:name="com.nurzainpradana.koperasimasjid.view.updateprofile.UpdateProfileFragment"
         android:label="fragment_update_profile"
         tools:layout="@layout/fragment_update_profile" />
+
+
 </navigation>

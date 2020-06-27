@@ -8,5 +8,5 @@
         />
     <stroke
         android:color="@color/color_two"
-        android:width="2dp"/>
+        android:width="1dp"/>
 </shape>

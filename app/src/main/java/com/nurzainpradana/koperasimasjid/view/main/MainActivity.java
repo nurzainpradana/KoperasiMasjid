@@ -118,4 +118,9 @@ public class MainActivity extends AppCompatActivity {
         username = sf.getString(username_key, "");
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }
