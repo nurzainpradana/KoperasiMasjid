@@ -9,7 +9,16 @@
         android:id="@+id/updateProfileFragment"
         android:name="com.nurzainpradana.koperasimasjid.view.updateprofile.UpdateProfileFragment"
         android:label="fragment_update_profile"
-        tools:layout="@layout/fragment_update_profile" />
+        tools:layout="@layout/fragment_update_profile" >
+        <action
+            android:id="@+id/action_updateProfileFragment_to_updatePasswordFragment"
+            app:destination="@id/updatePasswordFragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/updatePasswordFragment"
+        android:name="com.nurzainpradana.koperasimasjid.view.updateprofile.UpdatePasswordFragment"
+        android:label="fragment_update_password"
+        tools:layout="@layout/fragment_update_password" />
 
 </navigation>

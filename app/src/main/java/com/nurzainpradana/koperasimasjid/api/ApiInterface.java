@@ -23,6 +23,10 @@ public interface ApiInterface {
     Call<ResultMember> uploadPhoto(@Field("image") String image,
                                    @Field("filename") String filename);
 
+    @FormUrlEncoded
+    @POST("/koperasimasjid/removePhotoProfile.php")
+    Call<ResultMember> removePhoto(@Field("filename") String filename);
+
     @GET("/koperasimasjid/getAllMember.php")
     Call<ResultMember> getAllMember();
 

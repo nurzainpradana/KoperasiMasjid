@@ -41,6 +41,17 @@ public class UploadImage {
         }
     }
 
+    //when upload button is clicked
+    public void removeImage() {
+        //when image is selected from gallery
+        if (imgPath != null && !imgPath.isEmpty()) {
+            //convert image to string using base64
+            makeHTTPCallRemove();
+        } else {
+            Log.e("Error", "You must select image from gallery before you try to upload");
+        }
+    }
+
     //AsyncTask - To conver Image to String
     @SuppressLint("StaticFieldLeak")
     public void encodeImagetoString(String imgPath) {
@@ -67,13 +78,13 @@ public class UploadImage {
             @Override
             protected void onPostExecute(String s) {
                 //trigger image upload
-                makeHTTPCall();
+                makeHTTPCallUpload();
             }
         }.execute(null, null, null);
     }
 
     //make http call to upload image to php server
-    public void makeHTTPCall() {
+    public void makeHTTPCallUpload() {
         Service = Api.getApi().create(ApiInterface.class);
         uploadImage();
         Call = Service.uploadPhoto(encodedString, fileName);
@@ -86,6 +97,24 @@ public class UploadImage {
             @Override
             public void onFailure(retrofit2.Call<ResultMember> call, Throwable t) {
                 Log.d("UPLOAD GAGAL", t.toString());
+            }
+        });
+    }
+
+    //make http call to upload image to php server
+    public void makeHTTPCallRemove() {
+        Service = Api.getApi().create(ApiInterface.class);
+        uploadImage();
+        Call = Service.removePhoto(fileName);
+        Call.enqueue(new Callback<ResultMember>() {
+            @Override
+            public void onResponse(retrofit2.Call<ResultMember> call, Response<ResultMember> response) {
+                Log.d("REMOVE", response.toString());
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<ResultMember> call, Throwable t) {
+                Log.d("REMOVE GAGAL", t.toString());
             }
         });
     }
