@@ -1,6 +1,7 @@
 package com.nurzainpradana.koperasimasjid.view.signin;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -21,6 +22,7 @@ import com.nurzainpradana.koperasimasjid.viewmodel.MemberViewModel;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -72,24 +74,27 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
     private void verification(String username, String password) {
         //Cek Verifikasi Username Password
         memberViewModel.setMember(username, getApplicationContext());
-        memberViewModel.getMember().observe(this, members -> {
-            if (username.equals(members.get(0).getmUsername())){
-                if (password.equals(members.get(0).getmPassword())) {
-                    MemberPreference memberPreference = new MemberPreference(this);
-                    Member mMember = new Member();
-                    mMember.setmUsername(members.get(0).getmUsername());
-                    memberPreference.setMember(mMember);
+        memberViewModel.getMember().observe(this, new Observer<List<Member>>() {
+            @Override
+            public void onChanged(List<Member> members) {
+                if (username.equals(members.get(0).getmUsername())) {
+                    if (password.equals(members.get(0).getmPassword())) {
+                        MemberPreference memberPreference = new MemberPreference(SignInAct.this);
+                        Member mMember = new Member();
+                        mMember.setmUsername(members.get(0).getmUsername());
+                        memberPreference.setMember(mMember);
 
-                    Toast.makeText(this, "Verifikasi Selesai", Toast.LENGTH_SHORT).show();
-                    result = getString(R.string.verification_success);
-                    Intent goToHome = new Intent(SignInAct.this, MainActivity.class);
-                    startActivity(goToHome);
+                        Toast.makeText(SignInAct.this, "Verifikasi Selesai", Toast.LENGTH_SHORT).show();
+                        result = SignInAct.this.getString(R.string.verification_success);
+                        Intent goToHome = new Intent(SignInAct.this, MainActivity.class);
+                        SignInAct.this.startActivity(goToHome);
+                    }
+                    result = SignInAct.this.getString(R.string.wrong_password);
+                    //Toast.makeText(this, getString(R.string.wrong_password), Toast.LENGTH_SHORT).show();
+                } else {
+                    result = SignInAct.this.getString(R.string.username_not_found);
+                    //Toast.makeText(this, getString(R.string.username_not_found), Toast.LENGTH_SHORT).show();
                 }
-                result = getString(R.string.wrong_password);
-                //Toast.makeText(this, getString(R.string.wrong_password), Toast.LENGTH_SHORT).show();
-            } else {
-                result = getString(R.string.username_not_found);
-                //Toast.makeText(this, getString(R.string.username_not_found), Toast.LENGTH_SHORT).show();
             }
         });
         if (result != null) {
@@ -117,5 +122,4 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
         }
         return digest;
     }
-
 }

@@ -28,11 +28,11 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.nurzainpradana.koperasimasjid.BuildConfig.BASE_URL;
+import static com.nurzainpradana.koperasimasjid.util.Const.IMGPATH;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     private MemberViewModel memberViewModel;
-    public static String USERNAME_KEY = "usernamekey";
 
     public Member member;
     public MemberPreference memberPreference;
@@ -103,7 +103,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         tvProfileNoPhone.setText(members.get(0).getmNoPhone());
         tvProfilUsername.setText(members.get(0).getmUsername());
 
-        String urlPhoto = BASE_URL + members.get(0).getmPhotoProfile();
+        String urlPhoto = BASE_URL + IMGPATH + members.get(0).getmPhotoProfile();
         Picasso.get()
                 .load(urlPhoto)
                 .placeholder(R.mipmap.ic_launcher)

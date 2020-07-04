@@ -23,11 +23,18 @@ public class UploadImage {
     String encodedString;
     String fileName;
     String imgPath;
+    String urlPhoto;
 
     public UploadImage(String imgPath, String fileName) {
         this.imgPath = imgPath;
         this.fileName = fileName;
     }
+
+    public UploadImage(String urlPhoto) {
+        this.urlPhoto = urlPhoto;
+    }
+
+
 
     //when upload button is clicked
     public void uploadImage() {
@@ -44,8 +51,7 @@ public class UploadImage {
     //when upload button is clicked
     public void removeImage() {
         //when image is selected from gallery
-        if (imgPath != null && !imgPath.isEmpty()) {
-            //convert image to string using base64
+        if (urlPhoto != null) {
             makeHTTPCallRemove();
         } else {
             Log.e("Error", "You must select image from gallery before you try to upload");
@@ -105,7 +111,7 @@ public class UploadImage {
     public void makeHTTPCallRemove() {
         Service = Api.getApi().create(ApiInterface.class);
         uploadImage();
-        Call = Service.removePhoto(fileName);
+        Call = Service.removePhoto(urlPhoto);
         Call.enqueue(new Callback<ResultMember>() {
             @Override
             public void onResponse(retrofit2.Call<ResultMember> call, Response<ResultMember> response) {

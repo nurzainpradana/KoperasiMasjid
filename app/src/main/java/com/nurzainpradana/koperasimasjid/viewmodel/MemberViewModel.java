@@ -1,6 +1,7 @@
 package com.nurzainpradana.koperasimasjid.viewmodel;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -20,10 +21,6 @@ public class MemberViewModel  extends ViewModel {
 
     private MutableLiveData<List<Member>> memberMutableLiveData = new MutableLiveData<>();
 
-    public MutableLiveData<List<Member>> getMember() {
-        return memberMutableLiveData;
-    }
-
     public void setMember(String username, Context context) {
         ApiInterface Service;
         Call<List<Member>> Call;
@@ -40,10 +37,15 @@ public class MemberViewModel  extends ViewModel {
                 @Override
                 public void onFailure(retrofit2.Call<List<Member>> call, Throwable t) {
                     Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.d("ERROR", t.getMessage());
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public MutableLiveData<List<Member>> getMember() {
+        return memberMutableLiveData;
     }
 }

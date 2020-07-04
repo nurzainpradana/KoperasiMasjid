@@ -19,6 +19,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,9 +33,13 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.nurzainpradana.koperasimasjid.R;
+import com.nurzainpradana.koperasimasjid.api.Api;
+import com.nurzainpradana.koperasimasjid.api.ApiInterface;
 import com.nurzainpradana.koperasimasjid.model.Member;
+import com.nurzainpradana.koperasimasjid.model.ResultMember;
 import com.nurzainpradana.koperasimasjid.util.Const;
 import com.nurzainpradana.koperasimasjid.util.MemberPreference;
+import com.nurzainpradana.koperasimasjid.util.UploadImage;
 import com.nurzainpradana.koperasimasjid.view.registertwo.RegisterTwoAct;
 import com.nurzainpradana.koperasimasjid.viewmodel.MemberViewModel;
 import com.squareup.picasso.Picasso;
@@ -45,8 +50,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 import static android.app.Activity.RESULT_OK;
 import static com.nurzainpradana.koperasimasjid.BuildConfig.BASE_URL;
+import static com.nurzainpradana.koperasimasjid.util.Const.IMGPATH;
 
 public class UpdateProfileFragment extends Fragment implements View.OnClickListener{
 
@@ -73,13 +83,23 @@ public class UpdateProfileFragment extends Fragment implements View.OnClickListe
     RelativeLayout mLayout;
 
     private Calendar myCalendar;
+    SimpleDateFormat sdf;
+
+    Integer idMember;
+    String email;
+    String address;
+    String fullname;
+    String username;
+    String password;
+    String noPhone;
+    String dateOfBirth;
+    String imgPath;
+    String fileName;
+    String urlPhoto;
+    String urlPhotoProfile;
     Integer mYear;
     Integer mMonth;
     Integer mDay;
-    SimpleDateFormat sdf;
-
-    String imgPath;
-    String fileName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -128,6 +148,7 @@ public class UpdateProfileFragment extends Fragment implements View.OnClickListe
 
         btnChooseDate.setOnClickListener(this);
         btnAddPhoto.setOnClickListener(this);
+        btnSaveProfile.setOnClickListener(this);
     }
 
     public void setView(Member member) {
@@ -138,12 +159,16 @@ public class UpdateProfileFragment extends Fragment implements View.OnClickListe
         edtEmail.setText(member.getmEmail());
         @SuppressLint("SimpleDateFormat") SimpleDateFormat ft = new SimpleDateFormat("dd-MM-yyyy");
         edtDateOfBirth.setText(ft.format(member.getmDateOfBirth()));
-        String urlPhoto = BASE_URL + member.getmPhotoProfile();
+        String urlPhoto = BASE_URL + IMGPATH + member.getmPhotoProfile();
         Picasso.get()
-                .load(urlPhoto)
+                .load( urlPhoto)
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .into(ivPhotoProfile);
+        password = member.getmPassword();
+        idMember = member.getmIdMember();
+
+        urlPhotoProfile = member.getmPhotoProfile();
     }
 
     public Member getMemberPreference() {
@@ -221,7 +246,7 @@ public class UpdateProfileFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        switch (v.getId()){
             case R.id.btn_choose_date:
                 myCalendar = Calendar.getInstance();
                 mYear = myCalendar.get(Calendar.YEAR);
@@ -238,10 +263,62 @@ public class UpdateProfileFragment extends Fragment implements View.OnClickListe
                         edtDateOfBirth.setText(sdf.format(myCalendar.getTime()));
                     }
                 }, mYear, mMonth, mDay).show();
+                break;
 
             case R.id.btn_add_photo:
                 showCameraPreview();
+                break;
 
+            case R.id.btn_save_profile:
+                fullname =  edtFullname.getText().toString();
+                noPhone = edtPhoneNumber.getText().toString();
+                username = edtUsername.getText().toString();
+                address = edtAddress.getText().toString();
+                email = edtEmail.getText().toString();
+                dateOfBirth = edtDateOfBirth.getText().toString();
+
+                if (fileName == null){
+                    urlPhoto = urlPhotoProfile;
+                    Toast.makeText(getContext(), urlPhoto, Toast.LENGTH_SHORT).show();
+                } else {
+
+                    UploadImage uploadImage = new UploadImage(imgPath, fileName);
+                    uploadImage.uploadImage();
+
+                    uploadImage = new UploadImage(urlPhotoProfile);
+                    uploadImage.removeImage();
+
+                    urlPhoto = fileName;
+                    Toast.makeText(getContext(), urlPhotoProfile, Toast.LENGTH_SHORT).show();
+                }
+
+                ApiInterface Service;
+                retrofit2.Call<ResultMember> Call;
+                Service = Api.getApi().create(ApiInterface.class);
+                Call = Service.updateMember(idMember, fullname, noPhone, username, password, email, address, dateOfBirth, urlPhoto);
+                Call.enqueue(new Callback<ResultMember>() {
+                    @Override
+                    public void onResponse(retrofit2.Call<ResultMember> call, Response<ResultMember> response) {
+                        if (response.body() != null) {
+                            String value = response.body().getValue();
+                            String message = response.body().getMessage();
+                            if (value.equals("1")) {
+                                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                                Log.d("UPDATE", message);
+                            } else {
+                                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                                Log.d("UPDATE", message);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(retrofit2.Call<ResultMember> call, Throwable t) {
+                        t.printStackTrace();
+                        Log.e("error", String.valueOf(t));
+                    }
+                });
+                break;
         }
     }
 }

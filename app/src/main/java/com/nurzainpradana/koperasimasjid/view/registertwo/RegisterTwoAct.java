@@ -1,6 +1,7 @@
 package com.nurzainpradana.koperasimasjid.view.registertwo;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,11 +32,16 @@ import com.nurzainpradana.koperasimasjid.api.ApiInterface;
 import com.nurzainpradana.koperasimasjid.model.Member;
 import com.nurzainpradana.koperasimasjid.model.ResultMember;
 import com.nurzainpradana.koperasimasjid.util.Const;
+import com.nurzainpradana.koperasimasjid.util.MemberPreference;
 import com.nurzainpradana.koperasimasjid.util.UploadImage;
+import com.nurzainpradana.koperasimasjid.view.signin.SignInAct;
 import com.nurzainpradana.koperasimasjid.view.sucessregister.SuccessRegisterAct;
+import com.nurzainpradana.koperasimasjid.viewmodel.CreateMemberViewModel;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import retrofit2.Callback;
@@ -129,52 +135,40 @@ public class RegisterTwoAct extends AppCompatActivity {
                 email = edtEmail.getText().toString();
                 address = edtAddress.getText().toString();
                 dateOfBirth = edtDateOfBirth.getText().toString();
-                saveMember();
+                try {
+                    Member mMember = new Member();
+                    mMember.setmName(name);
+                    mMember.setmNoPhone(noPhone);
+                    mMember.setmUsername(username);
+                    mMember.setmPassword(password);
+                    mMember.setmEmail(email);
+                    mMember.setmAddress(address);
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                    Date birthDate = sdf.parse(dateOfBirth);
+                    mMember.setmDateOfBirth(birthDate);
+                    mMember.setmPhotoProfile(fileName);
+                    saveMember(mMember);
 
-                SharedPreferences sf = getSharedPreferences(USERNAME_KEY, MODE_PRIVATE);
-                SharedPreferences.Editor editor = sf.edit();
-                editor.putString(username_key, username);
-                editor.apply();
+                    MemberPreference memberPreference = new MemberPreference(RegisterTwoAct.this);
+                    memberPreference.setMember(mMember);
 
-                Intent gotoSuccessRegister = new Intent(RegisterTwoAct.this, SuccessRegisterAct.class);
-                startActivity(gotoSuccessRegister);
+                    Intent gotoSuccessRegister = new Intent(RegisterTwoAct.this, SuccessRegisterAct.class);
+                    startActivity(gotoSuccessRegister);
+                    finish();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
 
-    public void saveMember() {
-        progressBar.setVisibility(View.VISIBLE);
-        ApiInterface Service;
-        retrofit2.Call<ResultMember> Call;
-        Service = Api.getApi().create(ApiInterface.class);
+    public void saveMember(Member mMember){
+
         UploadImage uploadImage = new UploadImage(imgPath, fileName);
         uploadImage.uploadImage();
-        Call = Service.insertMember(name, noPhone, username, password, email, address, dateOfBirth, "/koperasimasjid/img/" + fileName);
-        Call.enqueue(new Callback<ResultMember>() {
-            @Override
-            public void onResponse(retrofit2.Call<ResultMember> call, Response<ResultMember> response) {
-                if (response.body() != null) {
-                    String value = response.body().getValue();
-                    String message = response.body().getMessage();
-                    if (value.equals("1")) {
-                        Toast.makeText(RegisterTwoAct.this, message, Toast.LENGTH_SHORT).show();
-                        finish();
-                    } else {
-                        Toast.makeText(RegisterTwoAct.this, message, Toast.LENGTH_SHORT).show();
-                    }
-                    progressBar.setVisibility(View.INVISIBLE);
-                }
-            }
 
-            @Override
-            public void onFailure(retrofit2.Call<ResultMember> call, Throwable t) {
-                t.printStackTrace();
-                Log.e("error", String.valueOf(t));
-                progressBar.setVisibility(View.INVISIBLE);
-                Toast.makeText(RegisterTwoAct.this, "Jaringan Error !", Toast.LENGTH_SHORT).show();
-                progressBar.setVisibility(View.INVISIBLE);
-            }
-        });
+        CreateMemberViewModel createMemberViewModel = new CreateMemberViewModel();
+        createMemberViewModel.setCreateMember(getApplicationContext(), mMember);
     }
 
     @Override
