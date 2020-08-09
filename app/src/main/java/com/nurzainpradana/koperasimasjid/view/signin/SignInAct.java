@@ -13,11 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nurzainpradana.koperasimasjid.R;
-import com.nurzainpradana.koperasimasjid.model.Member;
-import com.nurzainpradana.koperasimasjid.util.MemberPreference;
+import com.nurzainpradana.koperasimasjid.model.User;
+import com.nurzainpradana.koperasimasjid.util.UsernamePreference;
 import com.nurzainpradana.koperasimasjid.view.main.MainActivity;
 import com.nurzainpradana.koperasimasjid.view.registerone.RegisterOneAct;
-import com.nurzainpradana.koperasimasjid.viewmodel.MemberViewModel;
+import com.nurzainpradana.koperasimasjid.viewmodel.UserViewModel;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -32,7 +32,7 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
 
     private String result;
 
-    private MemberViewModel memberViewModel;
+    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
         registerNow.setOnClickListener(this);
         btnSignIn.setOnClickListener(this);
 
-        memberViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(MemberViewModel.class);
+        userViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(UserViewModel.class);
     }
 
     @Override
@@ -73,16 +73,14 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
 
     private void verification(String username, String password) {
         //Cek Verifikasi Username Password
-        memberViewModel.setMember(username, getApplicationContext());
-        memberViewModel.getMember().observe(this, new Observer<List<Member>>() {
+        userViewModel.setUser(username, getApplicationContext());
+        userViewModel.getUser().observe(this, new Observer<List<User>>() {
             @Override
-            public void onChanged(List<Member> members) {
-                if (username.equals(members.get(0).getmUsername())) {
-                    if (password.equals(members.get(0).getmPassword())) {
-                        MemberPreference memberPreference = new MemberPreference(SignInAct.this);
-                        Member mMember = new Member();
-                        mMember.setmUsername(members.get(0).getmUsername());
-                        memberPreference.setMember(mMember);
+            public void onChanged(List<User> users) {
+                if (username.equals(users.get(0).getmUsername())) {
+                    if (password.equals(users.get(0).getmPassword())) {
+                        UsernamePreference usernamePreference = new UsernamePreference(SignInAct.this);
+                        usernamePreference.setUsernameSF(username);
 
                         Toast.makeText(SignInAct.this, "Verifikasi Selesai", Toast.LENGTH_SHORT).show();
                         result = SignInAct.this.getString(R.string.verification_success);

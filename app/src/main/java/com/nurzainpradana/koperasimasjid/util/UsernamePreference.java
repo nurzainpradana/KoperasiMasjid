@@ -3,9 +3,7 @@ package com.nurzainpradana.koperasimasjid.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.nurzainpradana.koperasimasjid.model.Member;
-
-public class MemberPreference {
+public class UsernamePreference {
 
     private static final String PREFS_NAME = "user_pref";
 
@@ -13,21 +11,17 @@ public class MemberPreference {
 
     private SharedPreferences sharedPreferences;
 
-    public MemberPreference(Context context) {
+    public UsernamePreference(Context context) {
         sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
-    public void setMember(Member member) {
+    public void setUsernameSF(String username) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(USERNAME, member.getmUsername());
+        editor.putString(USERNAME, username);
         editor.apply();
     }
 
-    public Member getMember() {
-        Member member = new Member();
-        member.setmUsername(sharedPreferences.getString(USERNAME, ""));
-        return member;
+    public String getUsernameSF() {
+        return sharedPreferences.getString(USERNAME, "");
     }
-
-
 }

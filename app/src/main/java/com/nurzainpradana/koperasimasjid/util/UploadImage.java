@@ -9,7 +9,7 @@ import android.util.Log;
 
 import com.nurzainpradana.koperasimasjid.api.Api;
 import com.nurzainpradana.koperasimasjid.api.ApiInterface;
-import com.nurzainpradana.koperasimasjid.model.ResultMember;
+import com.nurzainpradana.koperasimasjid.model.ResultUser;
 
 import java.io.ByteArrayOutputStream;
 
@@ -18,7 +18,7 @@ import retrofit2.Response;
 
 public class UploadImage {
     ApiInterface Service;
-    retrofit2.Call<ResultMember> Call;
+    retrofit2.Call<ResultUser> Call;
 
     String encodedString;
     String fileName;
@@ -93,15 +93,15 @@ public class UploadImage {
     public void makeHTTPCallUpload() {
         Service = Api.getApi().create(ApiInterface.class);
         uploadImage();
-        Call = Service.uploadPhoto(encodedString, fileName);
-        Call.enqueue(new Callback<ResultMember>() {
+        Call = Service.uploadPhotoProfile(encodedString, fileName);
+        Call.enqueue(new Callback<ResultUser>() {
             @Override
-            public void onResponse(retrofit2.Call<ResultMember> call, Response<ResultMember> response) {
+            public void onResponse(retrofit2.Call<ResultUser> call, Response<ResultUser> response) {
                 Log.d("UPLOAD", response.toString());
             }
 
             @Override
-            public void onFailure(retrofit2.Call<ResultMember> call, Throwable t) {
+            public void onFailure(retrofit2.Call<ResultUser> call, Throwable t) {
                 Log.d("UPLOAD GAGAL", t.toString());
             }
         });
@@ -111,15 +111,15 @@ public class UploadImage {
     public void makeHTTPCallRemove() {
         Service = Api.getApi().create(ApiInterface.class);
         uploadImage();
-        Call = Service.removePhoto(urlPhoto);
-        Call.enqueue(new Callback<ResultMember>() {
+        Call = Service.removePhotoProfile(urlPhoto);
+        Call.enqueue(new Callback<ResultUser>() {
             @Override
-            public void onResponse(retrofit2.Call<ResultMember> call, Response<ResultMember> response) {
+            public void onResponse(retrofit2.Call<ResultUser> call, Response<ResultUser> response) {
                 Log.d("REMOVE", response.toString());
             }
 
             @Override
-            public void onFailure(retrofit2.Call<ResultMember> call, Throwable t) {
+            public void onFailure(retrofit2.Call<ResultUser> call, Throwable t) {
                 Log.d("REMOVE GAGAL", t.toString());
             }
         });

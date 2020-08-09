@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
@@ -27,16 +26,12 @@ import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.nurzainpradana.koperasimasjid.R;
-import com.nurzainpradana.koperasimasjid.api.Api;
-import com.nurzainpradana.koperasimasjid.api.ApiInterface;
-import com.nurzainpradana.koperasimasjid.model.Member;
-import com.nurzainpradana.koperasimasjid.model.ResultMember;
+import com.nurzainpradana.koperasimasjid.model.User;
 import com.nurzainpradana.koperasimasjid.util.Const;
-import com.nurzainpradana.koperasimasjid.util.MemberPreference;
+import com.nurzainpradana.koperasimasjid.util.UsernamePreference;
 import com.nurzainpradana.koperasimasjid.util.UploadImage;
-import com.nurzainpradana.koperasimasjid.view.signin.SignInAct;
 import com.nurzainpradana.koperasimasjid.view.sucessregister.SuccessRegisterAct;
-import com.nurzainpradana.koperasimasjid.viewmodel.CreateMemberViewModel;
+import com.nurzainpradana.koperasimasjid.viewmodel.UserViewModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,12 +39,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import retrofit2.Callback;
-import retrofit2.Response;
 
-
-public class RegisterTwoAct extends AppCompatActivity {
-
+public class RegisterTwoAct extends AppCompatActivity implements View.OnClickListener{
 
     Button btnRegisterTwoNext;
     Button btnAddPhoto;
@@ -59,9 +50,6 @@ public class RegisterTwoAct extends AppCompatActivity {
     EditText edtDateOfBirth;
     ImageView ivRegisterPhoto;
     ProgressBar progressBar;
-
-    String USERNAME_KEY = "usernamekey";
-    String username_key = "";
 
     String email;
     String address;
@@ -81,6 +69,8 @@ public class RegisterTwoAct extends AppCompatActivity {
 
     RelativeLayout mLayout;
 
+    UserViewModel userViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,85 +80,37 @@ public class RegisterTwoAct extends AppCompatActivity {
         edtAddress = findViewById(R.id.edt_address);
         edtDateOfBirth = findViewById(R.id.edt_date_of_birth);
         ivRegisterPhoto = findViewById(R.id.iv_register_photo);
-        btnAddPhoto = findViewById(R.id.btn_add_photo);
         progressBar = findViewById(R.id.loading);
+
+        btnAddPhoto = findViewById(R.id.btn_add_photo);
         btnChooseDate = findViewById(R.id.btn_choose_date);
+        btnRegisterTwoNext = findViewById(R.id.btn_register_two_next);
 
 
-        Member member = getIntent().getParcelableExtra(new Const().EXTRA_MEMBER);
-        if (member != null) {
-            name = member.getmName();
-            username = member.getmUsername();
-            password = member.getmPassword();
-            noPhone = member.getmNoPhone();
+        User user = getIntent().getParcelableExtra(new Const().EXTRA_USER);
+        if (user != null) {
+            name = user.getmName();
+            username = user.getmUsername();
+            password = user.getmPassword();
+            noPhone = user.getmNoPhone();
         }
         myCalendar = Calendar.getInstance();
         mYear = myCalendar.get(Calendar.YEAR);
         mMonth = myCalendar.get(Calendar.MONTH);
         mDay = myCalendar.get(Calendar.DAY_OF_WEEK);
 
-        btnChooseDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(RegisterTwoAct.this, (view, year, month, dayOfMonth) -> {
-                    myCalendar.set(Calendar.YEAR, year);
-                    myCalendar.set(Calendar.MONTH, month);
-                    myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                    String formatTanggal = "dd-MM-yyyy";
-                    sdf = new SimpleDateFormat(formatTanggal, Locale.getDefault());
-                    edtDateOfBirth.setText(sdf.format(myCalendar.getTime()));
-                }, mYear, mMonth, mDay).show();
-            }
-        });
-
-        btnAddPhoto.setOnClickListener(v -> showCameraPreview());
-
-        btnRegisterTwoNext = findViewById(R.id.btn_register_two_next);
-        btnRegisterTwoNext.setOnClickListener(v -> {
-            if(edtEmail.getText().toString().isEmpty()) {
-                edtEmail.setError(getString(R.string.not_null));
-            } else if (edtAddress.getText().toString().isEmpty()) {
-                edtAddress.setError(getString(R.string.not_null));
-            } else if (edtDateOfBirth.getText().toString().isEmpty()) {
-                edtDateOfBirth.setError(getString(R.string.not_null));
-            } else {
-                email = edtEmail.getText().toString();
-                address = edtAddress.getText().toString();
-                dateOfBirth = edtDateOfBirth.getText().toString();
-                try {
-                    Member mMember = new Member();
-                    mMember.setmName(name);
-                    mMember.setmNoPhone(noPhone);
-                    mMember.setmUsername(username);
-                    mMember.setmPassword(password);
-                    mMember.setmEmail(email);
-                    mMember.setmAddress(address);
-                    @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-                    Date birthDate = sdf.parse(dateOfBirth);
-                    mMember.setmDateOfBirth(birthDate);
-                    mMember.setmPhotoProfile(fileName);
-                    saveMember(mMember);
-
-                    MemberPreference memberPreference = new MemberPreference(RegisterTwoAct.this);
-                    memberPreference.setMember(mMember);
-
-                    Intent gotoSuccessRegister = new Intent(RegisterTwoAct.this, SuccessRegisterAct.class);
-                    startActivity(gotoSuccessRegister);
-                    finish();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        btnChooseDate.setOnClickListener(this);
+        btnAddPhoto.setOnClickListener(this);
+        btnRegisterTwoNext.setOnClickListener(this);
     }
 
-    public void saveMember(Member mMember){
+    public void saveMember(User mUser){
 
         UploadImage uploadImage = new UploadImage(imgPath, fileName);
         uploadImage.uploadImage();
 
-        CreateMemberViewModel createMemberViewModel = new CreateMemberViewModel();
-        createMemberViewModel.setCreateMember(getApplicationContext(), mMember);
+        userViewModel = new UserViewModel();
+        userViewModel.setCreateUser(getApplicationContext(), mUser);
     }
 
     @Override
@@ -261,6 +203,63 @@ public class RegisterTwoAct extends AppCompatActivity {
         //dissmiss the progress bar when appliaction is closed
         if (progressBar != null) {
             progressBar.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_choose_date:
+                new DatePickerDialog(RegisterTwoAct.this, (view, year, month, dayOfMonth) -> {
+                    myCalendar.set(Calendar.YEAR, year);
+                    myCalendar.set(Calendar.MONTH, month);
+                    myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                    String formatTanggal = "dd-MM-yyyy";
+                    sdf = new SimpleDateFormat(formatTanggal, Locale.getDefault());
+                    edtDateOfBirth.setText(sdf.format(myCalendar.getTime()));
+                }, mYear, mMonth, mDay).show();
+                break;
+
+            case R.id.btn_add_photo:
+                showCameraPreview();
+                break;
+
+            case R.id.btn_register_two_next:
+                if (edtEmail.getText().toString().isEmpty()) {
+                    edtEmail.setError(getString(R.string.not_null));
+                } else if (edtAddress.getText().toString().isEmpty()) {
+                    edtAddress.setError(getString(R.string.not_null));
+                } else if (edtDateOfBirth.getText().toString().isEmpty()) {
+                    edtDateOfBirth.setError(getString(R.string.not_null));
+                } else {
+                    email = edtEmail.getText().toString();
+                    address = edtAddress.getText().toString();
+                    dateOfBirth = edtDateOfBirth.getText().toString();
+                    try {
+                        User mUser = new User();
+                        mUser.setmName(name);
+                        mUser.setmNoPhone(noPhone);
+                        mUser.setmUsername(username);
+                        mUser.setmPassword(password);
+                        mUser.setmEmail(email);
+                        mUser.setmAddress(address);
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                        Date birthDate = sdf.parse(dateOfBirth);
+                        mUser.setmDateOfBirth(birthDate);
+                        mUser.setmPhotoProfile(fileName);
+                        saveMember(mUser);
+
+                        UsernamePreference usernamePreference = new UsernamePreference(RegisterTwoAct.this);
+                        usernamePreference.setUsernameSF(mUser.getmUsername());
+
+                        Intent gotoSuccessRegister = new Intent(RegisterTwoAct.this, SuccessRegisterAct.class);
+                        startActivity(gotoSuccessRegister);
+                        finish();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
         }
     }
 }

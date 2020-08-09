@@ -2,9 +2,25 @@ package com.nurzainpradana.koperasimasjid.util;
 
 public class Const {
 
-    public static final String IMGPATH = "/koperasimasjid/img/" ;
+    public static final String IMGPATH = "/koperasimasjid/img_user/" ;
     public final String USERNAME_KEY = "username";
+    public final String REGISTRATION_KEY = "registration";
+    public final String UPDATE_KEY = "update";
+
     public final int RESULT_LOAD_IMAGE = 1;
-    public final String EXTRA_MEMBER = "extra_member";
     public final int PERMISSION_REQUEST_CAMERA = 0;
+
+    public final String EXTRA_TYPE = "extra_type";
+    public final String EXTRA_USER = "extra_user";
+
+    //this is the JSON Data URL
+    //make sure you are using the correct ip else it will not work
+    public static final String BASE_URL = "http://192.168.43.83/koperasimasjid/";
+    public static final String IMAGE_URL = "http://192.168.43.83/koperasimasjid/image/";
+
+    public static final long API_CONNECTION_TIMEOUT = 1201;
+    public static final long API_READ_TIMEOUT = 901;
+
+    public static final String USER_DATA = "hariagus";
+
 }

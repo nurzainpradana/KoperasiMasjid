@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.nurzainpradana.koperasimasjid">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -16,8 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".view.updateprofile.UpdateProfileActivity"></activity>
-        <activity android:name=".view.detailproduct.DetailProductAct" />
+        <activity android:name=".view.updateprofile.UpdateProfileActivity"/>
+        <activity android:name=".view.detail.DetailProductAct" />
         <activity android:name=".view.updatepassword.UpdatePasswordAct" />
         <activity android:name=".view.main.MainActivity">
             <meta-data

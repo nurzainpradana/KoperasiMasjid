@@ -7,10 +7,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-public class Member implements Parcelable {
+public class User implements Parcelable {
 
-    @SerializedName("id_member")
-    private int mIdMember;
+    @SerializedName("id_user")
+    private int mIdUser;
 
     @SerializedName("name")
     private String mName;
@@ -38,7 +38,7 @@ public class Member implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(mIdMember);
+        dest.writeInt(mIdUser);
         dest.writeString(mName);
         dest.writeString(mNoPhone);
         dest.writeString(mUsername);
@@ -48,15 +48,15 @@ public class Member implements Parcelable {
         dest.writeString(mPhotoProfile);
     }
 
-    public static final Creator<Member> CREATOR = new Creator<Member>() {
+    public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
-        public Member createFromParcel(Parcel in) {
-            return new Member(in);
+        public User createFromParcel(Parcel in) {
+            return new User(in);
         }
 
         @Override
-        public Member[] newArray(int size) {
-            return new Member[size];
+        public User[] newArray(int size) {
+            return new User[size];
         }
     };
 
@@ -66,8 +66,8 @@ public class Member implements Parcelable {
     }
 
 
-    public Member(Parcel in) {
-        mIdMember = in.readInt();
+    public User(Parcel in) {
+        mIdUser = in.readInt();
         mName = in.readString();
         mNoPhone = in.readString();
         mUsername = in.readString();
@@ -78,12 +78,12 @@ public class Member implements Parcelable {
         mPhotoProfile = in.readString();
     }
 
-    public int getmIdMember() {
-        return mIdMember;
+    public int getmIdUser() {
+        return mIdUser;
     }
 
-    public void setmIdMember(int mIdMember) {
-        this.mIdMember = mIdMember;
+    public void setmIdUser(int mIdMember) {
+        this.mIdUser = mIdMember;
     }
 
     public String getmName() {
@@ -94,7 +94,7 @@ public class Member implements Parcelable {
         this.mName = mName;
     }
 
-    public Member(){
+    public User(){
     }
 
     public String getmNoPhone() {

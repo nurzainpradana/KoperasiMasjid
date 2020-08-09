@@ -12,14 +12,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.nurzainpradana.koperasimasjid.R;
-import com.nurzainpradana.koperasimasjid.model.Member;
-import com.nurzainpradana.koperasimasjid.util.MemberPreference;
+import com.nurzainpradana.koperasimasjid.model.User;
+import com.nurzainpradana.koperasimasjid.util.UsernamePreference;
 import com.nurzainpradana.koperasimasjid.view.updateprofile.UpdateProfileActivity;
-import com.nurzainpradana.koperasimasjid.viewmodel.MemberViewModel;
+import com.nurzainpradana.koperasimasjid.viewmodel.UserViewModel;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -32,10 +31,8 @@ import static com.nurzainpradana.koperasimasjid.util.Const.IMGPATH;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener{
 
-    private MemberViewModel memberViewModel;
-
-    public Member member;
-    public MemberPreference memberPreference;
+    public User user;
+    public UsernamePreference usernamePreference;
 
     private TextView tvProfileName;
     private TextView tvProfileAddress;
@@ -76,34 +73,30 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         tvProfilUsername = view.findViewById(R.id.tv_profile_username);
         ivProfilePicture = view.findViewById(R.id.iv_profile_frame_photo);
 
+        UserViewModel userViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(UserViewModel.class);
+
         if (getContext() != null) {
-            memberPreference = new MemberPreference(getContext());
-            member = memberPreference.getMember();
-            if (member != null) {
-                String username = member.getmUsername();
-                memberViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(MemberViewModel.class);
-                memberViewModel.setMember(username, getContext());
+            usernamePreference = new UsernamePreference(getContext());
+            String username = usernamePreference.getUsernameSF();
+            if (user != null) {
+
+                userViewModel.setUser(username, getContext());
             }
         }
 
-        memberViewModel.getMember().observe(getViewLifecycleOwner(), new Observer<List<Member>>() {
-            @Override
-            public void onChanged(List<Member> members) {
-                ProfileFragment.this.setView(members);
-            }
-        });
+        userViewModel.getUser().observe(getViewLifecycleOwner(), this::setView);
     }
 
-    private void setView(List<Member> members) {
-        tvProfileName.setText(members.get(0).getmName().toUpperCase());
-        tvProfileAddress.setText(members.get(0).getmAddress());
+    private void setView(List<User> users) {
+        tvProfileName.setText(users.get(0).getmName().toUpperCase());
+        tvProfileAddress.setText(users.get(0).getmAddress());
         @SuppressLint("SimpleDateFormat") SimpleDateFormat ft = new SimpleDateFormat("dd-MM-yyyy");
-        tvProfileBirthdate.setText(ft.format(members.get(0).getmDateOfBirth()));
-        tvProfileEmail.setText(members.get(0).getmEmail());
-        tvProfileNoPhone.setText(members.get(0).getmNoPhone());
-        tvProfilUsername.setText(members.get(0).getmUsername());
+        tvProfileBirthdate.setText(ft.format(users.get(0).getmDateOfBirth()));
+        tvProfileEmail.setText(users.get(0).getmEmail());
+        tvProfileNoPhone.setText(users.get(0).getmNoPhone());
+        tvProfilUsername.setText(users.get(0).getmUsername());
 
-        String urlPhoto = BASE_URL + IMGPATH + members.get(0).getmPhotoProfile();
+        String urlPhoto = BASE_URL + IMGPATH + users.get(0).getmPhotoProfile();
         Picasso.get()
                 .load(urlPhoto)
                 .placeholder(R.mipmap.ic_launcher)

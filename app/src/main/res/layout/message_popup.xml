@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/bg_btn_plus_cream">
+
+    <TextView
+        android:fontFamily="@font/mont_medium"
+        android:text="Berhasil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_msg"
+        android:textStyle="normal"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_marginTop="2dp"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <TextView
+        android:fontFamily="@font/mont_bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_ok"
+        android:text="OK"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="@dimen/dimen_8dp"
+        />
+
+</LinearLayout>

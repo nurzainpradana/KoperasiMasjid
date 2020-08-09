@@ -21,15 +21,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.nurzainpradana.koperasimasjid.R;
-import com.nurzainpradana.koperasimasjid.model.Member;
+import com.nurzainpradana.koperasimasjid.model.User;
+import com.nurzainpradana.koperasimasjid.util.Const;
 import com.nurzainpradana.koperasimasjid.view.registertwo.RegisterTwoAct;
+import com.nurzainpradana.koperasimasjid.view.updatepassword.UpdatePasswordAct;
 
 import java.util.concurrent.TimeUnit;
 
 public class VerificationAct extends AppCompatActivity implements View.OnClickListener{
-
-    public static final String EXTRA_MEMBER = "extra_member";
-
     TextView tvNoPhone;
     TextView tvResendCode;
     EditText edtPin1;
@@ -66,9 +65,9 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
         btn_verification_next.setOnClickListener(this);
         tvResendCode.setOnClickListener(this);
 
-        Member member = getIntent().getParcelableExtra(EXTRA_MEMBER);
-        if (member != null) {
-            String phoneNumber = member.getmNoPhone();
+        User user = getIntent().getParcelableExtra(new Const().EXTRA_USER);
+        if (user != null) {
+            String phoneNumber = user.getmNoPhone();
             tvNoPhone.setText(String.format("%s%s%s", getString(R.string.code_send_to), " ", phoneNumber));
             setupVerificationCallback();
             PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -83,32 +82,24 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
         //Menghubungkan project dengan firebase auth
         auth = FirebaseAuth.getInstance();
         stateListener = firebaseAuth -> {
-            FirebaseUser user = firebaseAuth.getCurrentUser();
-            //Mendeteksi apakah ada user yang sedang login (belum logout)
-            if (user != null) {
+            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+            //Mendeteksi apakah ada firebaseUser yang sedang login (belum logout)
+            if (firebaseUser != null) {
                 //Jika ada, User tidak perlu login lagi dan langsung menuju
                 //Welcome ACtivity
-                startActivity(new Intent(VerificationAct.this, RegisterTwoAct.class));
-                finish();
+                if (getIntent().getStringExtra(new Const().EXTRA_TYPE) == new Const().REGISTRATION_KEY) {
+                    startActivity(new Intent(VerificationAct.this, RegisterTwoAct.class));
+                    finish();
+                } else if (getIntent().getStringExtra(new Const().EXTRA_TYPE) == new Const().UPDATE_KEY) {
+                    startActivity(new Intent(VerificationAct.this, UpdatePasswordAct.class));
+                    finish();
+                }
+
             }
         };
 
         //Menghubungkan project dengan firebase auth
         auth = FirebaseAuth.getInstance();
-        stateListener = firebaseAuth -> {
-            //FirebaseUser user = firebaseAuth.getCurrentUser();
-            //Mendeteksi apakah ada user yang sedang login (belum logout)
-            //if (user != null) {
-                //Jika ada, User tidak perlu login lagi dan langsung menuju
-                //Welcome ACtivity
-
-                //Member member1 = getIntent().getParcelableExtra(EXTRA_MEMBER);
-                //Intent goToRegisterTwo = new Intent(VerificationAct.this, RegisterTwoAct.class);
-                //goToRegisterTwo.putExtra(EXTRA_MEMBER, member1);
-                //startActivity(goToRegisterTwo);
-                //finish();
-            //}
-        };
         moveEditTextPin();
     }
 
@@ -245,11 +236,18 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         //Sign in berhasil
-                        Member member = getIntent().getParcelableExtra(EXTRA_MEMBER);
-                        Intent goToRegisterTwo = new Intent(VerificationAct.this, RegisterTwoAct.class);
-                        goToRegisterTwo.putExtra(EXTRA_MEMBER, member);
-                        startActivity(goToRegisterTwo);
-                        finish();
+                        String type = getIntent().getStringExtra(new Const().EXTRA_TYPE);
+                        User user = getIntent().getParcelableExtra(new Const().EXTRA_USER);
+                        if (type.equals(new Const().REGISTRATION_KEY)) {
+                            Intent goToRegisterTwo = new Intent(VerificationAct.this, RegisterTwoAct.class);
+                            goToRegisterTwo.putExtra(new Const().EXTRA_USER, user);
+                            startActivity(goToRegisterTwo);
+                            finish();
+                        } else if (type.equals(new Const().UPDATE_KEY)) {
+                                Intent goToUpdatePassword = new Intent(VerificationAct.this, UpdatePasswordAct.class);
+                                startActivity(goToUpdatePassword);
+                                finish();
+                        }
                     } else {
                         //Sign gagal
                         if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
@@ -284,9 +282,9 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
 
             case R.id.tv_resend_code:
                 Toast.makeText(this, "Mengirim Ulang Kode Verifikasi", Toast.LENGTH_SHORT).show();
-                Member member = getIntent().getParcelableExtra(EXTRA_MEMBER);
-                if (member != null) {
-                    phoneNumber = member.getmNoPhone();
+                User user = getIntent().getParcelableExtra(new Const().EXTRA_USER);
+                if (user != null) {
+                    phoneNumber = user.getmNoPhone();
                     setupVerificationCallback();
                     PhoneAuthProvider.getInstance().verifyPhoneNumber(
                             phoneNumber,

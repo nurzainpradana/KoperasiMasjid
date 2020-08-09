@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.nurzainpradana.koperasimasjid.R;
-import com.nurzainpradana.koperasimasjid.model.Member;
+import com.nurzainpradana.koperasimasjid.model.User;
 import com.nurzainpradana.koperasimasjid.view.registertwo.RegisterTwoAct;
 
 import java.util.concurrent.TimeUnit;
@@ -66,9 +66,9 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
 
         btn_verification_next.setOnClickListener(this);
 
-        Member member = getIntent().getParcelableExtra(EXTRA_MEMBER);
-        if (member != null) {
-            String phoneNumber = member.getmNoPhone();
+        Member user = getIntent().getParcelableExtra(EXTRA_MEMBER);
+        if (user != null) {
+            String phoneNumber = user.getmNoPhone();
             tvNoPhone.setText(String.format("%s%s%s", getString(R.string.code_send_to), " ", phoneNumber));
             setupVerificationCallback();
             PhoneAuthProvider.getInstance().verifyPhoneNumber(
