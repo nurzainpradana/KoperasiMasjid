@@ -1,4 +1,4 @@
-package com.nurzainpradana.koperasimasjid.Model.Response;
+package com.nurzainpradana.koperasimasjid.model.response;
 
 public class JsonRespon {
 }

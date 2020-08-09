@@ -37,7 +37,7 @@ public class UserViewModel extends ViewModel {
 
                 @Override
                 public void onFailure(retrofit2.Call<List<User>> call, Throwable t) {
-                    Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
                     Log.d("ERROR", t.getMessage());
                 }
             });
@@ -63,9 +63,9 @@ public class UserViewModel extends ViewModel {
                     String value = response.body().getValue();
                     String message = response.body().getMessage();
                     if (value.equals("1")) {
-                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                     }
                 }
             }
