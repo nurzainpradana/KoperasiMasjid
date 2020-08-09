@@ -15,8 +15,8 @@ public class Const {
 
     //this is the JSON Data URL
     //make sure you are using the correct ip else it will not work
-    public static final String BASE_URL = "http://192.168.43.83/koperasimasjid/";
-    public static final String IMAGE_URL = "http://192.168.43.83/koperasimasjid/image/";
+    public static final String BASE_URL = "http://192.168.137.1/koperasimasjid/";
+    public static final String IMAGE_URL = "http://192.168.137.1/koperasimasjid/image/";
 
     public static final long API_CONNECTION_TIMEOUT = 1201;
     public static final long API_READ_TIMEOUT = 901;
