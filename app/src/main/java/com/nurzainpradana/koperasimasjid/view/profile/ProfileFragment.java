@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,7 +17,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.model.User;
-import com.nurzainpradana.koperasimasjid.util.UsernamePreference;
+import com.nurzainpradana.koperasimasjid.util.Const;
+import com.nurzainpradana.koperasimasjid.util.SharePreferenceUtils;
 import com.nurzainpradana.koperasimasjid.view.updateprofile.UpdateProfileActivity;
 import com.nurzainpradana.koperasimasjid.viewmodel.UserViewModel;
 import com.squareup.picasso.Picasso;
@@ -32,7 +34,6 @@ import static com.nurzainpradana.koperasimasjid.util.Const.IMGPATH;
 public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     public User user;
-    public UsernamePreference usernamePreference;
 
     private TextView tvProfileName;
     private TextView tvProfileAddress;
@@ -76,14 +77,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         UserViewModel userViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(UserViewModel.class);
 
         if (getContext() != null) {
-            usernamePreference = new UsernamePreference(getContext());
-            String username = usernamePreference.getUsernameSF();
-            if (user != null) {
+            new Const();
+            String username = SharePreferenceUtils.getInstance().getString(Const.USERNAME_KEY);
 
+            if (user != null) {
                 userViewModel.setUser(username, getContext());
             }
         }
-
         userViewModel.getUser().observe(getViewLifecycleOwner(), this::setView);
     }
 
@@ -97,6 +97,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         tvProfilUsername.setText(users.get(0).getmUsername());
 
         String urlPhoto = BASE_URL + IMGPATH + users.get(0).getmPhotoProfile();
+        Toast.makeText(getContext(), urlPhoto, Toast.LENGTH_SHORT).show();
         Picasso.get()
                 .load(urlPhoto)
                 .placeholder(R.mipmap.ic_launcher)

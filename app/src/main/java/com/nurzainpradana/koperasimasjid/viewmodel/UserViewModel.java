@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.nurzainpradana.koperasimasjid.api.Api;
 import com.nurzainpradana.koperasimasjid.api.ApiInterface;
+import com.nurzainpradana.koperasimasjid.model.Result;
 import com.nurzainpradana.koperasimasjid.model.ResultUser;
 import com.nurzainpradana.koperasimasjid.model.User;
 
@@ -38,7 +39,7 @@ public class UserViewModel extends ViewModel {
                 @Override
                 public void onFailure(retrofit2.Call<List<User>> call, Throwable t) {
                     Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
-                    Log.d("ERROR", t.getMessage());
+                    Log.d("ERROR 1", t.getMessage());
                 }
             });
         } catch (Exception e) {
@@ -60,7 +61,7 @@ public class UserViewModel extends ViewModel {
             @Override
             public void onResponse(retrofit2.Call<ResultUser> call, Response<ResultUser> response) {
                 if (response.body() != null) {
-                    String value = response.body().getValue();
+                    String value = response.body().getValue().toString();
                     String message = response.body().getMessage();
                     if (value.equals("1")) {
                         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
@@ -80,17 +81,29 @@ public class UserViewModel extends ViewModel {
     }
 
     public void setUpdateMember (Context context, User user){
-
         ApiInterface Service;
-        retrofit2.Call<ResultUser> Call;
-        Service = Api.getApi().create(ApiInterface.class);
+        Call<Result> Call;
 
-        Call = Service.updateUser(user.getmIdUser(), user.getmName(), user.getmNoPhone(), user.getmUsername(), user.getmPassword(), user.getmEmail(), user.getmAddress(), user.getmDateOfBirth(), user.getmPhotoProfile());
+        Service = Api.getApi().create(ApiInterface.class);
+        Call = Service.updateUser(user.getmIdUser(), user.getmName(), user.getmNoPhone(), user.getmUsername(), user.getmEmail(), user.getmAddress(), user.getmDateOfBirth(), user.getmPhotoProfile());
+        Call.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(retrofit2.Call<Result> call, Response<Result> response) {
+                Toast.makeText(context, "Update success", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<Result> call, Throwable t) {
+                Log.d("ERROR BOSQUE", t.getMessage());
+                Toast.makeText(context, "Update failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+        /*
         Call.enqueue(new Callback<ResultUser>() {
             @Override
             public void onResponse(retrofit2.Call<ResultUser> call, Response<ResultUser> response) {
                 if (response.body() != null) {
-                    String value = response.body().getValue();
+                    String value = response.body().getValue().toString();
                     String message = response.body().getMessage();
                     if (value.equals("1")) {
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
@@ -104,9 +117,12 @@ public class UserViewModel extends ViewModel {
             public void onFailure(retrofit2.Call<ResultUser> call, Throwable t) {
                 t.printStackTrace();
                 Log.e("error", String.valueOf(t));
-                Toast.makeText(context, "Jaringan Error !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Jaringan Error !", Toast.LENGTH_SHORT).show();
+
             }
         });
+
+         */
     }
 }
 

@@ -2,6 +2,7 @@ package com.nurzainpradana.koperasimasjid.api;
 
 import com.nurzainpradana.koperasimasjid.api.response.JsonRespon;
 import com.nurzainpradana.koperasimasjid.model.AddtoCart;
+import com.nurzainpradana.koperasimasjid.model.Result;
 import com.nurzainpradana.koperasimasjid.model.ResultUser;
 import com.nurzainpradana.koperasimasjid.model.User;
 
@@ -48,15 +49,14 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("/koperasimasjid/api/user/updateUser.php")
-    Call<ResultUser> updateUser(@Field("id_user") int id_user,
-                                @Field("name") String name,
-                                @Field("no_phone") String no_phone,
-                                @Field("username") String username,
-                                @Field("password") String password,
-                                @Field("email") String email,
-                                @Field("address") String address,
-                                @Field("date_of_birth") Date date_of_birth,
-                                @Field("photo_profile") String photo_profile);
+    Call<Result> updateUser(@Field("id_user") int id_user,
+                            @Field("name") String name,
+                            @Field("no_phone") String no_phone,
+                            @Field("username") String username,
+                            @Field("email") String email,
+                            @Field("address") String address,
+                            @Field("date_of_birth") Date date_of_birth,
+                            @Field("photo_profile") String photo_profile);
 
     @FormUrlEncoded
     @POST("/koperasimasjid/api/user/deleteUser.php")

@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -18,7 +19,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
         <activity android:name=".view.updateprofile.UpdateProfileActivity"/>
-        <activity android:name=".view.detail.DetailProductAct" />
+        <activity android:name=".view.detail.DetailProduct" />
         <activity android:name=".view.updatepassword.UpdatePasswordAct" />
         <activity android:name=".view.main.MainActivity">
             <meta-data

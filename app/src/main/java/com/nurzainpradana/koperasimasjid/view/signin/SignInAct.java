@@ -1,7 +1,6 @@
 package com.nurzainpradana.koperasimasjid.view.signin;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -13,8 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nurzainpradana.koperasimasjid.R;
-import com.nurzainpradana.koperasimasjid.model.User;
-import com.nurzainpradana.koperasimasjid.util.UsernamePreference;
+import com.nurzainpradana.koperasimasjid.util.Const;
+import com.nurzainpradana.koperasimasjid.util.SharePreferenceUtils;
 import com.nurzainpradana.koperasimasjid.view.main.MainActivity;
 import com.nurzainpradana.koperasimasjid.view.registerone.RegisterOneAct;
 import com.nurzainpradana.koperasimasjid.viewmodel.UserViewModel;
@@ -22,7 +21,6 @@ import com.nurzainpradana.koperasimasjid.viewmodel.UserViewModel;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -74,25 +72,22 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
     private void verification(String username, String password) {
         //Cek Verifikasi Username Password
         userViewModel.setUser(username, getApplicationContext());
-        userViewModel.getUser().observe(this, new Observer<List<User>>() {
-            @Override
-            public void onChanged(List<User> users) {
-                if (username.equals(users.get(0).getmUsername())) {
-                    if (password.equals(users.get(0).getmPassword())) {
-                        UsernamePreference usernamePreference = new UsernamePreference(SignInAct.this);
-                        usernamePreference.setUsernameSF(username);
+        userViewModel.getUser().observe(this, users -> {
+            if (username.equals(users.get(0).getmUsername())) {
+                if (password.equals(users.get(0).getmPassword())) {
+                    SharePreferenceUtils.getInstance().saveString(Const.USERNAME_KEY, username);
 
-                        Toast.makeText(SignInAct.this, "Verifikasi Selesai", Toast.LENGTH_SHORT).show();
-                        result = SignInAct.this.getString(R.string.verification_success);
-                        Intent goToHome = new Intent(SignInAct.this, MainActivity.class);
-                        SignInAct.this.startActivity(goToHome);
-                    }
-                    result = SignInAct.this.getString(R.string.wrong_password);
-                    //Toast.makeText(this, getString(R.string.wrong_password), Toast.LENGTH_SHORT).show();
-                } else {
-                    result = SignInAct.this.getString(R.string.username_not_found);
-                    //Toast.makeText(this, getString(R.string.username_not_found), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignInAct.this, "Verifikasi Selesai" + SharePreferenceUtils.getInstance().getString(Const.USERNAME_KEY), Toast.LENGTH_SHORT).show();
+
+                    result = SignInAct.this.getString(R.string.verification_success);
+                    Intent goToHome = new Intent(SignInAct.this, MainActivity.class);
+                    SignInAct.this.startActivity(goToHome);
                 }
+                result = SignInAct.this.getString(R.string.wrong_password);
+                //Toast.makeText(this, getString(R.string.wrong_password), Toast.LENGTH_SHORT).show();
+            } else {
+                result = SignInAct.this.getString(R.string.username_not_found);
+                //Toast.makeText(this, getString(R.string.username_not_found), Toast.LENGTH_SHORT).show();
             }
         });
         if (result != null) {

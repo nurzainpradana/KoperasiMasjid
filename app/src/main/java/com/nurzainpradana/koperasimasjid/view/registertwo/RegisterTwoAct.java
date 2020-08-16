@@ -28,7 +28,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.model.User;
 import com.nurzainpradana.koperasimasjid.util.Const;
-import com.nurzainpradana.koperasimasjid.util.UsernamePreference;
+import com.nurzainpradana.koperasimasjid.util.SharePreferenceUtils;
 import com.nurzainpradana.koperasimasjid.util.UploadImage;
 import com.nurzainpradana.koperasimasjid.view.sucessregister.SuccessRegisterAct;
 import com.nurzainpradana.koperasimasjid.viewmodel.UserViewModel;
@@ -249,8 +249,7 @@ public class RegisterTwoAct extends AppCompatActivity implements View.OnClickLis
                         mUser.setmPhotoProfile(fileName);
                         saveMember(mUser);
 
-                        UsernamePreference usernamePreference = new UsernamePreference(RegisterTwoAct.this);
-                        usernamePreference.setUsernameSF(mUser.getmUsername());
+                        SharePreferenceUtils.getInstance().saveString(Const.USERNAME_KEY, mUser.getmUsername());
 
                         Intent gotoSuccessRegister = new Intent(RegisterTwoAct.this, SuccessRegisterAct.class);
                         startActivity(gotoSuccessRegister);

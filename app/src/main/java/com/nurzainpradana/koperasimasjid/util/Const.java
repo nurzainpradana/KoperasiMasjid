@@ -2,10 +2,13 @@ package com.nurzainpradana.koperasimasjid.util;
 
 public class Const {
 
-    public static final String IMGPATH = "/koperasimasjid/img_user/" ;
-    public final String USERNAME_KEY = "username";
+    public static final String IMGPATH = "/koperasimasjid/image/user/" ;
+    public static final String USERNAME_KEY = "username";
+    public static final String USER_KEY = "user";
     public final String REGISTRATION_KEY = "registration";
     public final String UPDATE_KEY = "update";
+
+    public static final String SELECTED_MENU = "selected_menu";
 
     public final int RESULT_LOAD_IMAGE = 1;
     public final int PERMISSION_REQUEST_CAMERA = 0;

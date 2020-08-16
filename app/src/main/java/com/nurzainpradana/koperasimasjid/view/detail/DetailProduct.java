@@ -16,7 +16,7 @@ import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.Utility.AppUtilits;
 import com.nurzainpradana.koperasimasjid.util.Const;
 import com.nurzainpradana.koperasimasjid.Utility.NetworkUtility;
-import com.nurzainpradana.koperasimasjid.Utility.SharePreferenceUtils;
+import com.nurzainpradana.koperasimasjid.util.SharePreferenceUtils;
 import com.nurzainpradana.koperasimasjid.api.RetroConfig;
 import com.nurzainpradana.koperasimasjid.model.AddtoCart;
 import com.nurzainpradana.koperasimasjid.model.Product;

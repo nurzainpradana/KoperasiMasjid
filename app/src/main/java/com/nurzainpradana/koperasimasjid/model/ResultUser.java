@@ -3,22 +3,42 @@ package com.nurzainpradana.koperasimasjid.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 public class ResultUser implements Parcelable {
 
-    String value;
+    @SerializedName("value")
+    @Expose
+    Integer value;
+
+    @SerializedName("message")
+    @Expose
     String message;
+
     @SerializedName("result")
     private List<User> mResultUser;
 
-    protected ResultUser(Parcel in) {
-        this.mResultUser = in.createTypedArrayList(User.CREATOR);
+    public ResultUser(Integer value, String message) {
+        super();
+        this.value = value;
+        this.message = message;
     }
 
-    public ResultUser() {
+
+    public void setValue(Integer value) {
+        this.value = value;
+    }
+
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    protected ResultUser(Parcel in) {
+        this.mResultUser = in.createTypedArrayList(User.CREATOR);
     }
 
     public static final Creator<ResultUser> CREATOR = new Creator<ResultUser>() {
@@ -51,7 +71,7 @@ public class ResultUser implements Parcelable {
         dest.writeTypedList(this.mResultUser);
     }
 
-    public String getValue() {
+    public Integer getValue() {
         return value;
     }
 

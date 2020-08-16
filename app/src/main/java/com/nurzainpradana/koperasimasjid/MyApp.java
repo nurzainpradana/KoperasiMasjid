@@ -6,7 +6,6 @@ import android.content.Context;
 public class MyApp extends Application {
 
     private static Context context;
-    private String TAG = "myApp";
 
     @Override
     public void onCreate() {

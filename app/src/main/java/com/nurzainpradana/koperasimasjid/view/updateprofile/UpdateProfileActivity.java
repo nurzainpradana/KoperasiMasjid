@@ -1,13 +1,8 @@
 package com.nurzainpradana.koperasimasjid.view.updateprofile;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -20,11 +15,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.google.android.material.snackbar.Snackbar;
 import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.model.User;
 import com.nurzainpradana.koperasimasjid.util.Const;
-import com.nurzainpradana.koperasimasjid.util.UsernamePreference;
+import com.nurzainpradana.koperasimasjid.util.SharePreferenceUtils;
 import com.nurzainpradana.koperasimasjid.util.UploadImage;
 import com.nurzainpradana.koperasimasjid.view.main.MainActivity;
 import com.nurzainpradana.koperasimasjid.view.verification.VerificationAct;
@@ -51,9 +50,8 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
 
     private ImageView ivPhotoProfile;
 
-    private UserViewModel userViewModel;
-    private UsernamePreference usernamePreference;
-    private User user;
+    UserViewModel userViewModel;
+    User user;
 
     RelativeLayout mLayout;
 
@@ -66,6 +64,8 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
     String urlPhotoProfile;
     
     ImageView btnBack;
+
+    int id_user;
 
     public UpdateProfileActivity() {
     }
@@ -94,20 +94,19 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
         Button btnSaveProfile = findViewById(R.id.btn_save_profile);
         Button btnAddPhoto = findViewById(R.id.btn_add_photo);
 
+
+
+
+        userViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(UserViewModel.class);
+
+        userViewModel.setUser(SharePreferenceUtils.getInstance().getString(Const.USERNAME_KEY), getApplicationContext());
+        userViewModel.getUser().observe(this, users -> setView(users.get(0)));
+
         btnChooseDate.setOnClickListener(this);
         btnAddPhoto.setOnClickListener(this);
         btnSaveProfile.setOnClickListener(this);
         btnUpdatePassword.setOnClickListener(this);
         btnBack.setOnClickListener(this);
-
-
-        getUsernamePreference();
-
-        userViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(UserViewModel.class);
-
-        userViewModel.setUser(user.getmUsername(), getApplicationContext());
-        userViewModel.getUser().observe(this, users -> setView(users.get(0)));
-
     }
 
 
@@ -126,17 +125,8 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
                 .error(R.mipmap.ic_launcher)
                 .into(ivPhotoProfile);
 
+        id_user = user.getmIdUser();
         urlPhotoProfile = user.getmPhotoProfile();
-    }
-
-    public void getUsernamePreference() {
-        usernamePreference = new UsernamePreference(getApplicationContext());
-        usernamePreference.getUsernameSF();
-    }
-
-    public void setUsernamePreference(String username) {
-        usernamePreference = new UsernamePreference(getApplicationContext());
-        usernamePreference.setUsernameSF(username);
     }
 
     private void showCameraPreview() {
@@ -170,7 +160,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
                 new Const().RESULT_LOAD_IMAGE);
     }
 
-    private void updateMember() {
+    private void updateMember(User user) {
         if (fileName == null){
             urlPhoto = urlPhotoProfile;
         } else {
@@ -179,19 +169,15 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
 
             uploadImage = new UploadImage(urlPhotoProfile);
             uploadImage.removeImage();
-
             urlPhoto = fileName;
         }
-        Context context = getApplicationContext();
-        if (context!=null) {
-
-            userViewModel.setUpdateMember(context, user);
-            setUsernamePreference(user.getmUsername());
-        }
+        user.setmPhotoProfile(urlPhoto);
+        userViewModel.setUpdateMember(getApplicationContext(), user);
     }
 
     public User setMember() {
         User mUser = new User();
+        mUser.setmIdUser(id_user);
         mUser.setmName(edtFullname.getText().toString());
         mUser.setmNoPhone(edtPhoneNumber.getText().toString());
         mUser.setmUsername(edtUsername.getText().toString());
@@ -221,13 +207,16 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
                 int mYear = calendar.get(Calendar.YEAR);
                 int mMonth = calendar.get(Calendar.MONTH);
                 int mDay = calendar.get(Calendar.DAY_OF_WEEK);
-                new DatePickerDialog(getApplicationContext(), (view, year, month, dayOfMonth) -> {
-                    calendar.set(Calendar.YEAR, year);
-                    calendar.set(Calendar.MONTH, month);
-                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                    String formatTanggal = "dd-MM-yyyy";
-                    sdf = new SimpleDateFormat(formatTanggal, Locale.getDefault());
-                    edtDateOfBirth.setText(sdf.format(calendar.getTime()));
+                new DatePickerDialog(UpdateProfileActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, month);
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        String formatTanggal = "dd-MM-yyyy";
+                        sdf = new SimpleDateFormat(formatTanggal, Locale.getDefault());
+                        edtDateOfBirth.setText(sdf.format(calendar.getTime()));
+                    }
                 }, mYear, mMonth, mDay).show();
                 break;
 
@@ -237,13 +226,12 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
 
             case R.id.btn_save_profile:
                 user = setMember();
-                updateMember();
-                setUsernamePreference(user.getmUsername());
+                updateMember(user);
                 break;
 
             case R.id.btn_update_password:
                 user = setMember();
-                updateMember();
+                updateMember(user);
                 Intent goToVerification = new Intent(getApplicationContext(), VerificationAct.class);
                 goToVerification.putExtra(new Const().EXTRA_TYPE, new Const().UPDATE_KEY);
                 startActivity(goToVerification);

@@ -6,8 +6,6 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +14,7 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nurzainpradana.koperasimasjid.R;
+import com.nurzainpradana.koperasimasjid.util.Const;
 import com.nurzainpradana.koperasimasjid.view.home.HomeFragment;
 import com.nurzainpradana.koperasimasjid.view.favorite.FavoriteFragment;
 import com.nurzainpradana.koperasimasjid.view.cart.CartFragment;
@@ -26,20 +25,16 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView;
 
     //BottomNavBar
-    private final String SELECTED_MENU = "selected_menu";
+
     BottomNavigationView bottomNavigationView;
 
-    String USERNAME_KEY = "usernamekey";
-    String username_key = "";
-    String username = "";
-
+    Bundle mBundle;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
             Fragment fragment = null;
-            Bundle mBundle = new Bundle();
-            mBundle.putString(USERNAME_KEY, username);
 
             if(item.getItemId() == R.id.navigation_home){
                 fragment = HomeFragment.newInstance();
@@ -49,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 fragment.setArguments(mBundle);
             } else if(item.getItemId() == R.id.navigation_keranjang){
                 fragment = CartFragment.newInstance();
+                fragment.setArguments(mBundle);
                 fragment.setArguments(mBundle);
             } else if(item.getItemId() == R.id.navigation_favorite){
                 fragment = FavoriteFragment.newInstance();
@@ -73,13 +69,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getUsernameLocal();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         if(savedInstanceState != null){
-            savedInstanceState.getInt(SELECTED_MENU);
+            savedInstanceState.getInt(Const.SELECTED_MENU);
         } else {
             bottomNavigationView.setSelectedItemId(R.id.navigation_home);
         }
@@ -110,12 +105,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState){
         super.onSaveInstanceState(outState);
-        outState.putInt(SELECTED_MENU, bottomNavigationView.getSelectedItemId());
-    }
-
-    private void getUsernameLocal(){
-        SharedPreferences sf = getSharedPreferences(USERNAME_KEY, Context.MODE_PRIVATE);
-        username = sf.getString(username_key, "");
+        outState.putInt(Const.SELECTED_MENU, bottomNavigationView.getSelectedItemId());
     }
 
     @Override

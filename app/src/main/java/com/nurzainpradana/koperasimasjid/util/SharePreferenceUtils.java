@@ -1,4 +1,4 @@
-package com.nurzainpradana.koperasimasjid.Utility;
+package com.nurzainpradana.koperasimasjid.util;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,7 +21,6 @@ public class SharePreferenceUtils {
         if (sharePreferenceUtils == null) {
             sharePreferenceUtils = new SharePreferenceUtils(MyApp.getContext());
         }
-
         return sharePreferenceUtils;
     }
 
