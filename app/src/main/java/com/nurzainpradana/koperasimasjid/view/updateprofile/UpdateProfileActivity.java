@@ -20,10 +20,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.nurzainpradana.koperasimasjid.BuildConfig;
 import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.model.User;
 import com.nurzainpradana.koperasimasjid.util.Const;
-import com.nurzainpradana.koperasimasjid.util.SharePreferenceUtils;
+import com.nurzainpradana.koperasimasjid.util.SharePref;
 import com.nurzainpradana.koperasimasjid.util.UploadImage;
 import com.nurzainpradana.koperasimasjid.view.main.MainActivity;
 import com.nurzainpradana.koperasimasjid.view.verification.VerificationAct;
@@ -36,8 +37,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import static com.nurzainpradana.koperasimasjid.BuildConfig.BASE_URL;
-import static com.nurzainpradana.koperasimasjid.util.Const.IMGPATH;
+import static com.nurzainpradana.koperasimasjid.util.Const.IMAGE_USER_URL;
 
 public class UpdateProfileActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -98,8 +98,10 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
 
 
         userViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(UserViewModel.class);
+        SharePref sharePref = new SharePref(getApplicationContext());
+        String username = sharePref.getString(Const.USERNAME_KEY);
 
-        userViewModel.setUser(SharePreferenceUtils.getInstance().getString(Const.USERNAME_KEY), getApplicationContext());
+        userViewModel.setUser(username, getApplicationContext());
         userViewModel.getUser().observe(this, users -> setView(users.get(0)));
 
         btnChooseDate.setOnClickListener(this);
@@ -118,7 +120,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
         edtEmail.setText(user.getmEmail());
         @SuppressLint("SimpleDateFormat") SimpleDateFormat ft = new SimpleDateFormat("dd-MM-yyyy");
         edtDateOfBirth.setText(ft.format(user.getmDateOfBirth()));
-        String urlPhoto = BASE_URL + IMGPATH + user.getmPhotoProfile();
+        String urlPhoto = BuildConfig.BASE_URL + IMAGE_USER_URL + user.getmPhotoProfile();
         Picasso.get()
                 .load( urlPhoto)
                 .placeholder(R.mipmap.ic_launcher)

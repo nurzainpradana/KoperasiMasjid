@@ -18,7 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.model.User;
 import com.nurzainpradana.koperasimasjid.util.Const;
-import com.nurzainpradana.koperasimasjid.util.SharePreferenceUtils;
+import com.nurzainpradana.koperasimasjid.util.SharePref;
 import com.nurzainpradana.koperasimasjid.view.updateprofile.UpdateProfileActivity;
 import com.nurzainpradana.koperasimasjid.viewmodel.UserViewModel;
 import com.squareup.picasso.Picasso;
@@ -28,8 +28,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.nurzainpradana.koperasimasjid.BuildConfig.BASE_URL;
-import static com.nurzainpradana.koperasimasjid.util.Const.IMGPATH;
+import static com.nurzainpradana.koperasimasjid.util.Const.IMAGE_USER_URL;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener{
 
@@ -78,11 +77,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         if (getContext() != null) {
             new Const();
-            String username = SharePreferenceUtils.getInstance().getString(Const.USERNAME_KEY);
-
-            if (user != null) {
-                userViewModel.setUser(username, getContext());
-            }
+            SharePref sharePref = new SharePref(getContext());
+            String username = sharePref.getString(Const.USERNAME_KEY);
+            userViewModel.setUser(username, getContext());
         }
         userViewModel.getUser().observe(getViewLifecycleOwner(), this::setView);
     }
@@ -96,7 +93,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         tvProfileNoPhone.setText(users.get(0).getmNoPhone());
         tvProfilUsername.setText(users.get(0).getmUsername());
 
-        String urlPhoto = BASE_URL + IMGPATH + users.get(0).getmPhotoProfile();
+        String urlPhoto = IMAGE_USER_URL + users.get(0).getmPhotoProfile();
         Toast.makeText(getContext(), urlPhoto, Toast.LENGTH_SHORT).show();
         Picasso.get()
                 .load(urlPhoto)

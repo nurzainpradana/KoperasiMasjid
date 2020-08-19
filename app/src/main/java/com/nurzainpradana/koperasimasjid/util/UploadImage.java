@@ -6,19 +6,22 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.nurzainpradana.koperasimasjid.api.Api;
 import com.nurzainpradana.koperasimasjid.api.ApiInterface;
+import com.nurzainpradana.koperasimasjid.model.Result;
 import com.nurzainpradana.koperasimasjid.model.ResultUser;
 
 import java.io.ByteArrayOutputStream;
 
+import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UploadImage {
     ApiInterface Service;
-    retrofit2.Call<ResultUser> Call;
+    Call<Result> Call;
 
     String encodedString;
     String fileName;
@@ -91,20 +94,26 @@ public class UploadImage {
 
     //make http call to upload image to php server
     public void makeHTTPCallUpload() {
-        Service = Api.getApi().create(ApiInterface.class);
-        uploadImage();
-        Call = Service.uploadPhotoProfile(encodedString, fileName);
-        Call.enqueue(new Callback<ResultUser>() {
-            @Override
-            public void onResponse(retrofit2.Call<ResultUser> call, Response<ResultUser> response) {
-                Log.d("UPLOAD", response.toString());
-            }
+        try{
+            Service = Api.getApi().create(ApiInterface.class);
+            uploadImage();
+            Call = Service.uploadPhotoProfile(encodedString, fileName);
+            Call.enqueue(new Callback<Result>() {
+                @Override
+                public void onResponse(Call<Result> call, Response<Result> response) {
+                    Log.d("UPLOAD", response.toString());
+                }
 
-            @Override
-            public void onFailure(retrofit2.Call<ResultUser> call, Throwable t) {
-                Log.d("UPLOAD GAGAL", t.toString());
-            }
-        });
+                @Override
+                public void onFailure(Call<Result> call, Throwable t) {
+                    Log.d("UPLOAD GAGAL", t.toString());
+                }
+            });
+        } catch (Exception e){
+            Log.d("UPLOAD TEST", e.getMessage());
+        }
+
+
     }
 
     //make http call to upload image to php server
@@ -112,14 +121,14 @@ public class UploadImage {
         Service = Api.getApi().create(ApiInterface.class);
         uploadImage();
         Call = Service.removePhotoProfile(urlPhoto);
-        Call.enqueue(new Callback<ResultUser>() {
+        Call.enqueue(new Callback<Result>() {
             @Override
-            public void onResponse(retrofit2.Call<ResultUser> call, Response<ResultUser> response) {
+            public void onResponse(retrofit2.Call<Result> call, Response<Result> response) {
                 Log.d("REMOVE", response.toString());
             }
 
             @Override
-            public void onFailure(retrofit2.Call<ResultUser> call, Throwable t) {
+            public void onFailure(retrofit2.Call<Result> call, Throwable t) {
                 Log.d("REMOVE GAGAL", t.toString());
             }
         });

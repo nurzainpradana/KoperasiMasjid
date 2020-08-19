@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.util.Const;
+import com.nurzainpradana.koperasimasjid.util.SharePref;
 import com.nurzainpradana.koperasimasjid.util.SharePreferenceUtils;
 import com.nurzainpradana.koperasimasjid.view.main.MainActivity;
 import com.nurzainpradana.koperasimasjid.view.registerone.RegisterOneAct;
@@ -71,13 +72,16 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
 
     private void verification(String username, String password) {
         //Cek Verifikasi Username Password
-        userViewModel.setUser(username, getApplicationContext());
+        userViewModel.setUser(username, this.getBaseContext());
         userViewModel.getUser().observe(this, users -> {
             if (username.equals(users.get(0).getmUsername())) {
                 if (password.equals(users.get(0).getmPassword())) {
-                    SharePreferenceUtils.getInstance().saveString(Const.USERNAME_KEY, username);
 
-                    Toast.makeText(SignInAct.this, "Verifikasi Selesai" + SharePreferenceUtils.getInstance().getString(Const.USERNAME_KEY), Toast.LENGTH_SHORT).show();
+                    SharePref sharePref = new SharePref(getBaseContext());
+                    sharePref.setString(Const.USERNAME_KEY, users.get(0).getmUsername());
+
+
+                    Toast.makeText(SignInAct.this, "Verifikasi Selesai" + sharePref.getString(Const.USERNAME_KEY), Toast.LENGTH_SHORT).show();
 
                     result = SignInAct.this.getString(R.string.verification_success);
                     Intent goToHome = new Intent(SignInAct.this, MainActivity.class);
@@ -92,6 +96,8 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
         });
         if (result != null) {
             Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+        } else if(result == null) {
+            Toast.makeText(this, "Periksa Koneksi Anda", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -29,8 +29,14 @@
         <activity android:name=".view.sucessregister.SuccessRegisterAct" />
         <activity android:name=".view.registertwo.RegisterTwoAct" />
         <activity android:name=".view.verification.VerificationAct" />
-        <activity android:name=".view.registerone.RegisterOneAct" />
+        <activity android:name=".category.MensClothing" />
+        <activity android:name=".view.registerone.RegisterOneAct" >
+
+
+        </activity>
+
         <activity android:name=".view.signin.SignInAct" />
+
         <activity android:name=".view.splashscreen.SplashScreenAct">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />

@@ -10,13 +10,13 @@ public class SharePref {
         sharedPreferences = context.getSharedPreferences(Const.USERNAME_KEY, Context.MODE_PRIVATE);
     }
 
-    public void setUsernameSF(String username) {
+    public void setString(String key, String value) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(Const.USERNAME_KEY, username);
+        editor.putString(key, value);
         editor.apply();
     }
 
-    public String getUsernameSF() {
-        return sharedPreferences.getString(Const.USERNAME_KEY, "");
+    public String getString(String key) {
+        return sharedPreferences.getString(key, "");
     }
 }

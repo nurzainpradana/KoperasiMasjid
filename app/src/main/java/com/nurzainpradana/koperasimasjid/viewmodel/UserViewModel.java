@@ -44,6 +44,7 @@ public class UserViewModel extends ViewModel {
             });
         } catch (Exception e) {
             e.printStackTrace();
+            Log.d("ERROR EUY", e.getMessage());
         }
     }
 
@@ -98,31 +99,6 @@ public class UserViewModel extends ViewModel {
                 Toast.makeText(context, "Update failed", Toast.LENGTH_SHORT).show();
             }
         });
-        /*
-        Call.enqueue(new Callback<ResultUser>() {
-            @Override
-            public void onResponse(retrofit2.Call<ResultUser> call, Response<ResultUser> response) {
-                if (response.body() != null) {
-                    String value = response.body().getValue().toString();
-                    String message = response.body().getMessage();
-                    if (value.equals("1")) {
-                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(retrofit2.Call<ResultUser> call, Throwable t) {
-                t.printStackTrace();
-                Log.e("error", String.valueOf(t));
-                    Toast.makeText(context, "Jaringan Error !", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-         */
     }
 }
 

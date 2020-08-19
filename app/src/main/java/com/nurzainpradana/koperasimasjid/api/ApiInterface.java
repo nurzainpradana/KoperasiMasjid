@@ -21,23 +21,23 @@ import retrofit2.http.Part;
 public interface ApiInterface {
 
     @FormUrlEncoded
-    @POST("/koperasimasjid/api/user/getUser.php")
+    @POST("api/user/getUser.php")
     Call<List<User>> getUser(@Field("username") String username);
 
     @FormUrlEncoded
-    @POST("/koperasimasjid/api/user/uploadPhotoProfile.php")
-    Call<ResultUser> uploadPhotoProfile(@Field("image") String image,
+    @POST("api/user/uploadPhotoProfile.php")
+    Call<Result> uploadPhotoProfile(@Field("image") String image,
                                         @Field("filename") String filename);
 
     @FormUrlEncoded
-    @POST("/koperasimasjid/api/user/removePhotoProfile.php")
-    Call<ResultUser> removePhotoProfile(@Field("filename") String filename);
+    @POST("api/user/removePhotoProfile.php")
+    Call<Result> removePhotoProfile(@Field("filename") String filename);
 
-    @GET("/koperasimasjid/api/user/getAllUser.php")
+    @GET("api/user/getAllUser.php")
     Call<ResultUser> getAllUser();
 
     @FormUrlEncoded
-    @POST("/koperasimasjid/api/user/createUser.php")
+    @POST("api/user/createUser.php")
     Call<ResultUser> insertUser(@Field("name") String name,
                                 @Field("no_phone") String no_phone,
                                 @Field("username") String username,
@@ -48,7 +48,7 @@ public interface ApiInterface {
                                 @Field("photo_profile") String photo_profile);
 
     @FormUrlEncoded
-    @POST("/koperasimasjid/api/user/updateUser.php")
+    @POST("api/user/updateUser.php")
     Call<Result> updateUser(@Field("id_user") int id_user,
                             @Field("name") String name,
                             @Field("no_phone") String no_phone,
@@ -59,7 +59,7 @@ public interface ApiInterface {
                             @Field("photo_profile") String photo_profile);
 
     @FormUrlEncoded
-    @POST("/koperasimasjid/api/user/deleteUser.php")
+    @POST("api/user/deleteUser.php")
     Call<ResultUser> deleteUser(@Field("id_user") int id_user);
 
     //

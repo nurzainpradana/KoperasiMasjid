@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -226,6 +227,7 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
             public void onVerificationFailed(@NonNull FirebaseException e) {
                 //Callback disini akan dipanggil saat permintaan tidak valid atau terdapat kesalahan
                 Toast.makeText(getApplicationContext(), "Verifikasi Gagal, Silahkan Coba Lagi ", Toast.LENGTH_SHORT).show();
+                Log.d("ERROR VERIFICARTION", e.getMessage());
                 tvResendCode.setEnabled(true);
             }
         };

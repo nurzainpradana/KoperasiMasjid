@@ -47,7 +47,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
         holder.txt_price.setText("Rp " + productList.get(i).getPrice());
 
         Picasso.get()
-                .load(Const.IMAGE_URL + productList.get(i).getImage())
+                .load(Const.IMAGE_PRODUCT_URL + productList.get(i).getImage())
                 .error(R.drawable.ic_atk)
                 .fit()
                 .into(holder.img_product);

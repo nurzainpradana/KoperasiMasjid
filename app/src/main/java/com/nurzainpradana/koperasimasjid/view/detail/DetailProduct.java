@@ -68,7 +68,7 @@ public class DetailProduct extends AppCompatActivity {
         descDetail.setText(acc.getStringExtra("description"));
 
         Picasso.get()
-                .load(Const.IMAGE_URL + acc.getStringExtra("image"))
+                .load(Const.IMAGE_PRODUCT_URL + acc.getStringExtra("image"))
                 .error(R.mipmap.ic_launcher)
                 .into(imgDetail);
 
@@ -91,7 +91,9 @@ public class DetailProduct extends AppCompatActivity {
         } else {
             RetroConfig retroConfig = new RetroConfig(null);
             Call<AddtoCart> call = retroConfig.addtoWishlistCall("12345", id_product,
+
                     SharePreferenceUtils.getInstance().getString(Const.USER_DATA), priceDetail.getText().toString());
+
             call.enqueue(new Callback<AddtoCart>() {
                 @Override
                 public void onResponse(Call<AddtoCart> call, Response<AddtoCart> response) {
