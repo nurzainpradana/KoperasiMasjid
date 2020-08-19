@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EncryptMd5Java {
-    public static String encryptMd5Java(String message) {
+    public String encrypt(String message) {
         String digest = null;
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");

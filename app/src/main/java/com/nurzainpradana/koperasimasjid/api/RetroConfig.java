@@ -17,6 +17,8 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.nurzainpradana.koperasimasjid.util.Const.BASE_URL;
+
 public class RetroConfig {
 
     private static RetroConfig constant;
@@ -47,7 +49,7 @@ public class RetroConfig {
                 .create();
         if (retrofit == null){
             retrofit = new Retrofit.Builder()
-                    .baseUrl(BuildConfig.BASE_URL)
+                    .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .client(okHttpClient)
                     .build();

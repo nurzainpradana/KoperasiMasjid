@@ -120,7 +120,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
         edtEmail.setText(user.getmEmail());
         @SuppressLint("SimpleDateFormat") SimpleDateFormat ft = new SimpleDateFormat("dd-MM-yyyy");
         edtDateOfBirth.setText(ft.format(user.getmDateOfBirth()));
-        String urlPhoto = BuildConfig.BASE_URL + IMAGE_USER_URL + user.getmPhotoProfile();
+        String urlPhoto = IMAGE_USER_URL + user.getmPhotoProfile();
         Picasso.get()
                 .load( urlPhoto)
                 .placeholder(R.mipmap.ic_launcher)

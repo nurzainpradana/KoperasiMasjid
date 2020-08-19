@@ -15,12 +15,11 @@ import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.model.ResultUser;
 import com.nurzainpradana.koperasimasjid.model.User;
 import com.nurzainpradana.koperasimasjid.util.Const;
+import com.nurzainpradana.koperasimasjid.util.EncryptMd5Java;
 import com.nurzainpradana.koperasimasjid.view.verification.VerificationAct;
 import com.nurzainpradana.koperasimasjid.viewmodel.ListUserViewModel;
 
 import java.util.List;
-
-import static com.nurzainpradana.koperasimasjid.util.EncryptMd5Java.encryptMd5Java;
 
 public class RegisterOneAct extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,6 +31,8 @@ public class RegisterOneAct extends AppCompatActivity implements View.OnClickLis
 
     ListUserViewModel listUserViewModel;
     List<User> list;
+
+    EncryptMd5Java encryptMd5Java = new EncryptMd5Java();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +84,7 @@ public class RegisterOneAct extends AppCompatActivity implements View.OnClickLis
             user.setmName(name);
             user.setmNoPhone(noPhone);
             user.setmUsername(username);
-            user.setmPassword(encryptMd5Java(encryptMd5Java(password)));
+            user.setmPassword(encryptMd5Java.encrypt(encryptMd5Java.encrypt(password)));
 
             if (!checkUsername(username)) {
                 Intent goToVerification = new Intent(RegisterOneAct.this, VerificationAct.class);

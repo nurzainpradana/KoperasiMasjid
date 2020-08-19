@@ -1,6 +1,7 @@
 package com.nurzainpradana.koperasimasjid.view.signin;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -12,7 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nurzainpradana.koperasimasjid.R;
+import com.nurzainpradana.koperasimasjid.model.User;
 import com.nurzainpradana.koperasimasjid.util.Const;
+import com.nurzainpradana.koperasimasjid.util.EncryptMd5Java;
 import com.nurzainpradana.koperasimasjid.util.SharePref;
 import com.nurzainpradana.koperasimasjid.util.SharePreferenceUtils;
 import com.nurzainpradana.koperasimasjid.view.main.MainActivity;
@@ -22,6 +25,7 @@ import com.nurzainpradana.koperasimasjid.viewmodel.UserViewModel;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,6 +34,8 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
     private EditText edtSignInPassword;
 
     private String result;
+
+    private EncryptMd5Java encryptMd5Java;
 
     private UserViewModel userViewModel;
 
@@ -52,8 +58,9 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_sign_in) {
+            encryptMd5Java = new EncryptMd5Java();
             String username = edtSignInUsername.getText().toString();
-            String password = md5Java(md5Java(edtSignInPassword.getText().toString()));
+            String password = encryptMd5Java.encrypt(encryptMd5Java.encrypt(edtSignInPassword.getText().toString()));
 
             if (username.isEmpty()) {
                 edtSignInUsername.setError(getString(R.string.not_null));
@@ -71,54 +78,37 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
     }
 
     private void verification(String username, String password) {
+        String message = "";
         //Cek Verifikasi Username Password
         userViewModel.setUser(username, this.getBaseContext());
-        userViewModel.getUser().observe(this, users -> {
-            if (username.equals(users.get(0).getmUsername())) {
-                if (password.equals(users.get(0).getmPassword())) {
+        userViewModel.getUser().observe(this, new Observer<List<User>>() {
+            @Override
+            public void onChanged(List<User> users) {
+                if (username.equals(users.get(0).getmUsername())) {
+                    if (password.equals(users.get(0).getmPassword())) {
 
-                    SharePref sharePref = new SharePref(getBaseContext());
-                    sharePref.setString(Const.USERNAME_KEY, users.get(0).getmUsername());
+                        SharePref sharePref = new SharePref(SignInAct.this.getBaseContext());
+                        sharePref.setString(Const.USERNAME_KEY, users.get(0).getmUsername());
 
+                        String message = getString(R.string.verification_success);
+                        Toast.makeText(SignInAct.this, message, Toast.LENGTH_SHORT).show();
 
-                    Toast.makeText(SignInAct.this, "Verifikasi Selesai" + sharePref.getString(Const.USERNAME_KEY), Toast.LENGTH_SHORT).show();
+                        result = SignInAct.this.getString(R.string.verification_success);
+                        Intent goToHome = new Intent(SignInAct.this, MainActivity.class);
+                        SignInAct.this.startActivity(goToHome);
+                    }
+                    result = SignInAct.this.getString(R.string.wrong_password);
 
-                    result = SignInAct.this.getString(R.string.verification_success);
-                    Intent goToHome = new Intent(SignInAct.this, MainActivity.class);
-                    SignInAct.this.startActivity(goToHome);
+                } else {
+                    result = SignInAct.this.getString(R.string.username_not_found);
                 }
-                result = SignInAct.this.getString(R.string.wrong_password);
-                //Toast.makeText(this, getString(R.string.wrong_password), Toast.LENGTH_SHORT).show();
-            } else {
-                result = SignInAct.this.getString(R.string.username_not_found);
-                //Toast.makeText(this, getString(R.string.username_not_found), Toast.LENGTH_SHORT).show();
             }
         });
         if (result != null) {
             Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
         } else if(result == null) {
             Toast.makeText(this, "Periksa Koneksi Anda", Toast.LENGTH_SHORT).show();
+            result = null;
         }
-    }
-
-    //Enkripsi Password
-    public static String md5Java(String message) {
-        String digest = null;
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] hash = md.digest(message.getBytes(StandardCharsets.UTF_8));
-
-            //merubah byte array ke dalam String Hexadecimal
-            StringBuilder sb = new StringBuilder(2*hash.length);
-            for(byte b : hash)
-            {
-                sb.append(String.format("%02x", b&0xff));
-            }
-            digest = sb.toString();
-        } catch (NoSuchAlgorithmException ex)
-        {
-            Logger.getLogger(RegisterOneAct.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return digest;
     }
 }

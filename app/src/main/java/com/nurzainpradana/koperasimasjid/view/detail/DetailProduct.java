@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.nurzainpradana.koperasimasjid.R;
-import com.nurzainpradana.koperasimasjid.Utility.AppUtilits;
+import com.nurzainpradana.koperasimasjid.util.AppUtilits;
 import com.nurzainpradana.koperasimasjid.util.Const;
 import com.nurzainpradana.koperasimasjid.Utility.NetworkUtility;
 import com.nurzainpradana.koperasimasjid.util.SharePreferenceUtils;
