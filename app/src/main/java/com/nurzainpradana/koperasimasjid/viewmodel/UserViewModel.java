@@ -7,6 +7,7 @@ import android.widget.Toast;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.api.Api;
 import com.nurzainpradana.koperasimasjid.api.ApiInterface;
 import com.nurzainpradana.koperasimasjid.model.Result;
@@ -22,6 +23,7 @@ import retrofit2.Response;
 public class UserViewModel extends ViewModel {
 
     private MutableLiveData<List<User>> userMutableLiveData = new MutableLiveData<>();
+    private String failedMessage;
 
     public void setUser(String username, Context context) {
         ApiInterface Service;
@@ -38,7 +40,9 @@ public class UserViewModel extends ViewModel {
 
                 @Override
                 public void onFailure(retrofit2.Call<List<User>> call, Throwable t) {
-                    Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
+
+                    //failedMessage = t.getMessage();
+                    Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
                     Log.d("ERROR 1", t.getMessage());
                 }
             });
@@ -50,6 +54,10 @@ public class UserViewModel extends ViewModel {
 
     public MutableLiveData<List<User>> getUser() {
         return userMutableLiveData;
+    }
+
+    public String getFailedMessage() {
+        return failedMessage;
     }
 
     public void setCreateUser(Context context, User user){

@@ -78,7 +78,6 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
     }
 
     private void verification(String username, String password) {
-        String message = "";
         //Cek Verifikasi Username Password
         userViewModel.setUser(username, this.getBaseContext());
         userViewModel.getUser().observe(this, new Observer<List<User>>() {
@@ -90,25 +89,24 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
                         SharePref sharePref = new SharePref(SignInAct.this.getBaseContext());
                         sharePref.setString(Const.USERNAME_KEY, users.get(0).getmUsername());
 
-                        String message = getString(R.string.verification_success);
-                        Toast.makeText(SignInAct.this, message, Toast.LENGTH_SHORT).show();
-
-                        result = SignInAct.this.getString(R.string.verification_success);
+                        result = getString(R.string.verification_success);
+                        Toast.makeText(SignInAct.this, result, Toast.LENGTH_SHORT).show();
                         Intent goToHome = new Intent(SignInAct.this, MainActivity.class);
                         SignInAct.this.startActivity(goToHome);
                     }
                     result = SignInAct.this.getString(R.string.wrong_password);
+                    Toast.makeText(SignInAct.this, result, Toast.LENGTH_SHORT).show();
 
                 } else {
                     result = SignInAct.this.getString(R.string.username_not_found);
+                    Toast.makeText(SignInAct.this, result, Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        if (result != null) {
-            Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
-        } else if(result == null) {
-            Toast.makeText(this, "Periksa Koneksi Anda", Toast.LENGTH_SHORT).show();
-            result = null;
+
+        if (userViewModel.getFailedMessage() != null) {
+            Toast.makeText(this, userViewModel.getFailedMessage(), Toast.LENGTH_SHORT).show();
         }
+
     }
 }

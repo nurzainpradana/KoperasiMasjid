@@ -95,8 +95,6 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
         Button btnAddPhoto = findViewById(R.id.btn_add_photo);
 
 
-
-
         userViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(UserViewModel.class);
         SharePref sharePref = new SharePref(getApplicationContext());
         String username = sharePref.getString(Const.USERNAME_KEY);
