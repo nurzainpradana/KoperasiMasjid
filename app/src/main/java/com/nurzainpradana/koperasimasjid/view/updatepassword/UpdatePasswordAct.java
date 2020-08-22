@@ -9,10 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.model.User;
 import com.nurzainpradana.koperasimasjid.util.Const;
+import com.nurzainpradana.koperasimasjid.util.EncryptMd5Java;
 import com.nurzainpradana.koperasimasjid.util.SharePref;
 import com.nurzainpradana.koperasimasjid.view.main.MainActivity;
 import com.nurzainpradana.koperasimasjid.view.profile.ProfileFragment;
@@ -35,6 +37,8 @@ public class UpdatePasswordAct extends AppCompatActivity implements View.OnClick
     private String newPasword;
     private String reEnterPasword;
 
+    EncryptMd5Java encryptMd5Java;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +49,8 @@ public class UpdatePasswordAct extends AppCompatActivity implements View.OnClick
         titleBar = topBar.findViewById(R.id.title_bar);
         btnBack = topBar.findViewById(R.id.btn_back);
         btnSave = findViewById(R.id.btn_save);
+
+        encryptMd5Java = new EncryptMd5Java();
 
         titleBar.setText(R.string.update_password);
         btnBack.setOnClickListener(this);
@@ -66,17 +72,20 @@ public class UpdatePasswordAct extends AppCompatActivity implements View.OnClick
 
             case R.id.btn_save :
                 if (edtNewPassword.getText() == null) {
-                    edtNewPassword.setError("Kolom harus diisi");
+                    edtNewPassword.setError(getString(R.string.not_null));
                 } else if (edtReEnterPassword.getText() == null) {
-                    edtReEnterPassword.setError("Kolom harus diisi");
+                    edtReEnterPassword.setError(getString(R.string.not_null));
                 } else if (edtNewPassword.getText() != null &&  edtReEnterPassword.getText() != null) {
                     newPasword = edtNewPassword.getText().toString();
                     reEnterPasword = edtReEnterPassword.getText().toString();
 
-                    SharePref sharePref = new SharePref(getApplicationContext());
-                    String username = sharePref.getString(Const.USERNAME_KEY);
-                    userViewModel.setUpdatePassword(getApplicationContext(), username, newPasword);
-
+                    if (newPasword.equals(reEnterPasword)){
+                        SharePref sharePref = new SharePref(getApplicationContext());
+                        String username = sharePref.getString(Const.USERNAME_KEY);
+                        userViewModel.setUpdatePassword(getApplicationContext(), username, encryptMd5Java.encrypt(encryptMd5Java.encrypt(newPasword)));
+                    } else {
+                        edtReEnterPassword.setError(getString(R.string.password_not_equal));
+                    }
                 }
         }
     }
@@ -84,7 +93,7 @@ public class UpdatePasswordAct extends AppCompatActivity implements View.OnClick
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent goToUpdateProfile = new Intent(UpdatePasswordAct.this, MainActivity.class);
+        Intent goToUpdateProfile = new Intent(UpdatePasswordAct.this, UpdateProfileActivity.class);
         startActivity(goToUpdateProfile);
         finish();
     }
