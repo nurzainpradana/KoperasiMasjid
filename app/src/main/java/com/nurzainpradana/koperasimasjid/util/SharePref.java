@@ -3,7 +3,9 @@ package com.nurzainpradana.koperasimasjid.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+
 public class SharePref {
+
     private SharedPreferences sharedPreferences;
 
     public SharePref(Context context) {
@@ -19,4 +21,8 @@ public class SharePref {
     public String getString(String key) {
         return sharedPreferences.getString(key, "");
     }
+
+
 }
+
+

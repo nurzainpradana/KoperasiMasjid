@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static com.nurzainpradana.koperasimasjid.Utility.NetworkUtility.isNetworkConnected;
+import static com.nurzainpradana.koperasimasjid.util.NetworkUtility.isNetworkConnected;
 
 public class SignInAct extends AppCompatActivity implements View.OnClickListener{
     private EditText edtSignInUsername;
@@ -58,6 +58,7 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
 
         userViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(UserViewModel.class);
     }
+
 
     @Override
     public void onClick(View v) {
@@ -119,4 +120,6 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
         }
 
     }
+
+
 }

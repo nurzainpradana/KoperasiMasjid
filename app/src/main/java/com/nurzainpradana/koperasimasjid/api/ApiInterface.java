@@ -87,11 +87,11 @@ public interface ApiInterface {
 
     //Add to Cart
     @Multipart
-    @POST("android/add_to_cart.php")
+    @POST("/koperasimasjid/api/cart/add_to_cart.php")
     Call<AddtoCart> addtocartcall(
             @Part("securecode") RequestBody securecode,
             @Part("id_products") RequestBody id_products,
-            @Part("id_member") RequestBody id_member,
+            @Part("id_user") RequestBody id_user,
             @Part("price") RequestBody price
     );
 

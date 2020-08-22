@@ -66,9 +66,9 @@ public class RetroConfig {
 
 
     //Add to Cart
-    public Call<AddtoCart> addtoCartCall(String securcode, String id_produts, String id_member, String price) {
+    public Call<AddtoCart> addtoCartCall(String securcode, String id_produts, String id_user, String price) {
         return mApiInterface.addtocartcall(convertString(securcode),
-                convertString(id_produts), convertString(id_member),convertString(price));
+                convertString(id_produts), convertString(id_user),convertString(price));
     }
 
     //Add to Wishlist

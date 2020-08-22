@@ -6,9 +6,9 @@ public class AppUtilits {
 
     public static void viewMessage(Context mContext, String message) {
 
-        com.nurzainpradana.koperasimasjid.Utility.MessageDialog messageDialog = null;
+        com.nurzainpradana.koperasimasjid.util.MessageDialog messageDialog = null;
         if (messageDialog == null)
-            messageDialog = new com.nurzainpradana.koperasimasjid.Utility.MessageDialog(mContext, message);
+            messageDialog = new com.nurzainpradana.koperasimasjid.util.MessageDialog(mContext, message);
         messageDialog.viewMessageShow();
     }
 

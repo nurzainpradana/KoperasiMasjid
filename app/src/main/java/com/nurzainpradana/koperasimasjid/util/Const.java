@@ -5,8 +5,8 @@ import com.nurzainpradana.koperasimasjid.BuildConfig;
 public class Const {
 
 
-    //public static final String BASE_URL = "http://192.168.1.5/koperasimasjid/";
-    public static final String BASE_URL = "http://10.237.32.79/koperasimasjid/";
+    public static final String BASE_URL = "http://192.168.1.5/koperasimasjid/";
+    //public static final String BASE_URL = "http://10.237.98.190/koperasimasjid/";
     public static final String IMAGE_USER_URL = BASE_URL + "image/user/";
     public static final String IMAGE_PRODUCT_URL = BASE_URL + "image/product/";
     public static final String USERNAME_KEY = "username";

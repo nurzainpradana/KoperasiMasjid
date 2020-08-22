@@ -53,7 +53,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-import static com.nurzainpradana.koperasimasjid.Utility.NetworkUtility.isNetworkConnected;
+import static com.nurzainpradana.koperasimasjid.util.NetworkUtility.isNetworkConnected;
 import static com.nurzainpradana.koperasimasjid.util.Const.IMAGE_USER_URL;
 
 public class UpdateProfileActivity extends AppCompatActivity implements View.OnClickListener{

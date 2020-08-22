@@ -85,7 +85,6 @@ public class BestAdapter extends RecyclerView.Adapter<BestAdapter.ViewHolder> {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
         }
     }
 }

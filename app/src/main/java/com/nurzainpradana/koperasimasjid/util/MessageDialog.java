@@ -1,4 +1,4 @@
-package com.nurzainpradana.koperasimasjid.Utility;
+package com.nurzainpradana.koperasimasjid.util;
 
 import android.app.AlertDialog;
 import android.content.Context;
