@@ -16,6 +16,7 @@ import com.nurzainpradana.koperasimasjid.model.ResultUser;
 import com.nurzainpradana.koperasimasjid.model.User;
 import com.nurzainpradana.koperasimasjid.util.Const;
 import com.nurzainpradana.koperasimasjid.util.EncryptMd5Java;
+import com.nurzainpradana.koperasimasjid.view.registertwo.RegisterTwoAct;
 import com.nurzainpradana.koperasimasjid.view.verification.VerificationAct;
 import com.nurzainpradana.koperasimasjid.viewmodel.ListUserViewModel;
 
@@ -88,9 +89,13 @@ public class RegisterOneAct extends AppCompatActivity implements View.OnClickLis
 
             if (!checkUsername(username)) {
                 Intent goToVerification = new Intent(RegisterOneAct.this, VerificationAct.class);
+                /*
                 goToVerification.putExtra(new Const().EXTRA_USER, user);
                 goToVerification.putExtra(new Const().EXTRA_TYPE, new Const().REGISTRATION_KEY);
                 startActivity(goToVerification);
+                 */
+                Intent intent = new Intent(RegisterOneAct.this, RegisterTwoAct.class);
+                startActivity(intent);
             } else if (checkUsername(username)) {
                 Toast.makeText(RegisterOneAct.this, getString(R.string.username_already_registered), Toast.LENGTH_SHORT).show();
                 edtUsername.setError(getString(R.string.username_already_registered));

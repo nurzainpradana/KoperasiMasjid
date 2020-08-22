@@ -20,9 +20,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UploadImage {
-    ApiInterface Service;
-    Call<Result> Call;
-
     String encodedString;
     String fileName;
     String imgPath;
@@ -49,6 +46,7 @@ public class UploadImage {
         } else {
             Log.e("Error", "You must select image from gallery before you try to upload");
         }
+
     }
 
     //when upload button is clicked
@@ -62,7 +60,6 @@ public class UploadImage {
     }
 
     //AsyncTask - To conver Image to String
-    @SuppressLint("StaticFieldLeak")
     public void encodeImagetoString(String imgPath) {
         new AsyncTask<Void, Void, String>() {
             protected void onPreExecute() {
@@ -90,13 +87,15 @@ public class UploadImage {
                 makeHTTPCallUpload();
             }
         }.execute(null, null, null);
+
     }
 
     //make http call to upload image to php server
     public void makeHTTPCallUpload() {
-        try{
+            ApiInterface Service;
+            retrofit2.Call<Result> Call;
             Service = Api.getApi().create(ApiInterface.class);
-            uploadImage();
+            //uploadImage();
             Call = Service.uploadPhotoProfile(encodedString, fileName);
             Call.enqueue(new Callback<Result>() {
                 @Override
@@ -109,17 +108,15 @@ public class UploadImage {
                     Log.d("UPLOAD GAGAL", t.toString());
                 }
             });
-        } catch (Exception e){
-            Log.d("UPLOAD TEST", e.getMessage());
-        }
-
 
     }
 
     //make http call to upload image to php server
     public void makeHTTPCallRemove() {
+        ApiInterface Service;
+        retrofit2.Call<Result> Call;
         Service = Api.getApi().create(ApiInterface.class);
-        uploadImage();
+        //uploadImage();
         Call = Service.removePhotoProfile(urlPhoto);
         Call.enqueue(new Callback<Result>() {
             @Override

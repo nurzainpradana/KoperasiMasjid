@@ -13,6 +13,8 @@ import com.nurzainpradana.koperasimasjid.api.ApiInterface;
 import com.nurzainpradana.koperasimasjid.model.Result;
 import com.nurzainpradana.koperasimasjid.model.ResultUser;
 import com.nurzainpradana.koperasimasjid.model.User;
+import com.nurzainpradana.koperasimasjid.util.Const;
+import com.nurzainpradana.koperasimasjid.util.SharePref;
 
 import java.util.List;
 
@@ -23,6 +25,7 @@ import retrofit2.Response;
 public class UserViewModel extends ViewModel {
 
     private MutableLiveData<List<User>> userMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<User>> userMutableLiveData2 = new MutableLiveData<>();
     private String failedMessage;
 
     public void setUser(String username, Context context) {
@@ -98,7 +101,9 @@ public class UserViewModel extends ViewModel {
         Call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(retrofit2.Call<Result> call, Response<Result> response) {
-                Toast.makeText(context, "Update success", Toast.LENGTH_SHORT).show();
+                SharePref sharePref = new SharePref(context);
+                sharePref.setString(Const.USERNAME_KEY, user.getmUsername());
+                Toast.makeText(context, "Update success" + sharePref.getString(Const.USERNAME_KEY), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -107,6 +112,52 @@ public class UserViewModel extends ViewModel {
                 Toast.makeText(context, "Update failed", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void setUpdatePassword (Context context, String username, String password){
+        ApiInterface Service;
+        Call<Result> Call;
+
+        Service = Api.getApi().create(ApiInterface.class);
+        Call = Service.updatePassword(username, password);
+        Call.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(retrofit2.Call<Result> call, Response<Result> response) {
+                Toast.makeText(context, "Update Password success", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<Result> call, Throwable t) {
+                Log.d("ERROR BOSQUE", t.getMessage());
+                Toast.makeText(context, "Update password failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void checkUsername(Context context, String username) {
+        ApiInterface Service;
+        Call<List<User>> Call;
+
+        Service = Api.getApi().create(ApiInterface.class);
+        Call = Service.checkUsername(username);
+        Call.enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(retrofit2.Call<List<User>> call, Response<List<User>> response) {
+                if (response.body() != null ){
+                    List<User> user = response.body();
+                    userMutableLiveData2.postValue(user);
+                }
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<List<User>> call, Throwable t) {
+                Log.d("CHCK USERNAME", t.getMessage());
+            }
+        });
+    }
+
+    public MutableLiveData<List<User>> getUserMutableLiveData2() {
+        return userMutableLiveData2;
     }
 }
 

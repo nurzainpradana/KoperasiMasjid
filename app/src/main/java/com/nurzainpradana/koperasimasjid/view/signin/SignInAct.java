@@ -14,10 +14,12 @@ import android.widget.Toast;
 
 import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.model.User;
+import com.nurzainpradana.koperasimasjid.util.AppUtilits;
 import com.nurzainpradana.koperasimasjid.util.Const;
 import com.nurzainpradana.koperasimasjid.util.EncryptMd5Java;
 import com.nurzainpradana.koperasimasjid.util.SharePref;
 import com.nurzainpradana.koperasimasjid.util.SharePreferenceUtils;
+import com.nurzainpradana.koperasimasjid.view.detail.DetailProduct;
 import com.nurzainpradana.koperasimasjid.view.main.MainActivity;
 import com.nurzainpradana.koperasimasjid.view.registerone.RegisterOneAct;
 import com.nurzainpradana.koperasimasjid.viewmodel.UserViewModel;
@@ -28,6 +30,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static com.nurzainpradana.koperasimasjid.Utility.NetworkUtility.isNetworkConnected;
 
 public class SignInAct extends AppCompatActivity implements View.OnClickListener{
     private EditText edtSignInUsername;
@@ -57,24 +61,30 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btn_sign_in) {
-            encryptMd5Java = new EncryptMd5Java();
-            String username = edtSignInUsername.getText().toString();
-            String password = encryptMd5Java.encrypt(encryptMd5Java.encrypt(edtSignInPassword.getText().toString()));
+        if (isNetworkConnected(this)) {
+            if (v.getId() == R.id.btn_sign_in) {
 
-            if (username.isEmpty()) {
-                edtSignInUsername.setError(getString(R.string.not_null));
-            } else {
-                if (password.isEmpty()) {
-                    edtSignInPassword.setError(getString(R.string.not_null));
+                encryptMd5Java = new EncryptMd5Java();
+                String username = edtSignInUsername.getText().toString();
+                String password = encryptMd5Java.encrypt(encryptMd5Java.encrypt(edtSignInPassword.getText().toString()));
+
+                if (username.isEmpty()) {
+                    edtSignInUsername.setError(getString(R.string.not_null));
                 } else {
-                    verification(username, password);
+                    if (password.isEmpty()) {
+                        edtSignInPassword.setError(getString(R.string.not_null));
+                    } else {
+                        verification(username, password);
+                    }
                 }
+            } else if (v.getId() == R.id.text_register_now) {
+                Intent goToRegisterOne = new Intent(SignInAct.this, RegisterOneAct.class);
+                startActivity(goToRegisterOne);
             }
-        } else if (v.getId() == R.id.text_register_now) {
-            Intent goToRegisterOne = new Intent(SignInAct.this, RegisterOneAct.class);
-            startActivity(goToRegisterOne);
+        } else {
+            Toast.makeText(this, getString(R.string.network_not_connect), Toast.LENGTH_SHORT).show();
         }
+
     }
 
     private void verification(String username, String password) {

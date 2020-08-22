@@ -25,6 +25,10 @@ public interface ApiInterface {
     Call<List<User>> getUser(@Field("username") String username);
 
     @FormUrlEncoded
+    @POST("api/user/checkUsername.php")
+    Call<List<User>> checkUsername(@Field("username") String username);
+
+    @FormUrlEncoded
     @POST("api/user/uploadPhotoProfile.php")
     Call<Result> uploadPhotoProfile(@Field("image") String image,
                                         @Field("filename") String filename);
@@ -57,6 +61,12 @@ public interface ApiInterface {
                             @Field("address") String address,
                             @Field("date_of_birth") Date date_of_birth,
                             @Field("photo_profile") String photo_profile);
+
+    @FormUrlEncoded
+    @POST("api/user/updatePassword.php")
+    Call<Result> updatePassword(
+                            @Field("username") String username,
+                            @Field("password") String password);
 
     @FormUrlEncoded
     @POST("api/user/deleteUser.php")

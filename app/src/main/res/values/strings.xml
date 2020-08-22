@@ -72,5 +72,6 @@
     <string name="network_error">Please try again. Network not responding</string>
     <string name="desc">deskripsi</string>
     <string name="check_connection">Check Your Connection</string>
+    <string name="user_image_filename">user_image_</string>
 
 </resources>

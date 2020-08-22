@@ -39,6 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 
 
 public class RegisterTwoAct extends AppCompatActivity implements View.OnClickListener{
@@ -185,9 +186,14 @@ public class RegisterTwoAct extends AppCompatActivity implements View.OnClickLis
                 //set image in imageView
                 ivRegisterPhoto.setImageBitmap(BitmapFactory.decodeFile(imgPath));
 
-                //get the image's filename
+                /*//get the image's filename
                 String[] fileNameSegments = imgPath.split("/");
                 fileName = fileNameSegments[fileNameSegments.length - 1];
+
+                 */
+
+                Random random = new Random();
+                fileName = getString(R.string.user_image_filename) + random.nextInt(999999) +".png";
             } else {
                 Toast.makeText(this, "You Haven't picked image", Toast.LENGTH_LONG).show();
             }
