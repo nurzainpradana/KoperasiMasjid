@@ -126,4 +126,8 @@ public interface ApiInterface {
     Call<Result> deleteFromFavorite(
             @Part("id_products") Integer id_products,
             @Part("id_user") Integer id_user);
+
+    @Multipart
+    @POST("/koperasimasjid/api/favorite/favorite_product.php")
+    Call<JsonRespon> getFavorite(@Part("id_user") Integer id_user);
 }
