@@ -70,6 +70,8 @@ public class DetailProduct extends AppCompatActivity implements View.OnClickList
         SharePref sharePref = new SharePref(this);
         id_user = sharePref.getInt(Const.ID_USER_KEY);
 
+        Toast.makeText(this, String.valueOf(id_user), Toast.LENGTH_SHORT).show();
+
         checkFavorite(id_product, id_user);
 
         nameDetail.setText(acc.getStringExtra("name"));
@@ -141,6 +143,16 @@ public class DetailProduct extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    private void deleteFromFavorite(int id_product, int id_user) {
+        if (!NetworkUtility.isNetworkConnected(DetailProduct.this)) {
+            AppUtilits.viewMessage(DetailProduct.this, getString(R.string.network_not_connect));
+        } else {
+            FavoriteViewModel favoriteViewModel = new FavoriteViewModel();
+            favoriteViewModel.deleteFromFavorite(this, id_product, id_user);
+            btnFavorite.setImageResource(R.drawable.ic_non_favorite);
+        }
+    }
+
     private void addtoCart(int id_product, int id_user, int quantity) {
         if (!NetworkUtility.isNetworkConnected(DetailProduct.this)) {
             AppUtilits.viewMessage(DetailProduct.this, getString(R.string.network_not_connect));
@@ -206,9 +218,12 @@ public class DetailProduct extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.btn_add_favorite:
-                if (isFavorite==0){
+                if (isFavorite == 0){
                     addToFavorite(id_product, id_user);
                     isFavorite = 1;
+                } else if(isFavorite == 1) {
+                    deleteFromFavorite(id_product, id_user);
+                    isFavorite = 0;
                 }
 
                 break;

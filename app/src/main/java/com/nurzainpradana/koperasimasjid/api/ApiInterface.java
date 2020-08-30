@@ -111,7 +111,7 @@ public interface ApiInterface {
     @Multipart
     @POST("/koperasimasjid/api/favorite/add_to_favorite.php")
     Call<Result> addtoFavorite(
-            @Part("id_products")Integer id_products,
+            @Part("id_products") Integer id_products,
             @Part("id_user")Integer id_user);
 
 
@@ -123,5 +123,7 @@ public interface ApiInterface {
 
     @Multipart
     @POST("/koperasimasjid/api/favorite/delete_from_favorite.php")
-    Call<Result> deleteFromFavorite(Integer id_product, Integer id_user);
+    Call<Result> deleteFromFavorite(
+            @Part("id_products") Integer id_products,
+            @Part("id_user") Integer id_user);
 }

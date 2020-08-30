@@ -61,8 +61,7 @@ public class FavoriteViewModel extends ViewModel {
         RetroConfig.getApiService(null);
         ApiInterface request = RetroConfig.retrofit.create(ApiInterface.class);
 
-        Call<Result> call = request.deleteFromFavorite( id_product,
-                id_user);
+        Call<Result> call = request.deleteFromFavorite( id_product, id_user);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
