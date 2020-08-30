@@ -78,10 +78,12 @@ public class RetroConfig {
      */
 
     //Add to Wishlist
-    public Call<AddtoCart> addtoWishlistCall(String securcode, String id_products, String id_member, String price) {
-        return mApiInterface.addtoWishlist(convertString(securcode),
+    /*public Call<AddtoCart> addtoWishlistCall(String securcode, String id_products, String id_member, String price) {
+        return mApiInterface.addtoFavorite(convertString(securcode),
                 convertString(id_products), convertString(id_member),convertString(price));
     }
+
+     */
 
     //Convert aa param into plain text
     public RequestBody convertString(String data) {

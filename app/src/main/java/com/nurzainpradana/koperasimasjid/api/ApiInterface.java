@@ -96,7 +96,7 @@ public interface ApiInterface {
     );
 
     //Add to wishlist
-    @Multipart
+    /*@Multipart
     @POST("android/add_to_wishlist.php")
     Call<AddtoCart> addtoWishlist(
             @Part("securecode") RequestBody securecode,
@@ -104,4 +104,24 @@ public interface ApiInterface {
             @Part("id_member") RequestBody id_member,
             @Part("price") RequestBody price
     );
+
+     */
+
+    //Add to Favorite
+    @Multipart
+    @POST("/koperasimasjid/api/favorite/add_to_favorite.php")
+    Call<Result> addtoFavorite(
+            @Part("id_products")Integer id_products,
+            @Part("id_user")Integer id_user);
+
+
+    @FormUrlEncoded
+    @POST("/koperasimasjid/api/favorite/check_favorite.php")
+    Call<Result> checkFavorite(
+            @Field("id_user") Integer id_user,
+            @Field("id_products") Integer id_products);
+
+    @Multipart
+    @POST("/koperasimasjid/api/favorite/delete_from_favorite.php")
+    Call<Result> deleteFromFavorite(Integer id_product, Integer id_user);
 }
