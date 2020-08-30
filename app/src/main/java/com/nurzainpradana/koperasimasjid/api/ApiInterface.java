@@ -89,10 +89,10 @@ public interface ApiInterface {
     @Multipart
     @POST("/koperasimasjid/api/cart/add_to_cart.php")
     Call<AddtoCart> addtocartcall(
-            @Part("securecode") RequestBody securecode,
-            @Part("id_products") RequestBody id_products,
-            @Part("id_user") RequestBody id_user,
-            @Part("price") RequestBody price
+            @Part("securecode") String securecode,
+            @Part("id_products") int id_products,
+            @Part("id_user") String id_user,
+            @Part("price") String price
     );
 
     //Add to wishlist

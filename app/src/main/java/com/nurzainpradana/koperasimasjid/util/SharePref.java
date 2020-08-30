@@ -9,7 +9,7 @@ public class SharePref {
     private SharedPreferences sharedPreferences;
 
     public SharePref(Context context) {
-        sharedPreferences = context.getSharedPreferences(Const.USERNAME_KEY, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(Const.ID_USER_KEY, Context.MODE_PRIVATE);
     }
 
     public void setString(String key, String value) {

@@ -79,7 +79,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         if (getContext() != null) {
             new Const();
             SharePref sharePref = new SharePref(getContext());
-            String username = sharePref.getString(Const.USERNAME_KEY);
+            String username = sharePref.getString(Const.ID_USER_KEY);
             userViewModel.setUser(username, getContext());
         }
         userViewModel.getUser().observe(getViewLifecycleOwner(), this::setView);

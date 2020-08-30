@@ -9,15 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.model.User;
 import com.nurzainpradana.koperasimasjid.util.Const;
 import com.nurzainpradana.koperasimasjid.util.EncryptMd5Java;
 import com.nurzainpradana.koperasimasjid.util.SharePref;
-import com.nurzainpradana.koperasimasjid.view.main.MainActivity;
-import com.nurzainpradana.koperasimasjid.view.profile.ProfileFragment;
 import com.nurzainpradana.koperasimasjid.view.updateprofile.UpdateProfileActivity;
 import com.nurzainpradana.koperasimasjid.viewmodel.UserViewModel;
 
@@ -81,7 +78,7 @@ public class UpdatePasswordAct extends AppCompatActivity implements View.OnClick
 
                     if (newPasword.equals(reEnterPasword)){
                         SharePref sharePref = new SharePref(getApplicationContext());
-                        String username = sharePref.getString(Const.USERNAME_KEY);
+                        String username = sharePref.getString(Const.ID_USER_KEY);
                         userViewModel.setUpdatePassword(getApplicationContext(), username, encryptMd5Java.encrypt(encryptMd5Java.encrypt(newPasword)));
                     } else {
                         edtReEnterPassword.setError(getString(R.string.password_not_equal));

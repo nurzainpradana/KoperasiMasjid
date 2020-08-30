@@ -14,22 +14,14 @@ import android.widget.Toast;
 
 import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.model.User;
-import com.nurzainpradana.koperasimasjid.util.AppUtilits;
 import com.nurzainpradana.koperasimasjid.util.Const;
 import com.nurzainpradana.koperasimasjid.util.EncryptMd5Java;
 import com.nurzainpradana.koperasimasjid.util.SharePref;
-import com.nurzainpradana.koperasimasjid.util.SharePreferenceUtils;
-import com.nurzainpradana.koperasimasjid.view.detail.DetailProduct;
 import com.nurzainpradana.koperasimasjid.view.main.MainActivity;
 import com.nurzainpradana.koperasimasjid.view.registerone.RegisterOneAct;
 import com.nurzainpradana.koperasimasjid.viewmodel.UserViewModel;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static com.nurzainpradana.koperasimasjid.util.NetworkUtility.isNetworkConnected;
 
@@ -98,7 +90,7 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
                     if (password.equals(users.get(0).getmPassword())) {
 
                         SharePref sharePref = new SharePref(SignInAct.this.getBaseContext());
-                        sharePref.setString(Const.USERNAME_KEY, users.get(0).getmUsername());
+                        sharePref.setString(Const.ID_USER_KEY, users.get(0).getmUsername());
 
                         result = getString(R.string.verification_success);
                         Toast.makeText(SignInAct.this, result, Toast.LENGTH_SHORT).show();

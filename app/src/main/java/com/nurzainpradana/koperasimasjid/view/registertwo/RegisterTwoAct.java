@@ -29,7 +29,6 @@ import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.model.User;
 import com.nurzainpradana.koperasimasjid.util.Const;
 import com.nurzainpradana.koperasimasjid.util.SharePref;
-import com.nurzainpradana.koperasimasjid.util.SharePreferenceUtils;
 import com.nurzainpradana.koperasimasjid.util.UploadImage;
 import com.nurzainpradana.koperasimasjid.view.sucessregister.SuccessRegisterAct;
 import com.nurzainpradana.koperasimasjid.viewmodel.UserViewModel;
@@ -257,7 +256,7 @@ public class RegisterTwoAct extends AppCompatActivity implements View.OnClickLis
                         saveMember(mUser);
 
                         SharePref sharePref = new SharePref(getApplicationContext());
-                        sharePref.setString(Const.USERNAME_KEY, mUser.getmUsername());
+                        sharePref.setString(Const.ID_USER_KEY, mUser.getmUsername());
 
                         Intent gotoSuccessRegister = new Intent(RegisterTwoAct.this, SuccessRegisterAct.class);
                         startActivity(gotoSuccessRegister);

@@ -22,25 +22,18 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.nurzainpradana.koperasimasjid.BuildConfig;
 import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.model.ResultUser;
 import com.nurzainpradana.koperasimasjid.model.User;
-import com.nurzainpradana.koperasimasjid.util.AppUtilits;
 import com.nurzainpradana.koperasimasjid.util.Const;
 import com.nurzainpradana.koperasimasjid.util.SharePref;
 import com.nurzainpradana.koperasimasjid.util.UploadImage;
-import com.nurzainpradana.koperasimasjid.view.detail.DetailProduct;
 import com.nurzainpradana.koperasimasjid.view.main.MainActivity;
-import com.nurzainpradana.koperasimasjid.view.profile.ProfileFragment;
-import com.nurzainpradana.koperasimasjid.view.registertwo.RegisterTwoAct;
 import com.nurzainpradana.koperasimasjid.view.updatepassword.UpdatePasswordAct;
-import com.nurzainpradana.koperasimasjid.view.verification.VerificationAct;
 import com.nurzainpradana.koperasimasjid.viewmodel.ListUserViewModel;
 import com.nurzainpradana.koperasimasjid.viewmodel.UserViewModel;
 import com.squareup.picasso.Picasso;
@@ -123,7 +116,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
         if (isNetworkConnected(this)) {
             userViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(UserViewModel.class);
             SharePref sharePref = new SharePref(getApplicationContext());
-            String username = sharePref.getString(Const.USERNAME_KEY);
+            String username = sharePref.getString(Const.ID_USER_KEY);
 
             userViewModel.setUser(username, getApplicationContext());
             userViewModel.getUser().observe(this, users -> setView(users.get(0)));
@@ -259,7 +252,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
                 list = users;
                 if (list.get(0).getmUsername() == null || list.get(0).getmUsername().equals(user.getmUsername())){
                     SharePref sharePref = new SharePref(getApplicationContext());
-                    sharePref.setString(Const.USERNAME_KEY, user.getmUsername());
+                    sharePref.setString(Const.ID_USER_KEY, user.getmUsername());
                     userViewModel.setUpdateMember(getApplicationContext(), user);
                 } else {
                     edtUsername.setError(getString(R.string.username_already_registered));

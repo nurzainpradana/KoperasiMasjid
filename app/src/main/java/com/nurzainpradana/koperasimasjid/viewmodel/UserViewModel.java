@@ -7,7 +7,6 @@ import android.widget.Toast;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.api.Api;
 import com.nurzainpradana.koperasimasjid.api.ApiInterface;
 import com.nurzainpradana.koperasimasjid.model.Result;
@@ -102,8 +101,8 @@ public class UserViewModel extends ViewModel {
             @Override
             public void onResponse(retrofit2.Call<Result> call, Response<Result> response) {
                 SharePref sharePref = new SharePref(context);
-                sharePref.setString(Const.USERNAME_KEY, user.getmUsername());
-                Toast.makeText(context, "Update success" + sharePref.getString(Const.USERNAME_KEY), Toast.LENGTH_SHORT).show();
+                sharePref.setString(Const.ID_USER_KEY, user.getmUsername());
+                Toast.makeText(context, "Update success" + sharePref.getString(Const.ID_USER_KEY), Toast.LENGTH_SHORT).show();
             }
 
             @Override

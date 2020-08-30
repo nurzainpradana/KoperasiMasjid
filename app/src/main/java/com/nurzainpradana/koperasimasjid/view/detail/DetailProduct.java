@@ -14,11 +14,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.nurzainpradana.koperasimasjid.R;
+import com.nurzainpradana.koperasimasjid.api.ApiInterface;
 import com.nurzainpradana.koperasimasjid.util.AppUtilits;
 import com.nurzainpradana.koperasimasjid.util.Const;
 import com.nurzainpradana.koperasimasjid.util.NetworkUtility;
 import com.nurzainpradana.koperasimasjid.util.SharePref;
-import com.nurzainpradana.koperasimasjid.util.SharePreferenceUtils;
 import com.nurzainpradana.koperasimasjid.api.RetroConfig;
 import com.nurzainpradana.koperasimasjid.model.AddtoCart;
 import com.nurzainpradana.koperasimasjid.model.Product;
@@ -56,7 +56,7 @@ public class DetailProduct extends AppCompatActivity implements View.OnClickList
     @BindView(R.id.tv_qty)
     TextView tvQty;
 
-    private String id_product="";
+    private String id_products = "";
 
     int qty;
 
@@ -71,12 +71,13 @@ public class DetailProduct extends AppCompatActivity implements View.OnClickList
 
         final Intent acc = getIntent();
 
-        id_product = acc.getExtras().getString("id_products");
-        Toast.makeText(this, id_product, Toast.LENGTH_SHORT).show();
+        id_products = acc.getExtras().getString("id_products");
+        Toast.makeText(this, id_products, Toast.LENGTH_SHORT).show();
 
-        nameDetail.setText(acc.getStringExtra("name"));
+        nameDetail.setText(acc.getStringExtra("id_products"));
         priceDetail.setText(acc.getStringExtra("price"));
         descDetail.setText(acc.getStringExtra("description"));
+        //tvIdproducts.setText(acc.getStringExtra("id_products"));
 
         Picasso.get()
                 .load(Const.IMAGE_PRODUCT_URL + acc.getStringExtra("image"))
@@ -88,7 +89,7 @@ public class DetailProduct extends AppCompatActivity implements View.OnClickList
         });
 
         btnAddCart.setOnClickListener(v -> {
-            addtoCart();
+            addtoCart(Integer.parseInt(id_products));
         });
 
         btnPlus.setOnClickListener(this);
@@ -101,10 +102,8 @@ public class DetailProduct extends AppCompatActivity implements View.OnClickList
             AppUtilits.viewMessage(DetailProduct.this, getString(R.string.network_not_connect));
         } else {
             RetroConfig retroConfig = new RetroConfig(null);
-            Call<AddtoCart> call = retroConfig.addtoWishlistCall("12345", id_product,
-                    sharePref.getString(Const.USERNAME_KEY)
-
-                    , priceDetail.getText().toString());
+            Call<AddtoCart> call = retroConfig.addtoWishlistCall("12345", id_products,
+                    sharePref.getString(Const.ID_USER_KEY), priceDetail.getText().toString());
 
             call.enqueue(new Callback<AddtoCart>() {
                 @Override
@@ -129,14 +128,21 @@ public class DetailProduct extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void addtoCart() {
+    private void addtoCart(int id_product) {
         if (!NetworkUtility.isNetworkConnected(DetailProduct.this)) {
             AppUtilits.viewMessage(DetailProduct.this, getString(R.string.network_not_connect));
         } else {
-            RetroConfig retroConfig = new RetroConfig(null);
+            /*final Intent acc = getIntent();
+            id_product = acc.getExtras().getString("id_products");
+
+             */
+
+            RetroConfig.getApiService(null);
+            ApiInterface request = RetroConfig.retrofit.create(ApiInterface.class);
+
             SharePref sharePref = new SharePref(this);
-            Call<AddtoCart> call = retroConfig.addtoCartCall("12345", id_product,
-                    sharePref.getString(Const.USERNAME_KEY), priceDetail.getText().toString());
+            Call<AddtoCart> call = request.addtocartcall("12345", id_product,
+                    sharePref.getString(Const.ID_USER_KEY), priceDetail.getText().toString());
             call.enqueue(new Callback<AddtoCart>() {
                 @Override
                 public void onResponse(Call<AddtoCart> call, Response<AddtoCart> response) {

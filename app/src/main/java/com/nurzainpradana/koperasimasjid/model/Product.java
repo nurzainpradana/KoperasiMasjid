@@ -4,7 +4,7 @@ package com.nurzainpradana.koperasimasjid.model;
 
 public class Product {
 
-    private int id_products;
+    private String id_products;
     private String name;
     private String price;
     private double unit;
@@ -12,7 +12,7 @@ public class Product {
     private String image;
     private String favorite;
 
-    public Product(int id_products, String name, String price, double unit, String description, String image, String favorite) {
+    public Product(String id_products, String name, String price, double unit, String description, String image, String favorite) {
         this.id_products = id_products;
         this.name = name;
         this.price = price;
@@ -22,12 +22,16 @@ public class Product {
         this.favorite = favorite;
     }
 
-    public int getId_produts() {
+    public String getId_products() {
         return id_products;
     }
 
+    public void setId_products(String id_products) {
+        this.id_products = id_products;
+    }
+
     public void setId_produts(int id_produts) {
-        this.id_products = id_produts;
+        this.id_products = id_products;
     }
 
     public String getName() {
