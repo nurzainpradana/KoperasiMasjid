@@ -2,11 +2,13 @@ package com.nurzainpradana.koperasimasjid.view.profile;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,18 +21,26 @@ import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.model.User;
 import com.nurzainpradana.koperasimasjid.util.Const;
 import com.nurzainpradana.koperasimasjid.util.SharePref;
+import com.nurzainpradana.koperasimasjid.view.signin.SignInAct;
 import com.nurzainpradana.koperasimasjid.view.updateprofile.UpdateProfileActivity;
 import com.nurzainpradana.koperasimasjid.viewmodel.UserViewModel;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Objects;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.nurzainpradana.koperasimasjid.util.Const.IMAGE_USER_URL;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener{
+
+    @BindView(R.id.btn_log_out)
+    Button btnLogOut;
 
     public User user;
 
@@ -41,7 +51,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     private TextView tvProfileBirthdate;
     private TextView tvProfilUsername;
     private CircleImageView ivProfilePicture;
-    private Button btnUpdatePassword, btnEditProfile;
+    private Button btnEditProfile;
+
+    SharePref sharePref;
 
 
 
@@ -56,7 +68,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
 
@@ -78,8 +92,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         if (getContext() != null) {
             new Const();
-            SharePref sharePref = new SharePref(getContext());
-            String username = sharePref.getString(Const.ID_USER_KEY);
+            sharePref = new SharePref(getContext());
+            String username = sharePref.getString(Const.USERNAME_KEY);
             userViewModel.setUser(username, getContext());
         }
         userViewModel.getUser().observe(getViewLifecycleOwner(), this::setView);
@@ -107,20 +121,29 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         btnEditProfile.setOnClickListener(this);
+        btnLogOut.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId()==R.id.btn_edit_profile) {
-            Intent goToUpdateProfile = new Intent(getActivity(), UpdateProfileActivity.class);
-            startActivity(goToUpdateProfile);
+        switch (v.getId()){
+            case R.id.btn_edit_profile:
+                Intent goToUpdateProfile = new Intent(getActivity(), UpdateProfileActivity.class);
+                startActivity(goToUpdateProfile);
+                break;
+
+            case R.id.btn_log_out:
+                sharePref = new SharePref(requireContext());
+                sharePref.clearSharePref(Const.USERNAME_KEY);
+                sharePref.clearSharePref(Const.ID_USER_KEY);
+
+                Intent goToSignIn = new Intent(getActivity(), SignInAct.class);
+                startActivity(goToSignIn);
+                getActivity().finish();
+                break;
         }
     }
-
-
-
-
 
 
 }

@@ -74,5 +74,6 @@
     <string name="check_connection">Check Your Connection</string>
     <string name="user_image_filename">user_image_</string>
     <string name="password_not_equal">Password tidak sama</string>
+    <string name="logout">Log Out</string>
 
 </resources>

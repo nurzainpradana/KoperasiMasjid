@@ -53,8 +53,8 @@ public class SplashScreenAct extends AppCompatActivity {
         Handler handler = new Handler();
 
         SharePref sharePref = new SharePref(getApplicationContext());
-        String username = sharePref.getString(Const.ID_USER_KEY);
-        if (username != null){
+        String username = sharePref.getString(Const.USERNAME_KEY);
+        if (username != null && !username.equals("")){
             handler.postDelayed(() -> {
                 Intent gotomain = new Intent(SplashScreenAct.this, MainActivity.class);
                 startActivity(gotomain);

@@ -144,15 +144,22 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/bg_btn_primary_maroon"/>
 
-        <Button
-            android:id="@+id/btn_edit_profile"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginBottom="50dp"
-            style="@style/btn_primary.maroon"
-            android:text="@string/edit_profile"
-            android:textColor="@color/color_five"/>
+                <Button
+                    android:id="@+id/btn_log_out"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/logout"
+                    android:textColor="@color/color_two"
+                    android:layout_marginTop="8dp"
+                    style="@style/btn_primary.cream"/>
+
+                <Button
+                    android:id="@+id/btn_edit_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit_profile"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="8dp"
+                    style="@style/btn_primary.maroon"/>
         </LinearLayout>
     </ScrollView>
