@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nurzainpradana.koperasimasjid.R;
+import com.nurzainpradana.koperasimasjid.util.Const;
+import com.nurzainpradana.koperasimasjid.util.SharePref;
+import com.nurzainpradana.koperasimasjid.view.main.MainActivity;
 import com.nurzainpradana.koperasimasjid.view.signin.SignInAct;
 
 public class SplashScreenAct extends AppCompatActivity {
@@ -48,10 +51,21 @@ public class SplashScreenAct extends AppCompatActivity {
         muslimHandshake.setAnimation(appSplash);
 
         Handler handler = new Handler();
-        handler.postDelayed(() -> {
-            Intent gotosign = new Intent(SplashScreenAct.this, SignInAct.class);
-            startActivity(gotosign);
-            finish();
-        }, 2000); //1000milisecon = 1 secon
+
+        SharePref sharePref = new SharePref(getApplicationContext());
+        String username = sharePref.getString(Const.ID_USER_KEY);
+        if (username != null){
+            handler.postDelayed(() -> {
+                Intent gotomain = new Intent(SplashScreenAct.this, MainActivity.class);
+                startActivity(gotomain);
+                finish();
+            }, 2000); //1000milisecon = 1 secon
+        } else {
+            handler.postDelayed(() -> {
+                Intent gotosign = new Intent(SplashScreenAct.this, SignInAct.class);
+                startActivity(gotosign);
+                finish();
+            }, 2000); //1000milisecon = 1 secon
+        }
     }
 }
