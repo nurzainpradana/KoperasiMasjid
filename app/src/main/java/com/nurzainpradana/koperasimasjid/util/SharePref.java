@@ -22,6 +22,15 @@ public class SharePref {
         return sharedPreferences.getString(key, "");
     }
 
+    public void setInt(String key, int value) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(key, value);
+        editor.apply();
+    }
+
+    public Integer getInt(String key) {
+        return sharedPreferences.getInt(key, 0);
+    }
 
 }
 

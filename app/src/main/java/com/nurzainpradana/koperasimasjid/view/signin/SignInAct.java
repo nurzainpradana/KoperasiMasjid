@@ -90,7 +90,7 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
                     if (password.equals(users.get(0).getmPassword())) {
 
                         SharePref sharePref = new SharePref(SignInAct.this.getBaseContext());
-                        sharePref.setString(Const.ID_USER_KEY, users.get(0).getmUsername());
+                        sharePref.setInt(Const.ID_USER_KEY, users.get(0).getmIdUser());
 
                         result = getString(R.string.verification_success);
                         Toast.makeText(SignInAct.this, result, Toast.LENGTH_SHORT).show();
