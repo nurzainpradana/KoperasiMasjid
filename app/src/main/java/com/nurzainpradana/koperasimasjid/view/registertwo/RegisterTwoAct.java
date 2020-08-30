@@ -257,6 +257,7 @@ public class RegisterTwoAct extends AppCompatActivity implements View.OnClickLis
 
                         SharePref sharePref = new SharePref(getApplicationContext());
                         sharePref.setInt(Const.ID_USER_KEY, mUser.getmIdUser());
+                        sharePref.setString(Const.USERNAME_KEY, mUser.getmUsername());
 
                         Intent gotoSuccessRegister = new Intent(RegisterTwoAct.this, SuccessRegisterAct.class);
                         startActivity(gotoSuccessRegister);

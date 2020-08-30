@@ -13,6 +13,7 @@ public class Const {
     public static final String IMAGE_PRODUCT_URL = BASE_URL + "public/image/product/";
     public static final String ID_USER_KEY = "id_user";
     public static final String USER_KEY = "user";
+    public static final String USERNAME_KEY = "username" ;
     public final String REGISTRATION_KEY = "registration";
     public final String UPDATE_KEY = "update";
 
