@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.nurzainpradana.koperasimasjid.R;
 import com.nurzainpradana.koperasimasjid.api.ApiInterface;
+import com.nurzainpradana.koperasimasjid.model.Result;
 import com.nurzainpradana.koperasimasjid.util.AppUtilits;
 import com.nurzainpradana.koperasimasjid.util.Const;
 import com.nurzainpradana.koperasimasjid.util.NetworkUtility;
@@ -34,8 +35,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DetailProduct extends AppCompatActivity implements View.OnClickListener {
-
-    Context context;
 
     @BindView(R.id.img_detail_product)
     ImageView imgDetail;
@@ -57,11 +56,7 @@ public class DetailProduct extends AppCompatActivity implements View.OnClickList
     TextView tvQty;
 
     private String id_products = "";
-
     int qty;
-
-
-    ArrayList<Product> listProdut = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +67,6 @@ public class DetailProduct extends AppCompatActivity implements View.OnClickList
         final Intent acc = getIntent();
 
         id_products = acc.getExtras().getString("id_products");
-        Toast.makeText(this, id_products, Toast.LENGTH_SHORT).show();
 
         nameDetail.setText(acc.getStringExtra("id_products"));
         priceDetail.setText(acc.getStringExtra("price"));
@@ -84,16 +78,31 @@ public class DetailProduct extends AppCompatActivity implements View.OnClickList
                 .error(R.mipmap.ic_launcher)
                 .into(imgDetail);
 
-        btnFavorite.setOnClickListener(v -> {
-            addtoWishlist();
-        });
-
-        btnAddCart.setOnClickListener(v -> {
-            addtoCart(Integer.parseInt(id_products));
-        });
-
+        btnFavorite.setOnClickListener(this);
+        btnAddCart.setOnClickListener(this);
         btnPlus.setOnClickListener(this);
         btnMinus.setOnClickListener(this);
+    }
+
+    private void addQuantity(){
+        qty = Integer.parseInt(tvQty.getText().toString());
+        qty = qty + 1;
+        tvQty.setText(String.valueOf(qty));
+        btnMinus.setEnabled(true);
+    }
+    private void reduceQuantity(){
+        qty = Integer.parseInt(tvQty.getText().toString());
+        if (qty < 0){
+            btnMinus.setEnabled(false);
+        } else {
+            btnMinus.setEnabled(true);
+            if (qty>0){
+                qty = qty - 1;
+                tvQty.setText(String.valueOf(qty));
+            } else {
+                btnMinus.setEnabled(false);
+            }
+        }
     }
 
     private void addtoWishlist() {
@@ -132,30 +141,50 @@ public class DetailProduct extends AppCompatActivity implements View.OnClickList
         if (!NetworkUtility.isNetworkConnected(DetailProduct.this)) {
             AppUtilits.viewMessage(DetailProduct.this, getString(R.string.network_not_connect));
         } else {
-            /*final Intent acc = getIntent();
-            id_product = acc.getExtras().getString("id_products");
-
-             */
-
             RetroConfig.getApiService(null);
             ApiInterface request = RetroConfig.retrofit.create(ApiInterface.class);
 
             SharePref sharePref = new SharePref(this);
-            Call<AddtoCart> call = request.addtocartcall("12345", id_product,
-                    sharePref.getString(Const.ID_USER_KEY), priceDetail.getText().toString());
+            Call<Result> call = request.addtocartcall( id_product,
+                    sharePref.getInt(Const.ID_USER_KEY), Integer.parseInt(tvQty.getText().toString()));
+            call.enqueue(new Callback<Result>() {
+                @Override
+                public void onResponse(Call<Result> call, Response<Result> response) {
+                    String value = response.body().getValue().toString();
+                    String message = response.body().getMessage();
+                    if (value.equals("1")) {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                        AppUtilits.viewMessage(DetailProduct.this, getString(R.string.succes_add_to_wishlist));
+                    } else {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                        AppUtilits.viewMessage(DetailProduct.this, getString(R.string.fail_add_to_wishlist));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Result> call, Throwable t) {
+                    t.printStackTrace();
+                    Log.e("error", String.valueOf(t));
+                    Toast.makeText(getApplicationContext(), "Jaringan Error !", Toast.LENGTH_SHORT).show();
+                    AppUtilits.viewMessage(DetailProduct.this, getString(R.string.network_error));
+                }
+            });
+
+            /*
+
             call.enqueue(new Callback<AddtoCart>() {
                 @Override
                 public void onResponse(Call<AddtoCart> call, Response<AddtoCart> response) {
                     Log.e("TAG", "respons is" + response.body().getInformation());
                     if (response.body() != null && response.isSuccessful()) {
                         if (response.body().getStatus() == 1) {
-                            //AppUtilits.viewMessage(DetailProduct.this, getString(R.string.succes_add_to_wishlist));
-                            Toast.makeText(DetailProduct.this, "Berhasil ditambahkan", Toast.LENGTH_SHORT).show();
+
+                            //Toast.makeText(DetailProduct.this, "Berhasil ditambahkan", Toast.LENGTH_SHORT).show();
                         } else {
-                            AppUtilits.viewMessage(DetailProduct.this, getString(R.string.fail_add_to_wishlist));
+
                         }
                     } else {
-                        AppUtilits.viewMessage(DetailProduct.this, getString(R.string.network_error));
+
                     }
                 }
 
@@ -164,6 +193,8 @@ public class DetailProduct extends AppCompatActivity implements View.OnClickList
                     AppUtilits.viewMessage(DetailProduct.this, getString(R.string.fail_add_to_wishlist));
                 }
             });
+
+             */
         }
     }
 
@@ -179,25 +210,19 @@ public class DetailProduct extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_plus:
-                qty = Integer.parseInt(tvQty.getText().toString());
-                qty = qty + 1;
-                tvQty.setText(String.valueOf(qty));
-                btnMinus.setEnabled(true);
+                    addQuantity();
                 break;
 
                 case R.id.btn_minus:
-                    qty = Integer.parseInt(tvQty.getText().toString());
-                if (qty < 0){
-                    btnMinus.setEnabled(false);
-                } else {
-                    btnMinus.setEnabled(true);
-                    if (qty>0){
-                        qty = qty - 1;
-                        tvQty.setText(String.valueOf(qty));
-                    } else {
-                        btnMinus.setEnabled(false);
-                    }
-                }
+                    reduceQuantity();
+                break;
+
+            case R.id.btn_add_cart:
+                addtoCart(Integer.parseInt(id_products));
+                break;
+
+            case R.id.btn_favorite:
+                addtoWishlist();
                 break;
         }
     }
