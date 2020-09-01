@@ -109,7 +109,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         tvProfilUsername.setText(users.get(0).getmUsername());
 
         String urlPhoto = IMAGE_USER_URL + users.get(0).getmPhotoProfile();
-        Toast.makeText(getContext(), urlPhoto, Toast.LENGTH_SHORT).show();
         Picasso.get()
                 .load(urlPhoto)
                 .placeholder(R.mipmap.ic_launcher)

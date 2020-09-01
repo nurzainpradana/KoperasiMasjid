@@ -14,12 +14,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen_horizontal"
                     android:layout_marginTop="@dimen/dimen_8dp"
-                        android:fontFamily="@font/mont_bold"
-                        android:textColor="@color/colorBlack"
-                        android:textStyle="bold"
-                        android:text="Favorite"
+                        android:text="@string/favorite"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    style="@style/body.bold.maroon"
 
                     />
 

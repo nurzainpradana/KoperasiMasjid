@@ -75,5 +75,9 @@
     <string name="user_image_filename">user_image_</string>
     <string name="password_not_equal">Password tidak sama</string>
     <string name="logout">Log Out</string>
+    <string name="listcart">Daftar Belanja</string>
+    <string name="total_price">Total Harga</string>
+    <string name="dummy_price">Rp. 99.999</string>
+    <string name="order_now">Pesan Sekarang</string>
 
 </resources>
