@@ -82,7 +82,7 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
 
     private void verification(String username, String password) {
         //Cek Verifikasi Username Password
-        userViewModel.setUser(username, this.getBaseContext());
+        userViewModel.setUser(username, this);
         userViewModel.getUser().observe(this, new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> users) {

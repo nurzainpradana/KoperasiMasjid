@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nurzainpradana.koperasimasjid.BuildConfig;
 import com.nurzainpradana.koperasimasjid.model.AddtoCart;
+import com.nurzainpradana.koperasimasjid.model.CartDetail;
 import com.nurzainpradana.koperasimasjid.util.Const;
 
 import java.util.concurrent.TimeUnit;
@@ -89,5 +90,11 @@ public class RetroConfig {
     public RequestBody convertString(String data) {
         RequestBody plainString = RequestBody.create(MediaType.parse("text/plain"), "id");
         return plainString;
+    }
+
+    //Cart Detail
+    public Call<CartDetail> cartDetailCall(String securcode, String qoute_id, String id_member) {
+        return mApiInterface.getCartDetail(convertString(securcode),
+                convertString(qoute_id), convertString(id_member));
     }
 }

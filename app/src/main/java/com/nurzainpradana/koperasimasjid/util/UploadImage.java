@@ -73,7 +73,7 @@ public class UploadImage {
                 Bitmap bitmap = BitmapFactory.decodeFile(imgPath, options);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 // Must compress the image to reduce image size to make upload easey
-                bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 30, stream);
                 byte[] byte_arr = stream.toByteArray();
 
                 //encode image to string

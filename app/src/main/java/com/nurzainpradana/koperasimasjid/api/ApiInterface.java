@@ -2,6 +2,8 @@ package com.nurzainpradana.koperasimasjid.api;
 
 import com.nurzainpradana.koperasimasjid.api.response.JsonRespon;
 import com.nurzainpradana.koperasimasjid.model.AddtoCart;
+import com.nurzainpradana.koperasimasjid.model.CartDetail;
+import com.nurzainpradana.koperasimasjid.model.FavoriteDetail;
 import com.nurzainpradana.koperasimasjid.model.Result;
 import com.nurzainpradana.koperasimasjid.model.ResultUser;
 import com.nurzainpradana.koperasimasjid.model.User;
@@ -130,4 +132,22 @@ public interface ApiInterface {
     @Multipart
     @POST("/koperasimasjid/api/favorite/favorite_product.php")
     Call<JsonRespon> getFavorite(@Part("id_user") Integer id_user);
+
+
+    //get user cart
+    @Multipart
+    @POST("android/getusercartdetail.php")
+    Call<CartDetail> getCartDetail(
+            @Part("securecode") RequestBody securecode,
+            @Part("qoute_id") RequestBody qoute_id,
+            @Part("id_member") RequestBody id_member
+    );
+
+    //get user wishlist
+    @Multipart
+    @POST("android/getuserwishlist.php")
+    Call<FavoriteDetail> getCartDetail(
+            @Part("securecode") RequestBody securecode,
+            @Part("id_member") RequestBody id_member
+    );
 }

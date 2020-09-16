@@ -9,8 +9,11 @@ public class NetworkUtility {
     public static Boolean isNetworkConnected(Context mContext) {
 
         ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(
-                mContext.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+                Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null){
+            NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+            return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        }
+        return false;
     }
 }
