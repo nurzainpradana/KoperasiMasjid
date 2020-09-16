@@ -1,6 +1,5 @@
 package com.nurzainpradana.koperasimasjid.util;
 
-import com.nurzainpradana.koperasimasjid.BuildConfig;
 
 public class Const {
 

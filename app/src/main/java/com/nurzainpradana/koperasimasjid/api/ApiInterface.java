@@ -109,6 +109,8 @@ public interface ApiInterface {
 
      */
 
+
+
     //Add to Favorite
     @Multipart
     @POST("/koperasimasjid/api/favorite/add_to_favorite.php")
@@ -133,7 +135,10 @@ public interface ApiInterface {
     @POST("/koperasimasjid/api/favorite/favorite_product.php")
     Call<JsonRespon> getFavorite(@Part("id_user") Integer id_user);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 28928c4778c94d5b35fe76750c34828edb8ced5b
     //get user cart
     @Multipart
     @POST("android/getusercartdetail.php")

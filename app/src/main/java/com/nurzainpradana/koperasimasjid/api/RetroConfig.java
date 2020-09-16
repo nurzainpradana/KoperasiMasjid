@@ -1,10 +1,14 @@
 package com.nurzainpradana.koperasimasjid.api;
 
+import com.bm.library.BuildConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.nurzainpradana.koperasimasjid.BuildConfig;
 import com.nurzainpradana.koperasimasjid.model.AddtoCart;
 import com.nurzainpradana.koperasimasjid.model.CartDetail;
+<<<<<<< HEAD
+=======
+import com.nurzainpradana.koperasimasjid.model.FavoriteDetail;
+>>>>>>> 28928c4778c94d5b35fe76750c34828edb8ced5b
 import com.nurzainpradana.koperasimasjid.util.Const;
 
 import java.util.concurrent.TimeUnit;
@@ -86,9 +90,20 @@ public class RetroConfig {
 
      */
 
+    //Cart Detail
+    public Call<CartDetail> cartDetailCall(String securcode, String qoute_id, String id_member) {
+        return mApiInterface.getCartDetail(convertString(securcode),
+                convertString(qoute_id), convertString(id_member));
+    }
+
+    //Favorite Detail
+    public Call<FavoriteDetail> favoriteCall (String securcode, String id_member) {
+        return mApiInterface.getCartDetail(convertString(securcode), convertString(id_member));
+    }
+
     //Convert aa param into plain text
     public RequestBody convertString(String data) {
-        RequestBody plainString = RequestBody.create(MediaType.parse("text/plain"), "id");
+        RequestBody plainString = RequestBody.create(MediaType.parse("text/plain"), data);
         return plainString;
     }
 

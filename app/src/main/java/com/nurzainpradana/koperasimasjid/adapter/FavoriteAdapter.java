@@ -22,18 +22,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-<<<<<<< HEAD
-/*
-public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
-=======
 
-public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder> {
 
->>>>>>> 28928c4778c94d5b35fe76750c34828edb8ced5b
     private Context context;
     private List<CartItem> cartItemList;
 
-    public CartAdapter(Context context, List<CartItem> cartItemList) {
+    public FavoriteAdapter(Context context, List<CartItem> cartItemList) {
         this.context = context;
         this.cartItemList = cartItemList;
     }
@@ -41,14 +36,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_cart, parent, false);
-        return new CartAdapter.ViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_wishlist, parent, false);
+        return new FavoriteAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
-        final CartItem model = cartItemList.get(i);
-
         holder.txt_name.setText(cartItemList.get(i).getName());
         holder.txt_price.setText("Rp " + cartItemList.get(i).getPrice());
 
@@ -70,7 +63,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
             holder.itemView.getContext().startActivity(detailIntent);
         });
-
     }
 
     @Override
@@ -88,21 +80,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         ImageView img_product;
         @BindView(R.id.btn_cart_delete)
         Button btnDelete;
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 28928c4778c94d5b35fe76750c34828edb8ced5b
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
-<<<<<<< HEAD
-
 }
-
- */
-=======
-}
->>>>>>> 28928c4778c94d5b35fe76750c34828edb8ced5b
