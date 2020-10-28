@@ -68,11 +68,11 @@ public class FavoriteViewModel extends ViewModel {
                 Integer value = response.body().getValue();
                 String message = response.body().getMessage();
                 if (value == 1 ) {
-                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                     //AppUtilits.viewMessage(context, context.getString(R.string.succes_add_to_wishlist));
 
                 } else {
-                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                     //AppUtilits.viewMessage(context, context.getString(R.string.fail_add_to_wishlist));
                 }
             }

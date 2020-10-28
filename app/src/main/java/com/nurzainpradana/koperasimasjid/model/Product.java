@@ -1,7 +1,4 @@
 package com.nurzainpradana.koperasimasjid.model;
-
-
-
 public class Product {
 
     private String id_products;

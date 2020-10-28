@@ -145,6 +145,8 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (edtPin2.getText().toString().length() == 1) {
                     edtPin3.requestFocus();
+                } else {
+                    edtPin1.requestFocus();
                 }
             }
 
@@ -161,6 +163,8 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (edtPin3.getText().toString().length() == 1) {
                     edtPin4.requestFocus();
+                } else {
+                    edtPin2.requestFocus();
                 }
             }
 
@@ -177,6 +181,8 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (edtPin4.getText().toString().length() == 1) {
                     edtPin5.requestFocus();
+                } else {
+                    edtPin3.requestFocus();
                 }
             }
 
@@ -193,6 +199,8 @@ public class VerificationAct extends AppCompatActivity implements View.OnClickLi
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (edtPin5.getText().toString().length() == 1) {
                     edtPin6.requestFocus();
+                } else {
+                    edtPin4.requestFocus();
                 }
             }
 

@@ -38,7 +38,6 @@ public class SharePref {
         editor.remove(key);
         editor.apply();
     }
-
 }
 
 

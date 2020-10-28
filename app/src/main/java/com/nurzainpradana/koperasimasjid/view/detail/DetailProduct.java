@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 
 import com.nurzainpradana.koperasimasjid.R;
+import com.nurzainpradana.koperasimasjid.model.AddtoCart;
 import com.nurzainpradana.koperasimasjid.util.AppUtilits;
 import com.nurzainpradana.koperasimasjid.util.Const;
 import com.nurzainpradana.koperasimasjid.util.NetworkUtility;
@@ -25,6 +26,7 @@ import com.squareup.picasso.Picasso;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
 
 public class DetailProduct extends AppCompatActivity implements View.OnClickListener {
 
@@ -38,12 +40,16 @@ public class DetailProduct extends AppCompatActivity implements View.OnClickList
     TextView descDetail;
     @BindView(R.id.btn_add_favorite)
     ImageButton btnFavorite;
-    @BindView(R.id.btn_add_cart)
+
+    @BindView(R.id.btn_addcart)
     Button btnAddCart;
+
     @BindView(R.id.btn_plus)
     Button btnPlus;
+
     @BindView(R.id.btn_minus)
     Button btnMinus;
+
     @BindView(R.id.tv_qty)
     TextView tvQty;
 
@@ -70,7 +76,7 @@ public class DetailProduct extends AppCompatActivity implements View.OnClickList
         SharePref sharePref = new SharePref(this);
         id_user = sharePref.getInt(Const.ID_USER_KEY);
 
-        Toast.makeText(this, String.valueOf(id_user), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, String.valueOf(id_user), Toast.LENGTH_SHORT).show();
 
         checkFavorite(id_product, id_user);
 
@@ -84,8 +90,9 @@ public class DetailProduct extends AppCompatActivity implements View.OnClickList
                 .error(R.mipmap.ic_launcher)
                 .into(imgDetail);
 
-        btnFavorite.setOnClickListener(this);
+        btnAddCart = findViewById(R.id.btn_addcart);
         btnAddCart.setOnClickListener(this);
+        btnFavorite.setOnClickListener(this);
         btnPlus.setOnClickListener(this);
         btnMinus.setOnClickListener(this);
     }
@@ -119,8 +126,6 @@ public class DetailProduct extends AppCompatActivity implements View.OnClickList
             @Override
             public void onChanged(Integer integer) {
                 Log.d("RES CHECK", integer.toString());
-                Toast.makeText(DetailProduct.this, integer.toString(), Toast.LENGTH_SHORT).show();
-
                 if (integer == 1){
                     btnFavorite.setImageResource(R.drawable.ic_favorite);
                     isFavorite = 1;
@@ -157,16 +162,10 @@ public class DetailProduct extends AppCompatActivity implements View.OnClickList
         if (!NetworkUtility.isNetworkConnected(DetailProduct.this)) {
             AppUtilits.viewMessage(DetailProduct.this, getString(R.string.network_not_connect));
         } else {
-            if (isFavorite == 0){
                 CartViewModel cartViewModel = new CartViewModel();
                 cartViewModel.addToCart(this, id_product, id_user, quantity);
 
-            }
-
-
-
             /*
-
             call.enqueue(new Callback<AddtoCart>() {
                 @Override
                 public void onResponse(Call<AddtoCart> call, Response<AddtoCart> response) {
@@ -188,8 +187,9 @@ public class DetailProduct extends AppCompatActivity implements View.OnClickList
                     AppUtilits.viewMessage(DetailProduct.this, getString(R.string.fail_add_to_wishlist));
                 }
             });
-
              */
+
+
         }
     }
 
@@ -212,9 +212,10 @@ public class DetailProduct extends AppCompatActivity implements View.OnClickList
                     reduceQuantity();
                 break;
 
-            case R.id.btn_add_cart:
+            case R.id.btn_addcart:
                 quantity = Integer.parseInt(tvQty.getText().toString());
                 addtoCart(id_product, id_user, quantity);
+                //Toast.makeText(this, "TEST", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.btn_add_favorite:

@@ -116,7 +116,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
         if (isNetworkConnected(this)) {
             userViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(UserViewModel.class);
             SharePref sharePref = new SharePref(getApplicationContext());
-            String username = sharePref.getString(Const.ID_USER_KEY);
+            String username = sharePref.getString(Const.USERNAME_KEY);
 
             userViewModel.setUser(username, getApplicationContext());
             userViewModel.getUser().observe(this, users -> setView(users.get(0)));
@@ -252,7 +252,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
                 list = users;
                 if (list.get(0).getmUsername() == null || list.get(0).getmUsername().equals(user.getmUsername())){
                     SharePref sharePref = new SharePref(getApplicationContext());
-                    sharePref.setString(Const.ID_USER_KEY, user.getmUsername());
+                    sharePref.setString(Const.USERNAME_KEY, user.getmUsername());
                     userViewModel.setUpdateMember(getApplicationContext(), user);
                 } else {
                     edtUsername.setError(getString(R.string.username_already_registered));

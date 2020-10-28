@@ -1,17 +1,10 @@
 package com.nurzainpradana.koperasimasjid.model;
 
-<<<<<<< HEAD
-import java.util.List;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-=======
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
->>>>>>> 28928c4778c94d5b35fe76750c34828edb8ced5b
 public class CartDetail {
 
     @SerializedName("status")

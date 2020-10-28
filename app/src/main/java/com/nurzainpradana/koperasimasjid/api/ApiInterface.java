@@ -1,11 +1,12 @@
 package com.nurzainpradana.koperasimasjid.api;
 
 import com.nurzainpradana.koperasimasjid.api.response.JsonRespon;
-import com.nurzainpradana.koperasimasjid.model.AddtoCart;
 import com.nurzainpradana.koperasimasjid.model.CartDetail;
 import com.nurzainpradana.koperasimasjid.model.FavoriteDetail;
 import com.nurzainpradana.koperasimasjid.model.Result;
+import com.nurzainpradana.koperasimasjid.model.ResultCart;
 import com.nurzainpradana.koperasimasjid.model.ResultUser;
+import com.nurzainpradana.koperasimasjid.model.Transaction;
 import com.nurzainpradana.koperasimasjid.model.User;
 
 import java.util.Date;
@@ -33,7 +34,7 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("api/user/uploadPhotoProfile.php")
     Call<Result> uploadPhotoProfile(@Field("image") String image,
-                                        @Field("filename") String filename);
+                                    @Field("filename") String filename);
 
     @FormUrlEncoded
     @POST("api/user/removePhotoProfile.php")
@@ -44,7 +45,8 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("api/user/createUser.php")
-    Call<ResultUser> insertUser(@Field("name") String name,
+    Call<ResultUser> insertUser(@Field("id_user") int id_user,
+                                @Field("name") String name,
                                 @Field("no_phone") String no_phone,
                                 @Field("username") String username,
                                 @Field("password") String password,
@@ -67,29 +69,29 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("api/user/updatePassword.php")
     Call<Result> updatePassword(
-                            @Field("username") String username,
-                            @Field("password") String password);
+            @Field("username") String username,
+            @Field("password") String password);
 
     @FormUrlEncoded
     @POST("api/user/deleteUser.php")
     Call<ResultUser> deleteUser(@Field("id_user") int id_user);
 
     //
-    @GET("/koperasimasjid/api/product/new_product.php")
+    @GET("/api/product/new_product.php")
     Call<JsonRespon> getNew();
 
-    @GET("/koperasimasjid/api/product/best_product.php")
+    @GET("/api/product/best_product.php")
     Call<JsonRespon> getBest();
 
-    @GET("/koperasimasjid/api/product/womens_product.php")
+    @GET("/api/product/womens_product.php")
     Call<JsonRespon> getWomens();
 
-    @GET("/koperasimasjid/api/product/stationery_product.php")
+    @GET("/api/product/stationery_product.php")
     Call<JsonRespon> getStationery();
 
     //Add to Cart
     @Multipart
-    @POST("/koperasimasjid/api/cart/add_to_cart.php")
+    @POST("/api/cart/add_to_cart.php")
     Call<Result> addtocartcall(
             //@Part("securecode") String securecode,
             @Part("id_products") int id_products,
@@ -110,35 +112,34 @@ public interface ApiInterface {
      */
 
 
-
     //Add to Favorite
     @Multipart
-    @POST("/koperasimasjid/api/favorite/add_to_favorite.php")
+    @POST("/api/favorite/add_to_favorite.php")
     Call<Result> addtoFavorite(
             @Part("id_products") Integer id_products,
-            @Part("id_user")Integer id_user);
+            @Part("id_user") Integer id_user);
 
 
     @FormUrlEncoded
-    @POST("/koperasimasjid/api/favorite/check_favorite.php")
+    @POST("/api/favorite/check_favorite.php")
     Call<Result> checkFavorite(
             @Field("id_user") Integer id_user,
             @Field("id_products") Integer id_products);
 
     @Multipart
-    @POST("/koperasimasjid/api/favorite/delete_from_favorite.php")
+    @POST("/api/favorite/delete_from_favorite.php")
     Call<Result> deleteFromFavorite(
             @Part("id_products") Integer id_products,
             @Part("id_user") Integer id_user);
 
     @Multipart
-    @POST("/koperasimasjid/api/favorite/favorite_product.php")
+    @POST("/api/favorite/favorite_product.php")
     Call<JsonRespon> getFavorite(@Part("id_user") Integer id_user);
 
-<<<<<<< HEAD
+    @Multipart
+    @POST("/api/cart/getCart.php")
+    Call<ResultCart> getCart(@Part("id_user") Integer id_user);
 
-=======
->>>>>>> 28928c4778c94d5b35fe76750c34828edb8ced5b
     //get user cart
     @Multipart
     @POST("android/getusercartdetail.php")
@@ -155,4 +156,30 @@ public interface ApiInterface {
             @Part("securecode") RequestBody securecode,
             @Part("id_member") RequestBody id_member
     );
+
+    @Multipart
+    @POST("/api/cart/delete_cart.php")
+    Call<Result> deleteCartCall(
+            @Part("id_cart") int id_cart);
+
+    @Multipart
+    @POST("/api/cart/checkout.php")
+    Call<Result> checkout(
+            @Part("id_transaction") int id_transaction,
+            @Part("id_user") int id_user,
+            @Part("total") int total);
+
+    @Multipart
+    @POST("/api/cart/checkout_item.php")
+    Call<Result> checkoutItem(
+            @Part("id_transaction") int id_transaction,
+            @Part("id_product") int id_product,
+            @Part("harga_satuan") int harga_satuan,
+            @Part("quantity") int quantity,
+            @Part("subtotal") int subtotal);
+
+    @Multipart
+    @POST("/api/transaction/getTransaction.php")
+    Call<List<Transaction>> getTransaction(
+            @Part("id_user") int id_user);
 }

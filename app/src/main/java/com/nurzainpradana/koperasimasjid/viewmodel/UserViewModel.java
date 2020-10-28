@@ -67,7 +67,7 @@ public class UserViewModel extends ViewModel {
         ApiInterface Service;
         retrofit2.Call<ResultUser> Call;
         Service = Api.getApi().create(ApiInterface.class);
-        Call = Service.insertUser(user.getmName(), user.getmNoPhone(), user.getmUsername(), user.getmPassword(), user.getmEmail(), user.getmAddress(), user.getmDateOfBirth().toString(), user.getmPhotoProfile());
+        Call = Service.insertUser(user.getmIdUser(), user.getmName(), user.getmNoPhone(), user.getmUsername(), user.getmPassword(), user.getmEmail(), user.getmAddress(), user.getmDateOfBirth().toString(), user.getmPhotoProfile());
         Call.enqueue(new Callback<ResultUser>() {
             @Override
             public void onResponse(retrofit2.Call<ResultUser> call, Response<ResultUser> response) {
@@ -102,7 +102,7 @@ public class UserViewModel extends ViewModel {
             public void onResponse(retrofit2.Call<Result> call, Response<Result> response) {
                 SharePref sharePref = new SharePref(context);
                 sharePref.setString(Const.ID_USER_KEY, user.getmUsername());
-                Toast.makeText(context, "Update success" + sharePref.getString(Const.ID_USER_KEY), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Update success", Toast.LENGTH_SHORT).show();
             }
 
             @Override

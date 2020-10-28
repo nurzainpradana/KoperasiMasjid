@@ -211,6 +211,7 @@
                 android:text="@string/btn_save"
                 android:textColor="@color/white"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="30dp"
                 style="@style/btn_primary.maroon"/>
         </LinearLayout>
     </ScrollView>

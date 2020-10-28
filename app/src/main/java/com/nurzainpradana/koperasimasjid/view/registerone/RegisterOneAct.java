@@ -89,13 +89,13 @@ public class RegisterOneAct extends AppCompatActivity implements View.OnClickLis
 
             if (!checkUsername(username)) {
                 Intent goToVerification = new Intent(RegisterOneAct.this, VerificationAct.class);
-                /*
+
                 goToVerification.putExtra(new Const().EXTRA_USER, user);
                 goToVerification.putExtra(new Const().EXTRA_TYPE, new Const().REGISTRATION_KEY);
                 startActivity(goToVerification);
-                 */
-                Intent intent = new Intent(RegisterOneAct.this, RegisterTwoAct.class);
-                startActivity(intent);
+
+                //Intent intent = new Intent(RegisterOneAct.this, RegisterTwoAct.class);
+                //startActivity(intent);
             } else if (checkUsername(username)) {
                 Toast.makeText(RegisterOneAct.this, getString(R.string.username_already_registered), Toast.LENGTH_SHORT).show();
                 edtUsername.setError(getString(R.string.username_already_registered));

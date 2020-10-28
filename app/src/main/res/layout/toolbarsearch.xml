@@ -24,18 +24,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <androidx.appcompat.widget.SearchView
-            android:layout_width="120dp"
-            android:layout_height="30dp"
-            android:layout_gravity="right"
-            android:id="@+id/sv_pencarian"
-            app:queryHint="Cari Barang ..."
-            app:searchIcon="@drawable/ic_search"
-            app:submitBackground="@color/warna3"
-            app:queryBackground="@color/warna5"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

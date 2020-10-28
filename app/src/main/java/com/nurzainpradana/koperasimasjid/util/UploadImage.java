@@ -76,7 +76,7 @@ public class UploadImage {
                 bitmap.compress(Bitmap.CompressFormat.PNG, 30, stream);
                 byte[] byte_arr = stream.toByteArray();
 
-                //encode image to string
+                //encode image to stringx
                 encodedString = Base64.encodeToString(byte_arr, 0);
                 return "";
             }

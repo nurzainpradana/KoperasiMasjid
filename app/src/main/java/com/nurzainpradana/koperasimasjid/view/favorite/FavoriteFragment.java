@@ -70,7 +70,7 @@ public class FavoriteFragment extends Fragment {
 
     private void loadDataFavorite() {
         SharePref sharePref = new SharePref(getContext());
-        Integer id_user = sharePref.getInt(Const.ID_USER_KEY);
+        int id_user = sharePref.getInt(Const.ID_USER_KEY);
 
         RetroConfig.getApiService(null);
         ApiInterface request = RetroConfig.retrofit.create(ApiInterface.class);

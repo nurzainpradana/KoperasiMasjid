@@ -40,6 +40,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
+import static com.nurzainpradana.koperasimasjid.util.Const.ID_USER_KEY;
+import static com.nurzainpradana.koperasimasjid.util.Const.USERNAME_KEY;
+
 
 public class RegisterTwoAct extends AppCompatActivity implements View.OnClickListener{
 
@@ -52,6 +55,7 @@ public class RegisterTwoAct extends AppCompatActivity implements View.OnClickLis
     ImageView ivRegisterPhoto;
     ProgressBar progressBar;
 
+    int id;
     String email;
     String address;
     String name;
@@ -87,6 +91,8 @@ public class RegisterTwoAct extends AppCompatActivity implements View.OnClickLis
         btnChooseDate = findViewById(R.id.btn_choose_date);
         btnRegisterTwoNext = findViewById(R.id.btn_register_two_next);
 
+        Random random = new Random();
+        id = random.nextInt(99999);
 
         User user = getIntent().getParcelableExtra(new Const().EXTRA_USER);
         if (user != null) {
@@ -190,7 +196,6 @@ public class RegisterTwoAct extends AppCompatActivity implements View.OnClickLis
                 fileName = fileNameSegments[fileNameSegments.length - 1];
 
                  */
-
                 Random random = new Random();
                 fileName = getString(R.string.user_image_filename) + random.nextInt(999999) +".png";
             } else {
@@ -243,6 +248,7 @@ public class RegisterTwoAct extends AppCompatActivity implements View.OnClickLis
                     dateOfBirth = edtDateOfBirth.getText().toString();
                     try {
                         User mUser = new User();
+                        mUser.setmIdUser(id);
                         mUser.setmName(name);
                         mUser.setmNoPhone(noPhone);
                         mUser.setmUsername(username);
@@ -256,12 +262,17 @@ public class RegisterTwoAct extends AppCompatActivity implements View.OnClickLis
                         saveMember(mUser);
 
                         SharePref sharePref = new SharePref(getApplicationContext());
-                        sharePref.setInt(Const.ID_USER_KEY, mUser.getmIdUser());
+                        sharePref.clearSharePref(ID_USER_KEY);
+                        sharePref.clearSharePref(USERNAME_KEY);
+
+                        sharePref.setInt(ID_USER_KEY, mUser.getmIdUser());
                         sharePref.setString(Const.USERNAME_KEY, mUser.getmUsername());
 
-                        Intent gotoSuccessRegister = new Intent(RegisterTwoAct.this, SuccessRegisterAct.class);
-                        startActivity(gotoSuccessRegister);
-                        finish();
+                        if (sharePref.getInt(ID_USER_KEY) != null ){
+                            Intent gotoSuccessRegister = new Intent(RegisterTwoAct.this, SuccessRegisterAct.class);
+                            startActivity(gotoSuccessRegister);
+                            finish();
+                        }
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }

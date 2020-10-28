@@ -88,29 +88,23 @@ public class SignInAct extends AppCompatActivity implements View.OnClickListener
             public void onChanged(List<User> users) {
                 if (username.equals(users.get(0).getmUsername())) {
                     if (password.equals(users.get(0).getmPassword())) {
-
                         SharePref sharePref = new SharePref(SignInAct.this.getBaseContext());
                         sharePref.setInt(Const.ID_USER_KEY, users.get(0).getmIdUser());
                         sharePref.setString(Const.USERNAME_KEY, users.get(0).getmUsername());
-
                         result = getString(R.string.verification_success);
                         Toast.makeText(SignInAct.this, result, Toast.LENGTH_SHORT).show();
                         Intent goToHome = new Intent(SignInAct.this, MainActivity.class);
                         SignInAct.this.startActivity(goToHome);
+                    } else {
+                        result = SignInAct.this.getString(R.string.wrong_password);
+                        Toast.makeText(SignInAct.this, result, Toast.LENGTH_SHORT).show();
                     }
-                    result = SignInAct.this.getString(R.string.wrong_password);
-                    Toast.makeText(SignInAct.this, result, Toast.LENGTH_SHORT).show();
-
                 } else {
                     result = SignInAct.this.getString(R.string.username_not_found);
                     Toast.makeText(SignInAct.this, result, Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-        if (userViewModel.getFailedMessage() != null) {
-            Toast.makeText(this, userViewModel.getFailedMessage(), Toast.LENGTH_SHORT).show();
-        }
 
     }
 

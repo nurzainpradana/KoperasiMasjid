@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list_main_product"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -15,9 +16,9 @@
         app:cardCornerRadius="8dp"
         app:cardElevation="2dp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayout3"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:layout_marginTop="6dp"
@@ -35,58 +36,62 @@
                 android:padding="16dp"
                 android:src="@mipmap/ic_launcher"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
                 android:orientation="vertical"
-                android:layout_marginLeft="8dp">
+                app:layout_constraintEnd_toStartOf="@+id/option"
+                app:layout_constraintStart_toEndOf="@id/image_product"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/name_product"
-                    android:text="Name Produtcs"
-                    android:textColor="@color/color_two"
-                    android:fontFamily="@font/mont_bold"
-                    android:layout_marginTop="6dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/mont_bold"
+                    android:text="Name Produtcs"
+                    android:textColor="@color/color_two"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/image_produts" />
 
                 <TextView
                     android:id="@+id/price_product"
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:fontFamily="@font/mont_light"
                     android:text="Rp.8.000"
-                    android:layout_marginTop="8dp"
                     android:textColor="@color/color_two"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/name_produts" />
-
-
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/option"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="75dp"
-                android:layout_marginTop="27dp">
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
                 <Button
                     android:id="@+id/imageButton"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/btnpls" />
+                    android:background="@drawable/btnpls"
+                    android:visibility="invisible"/>
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/tv_qty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_marginStart="@dimen/dimen_8dp"
                     android:fontFamily="@font/mont_medium"
                     android:text="2"
@@ -96,37 +101,26 @@
                     android:id="@+id/button"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginTop="8dp"
                     android:layout_marginStart="@dimen/dimen_8dp"
+                    android:visibility="invisible"
                     android:background="@drawable/btnmines" />
 
             </LinearLayout>
 
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="120dp"
-            android:layout_marginEnd="20dp"
-            android:gravity="right"
-            android:layout_marginTop="80dp">
-
             <Button
                 android:id="@+id/btn_cart_delete"
-                android:layout_marginTop="@dimen/dimen_8dp"
+                android:layout_width="55dp"
+                android:layout_height="22dp"
                 android:layout_gravity="right"
+                android:layout_marginTop="8dp"
                 android:background="@color/color_two"
                 android:text="Hapus"
-                android:textColor="@color/color_five"
                 android:textAllCaps="false"
-                android:layout_width="55dp"
-                android:layout_height="22dp" />
-
-        </LinearLayout>
-
-
+                android:textColor="@color/color_five"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/option"
+                app:layout_constraintTop_toBottomOf="@+id/option" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 

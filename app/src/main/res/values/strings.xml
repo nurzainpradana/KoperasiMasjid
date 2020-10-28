@@ -79,5 +79,11 @@
     <string name="total_price">Total Harga</string>
     <string name="dummy_price">Rp. 99.999</string>
     <string name="order_now">Pesan Sekarang</string>
+    <string name="listtransaction">Daftar Transaksi</string>
+    <string name="nomor_transaksi">Nomor Transaksi</string>
+    <string name="date_order">Tanggal Order</string>
+    <string name="lihat_detail">Lihat Detail</string>
+    <string name="status">Status</string>
+    <string name="total_order">Total Order</string>
 
 </resources>

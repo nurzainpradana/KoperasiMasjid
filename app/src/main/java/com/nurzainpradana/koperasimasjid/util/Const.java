@@ -3,9 +3,9 @@ package com.nurzainpradana.koperasimasjid.util;
 
 public class Const {
 
-    public static final String BASE_URL = "http://192.168.1.4/koperasimasjid/public/";
-    public static final String IMAGE_USER_URL = BASE_URL + "public/image/user/";
-    public static final String IMAGE_PRODUCT_URL = BASE_URL + "public/image/product/";
+    public static final String BASE_URL = "http://zainpradana.com/public/";
+    public static final String IMAGE_USER_URL = BASE_URL + "image/user/";
+    public static final String IMAGE_PRODUCT_URL = BASE_URL + "image/product/";
     public static final String ID_USER_KEY = "id_user";
     public static final String USER_KEY = "user";
     public static final String USERNAME_KEY = "username" ;
